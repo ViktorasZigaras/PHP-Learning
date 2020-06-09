@@ -103,18 +103,18 @@
             $one_count = 0;
             $two_count = 0;
 
-            $zero_count += $number_one === 0 ? 1 : 0;
-            $zero_count += $number_two === 0 ? 1 : 0;
-            $zero_count += $number_three === 0 ? 1 : 0;
-            $zero_count += $number_four === 0 ? 1 : 0;
-            $one_count += $number_one === 1 ? 1 : 0;
-            $one_count += $number_two === 1 ? 1 : 0;
-            $one_count += $number_three === 1 ? 1 : 0;
-            $one_count += $number_four === 1 ? 1 : 0;
-            $two_count += $number_one === 2 ? 1 : 0;
-            $two_count += $number_two === 2 ? 1 : 0;
-            $two_count += $number_three === 2 ? 1 : 0;
-            $two_count += $number_four === 2 ? 1 : 0;
+            $zero_count += ($number_one === 0) ? 1 : 0;
+            $zero_count += ($number_two === 0) ? 1 : 0;
+            $zero_count += ($number_three === 0) ? 1 : 0;
+            $zero_count += ($number_four === 0) ? 1 : 0;
+            $one_count += ($number_one === 1) ? 1 : 0;
+            $one_count += ($number_two === 1) ? 1 : 0;
+            $one_count += ($number_three === 1) ? 1 : 0;
+            $one_count += ($number_four === 1) ? 1 : 0;
+            $two_count += ($number_one === 2) ? 1 : 0;
+            $two_count += ($number_two === 2) ? 1 : 0;
+            $two_count += ($number_three === 2) ? 1 : 0;
+            $two_count += ($number_four === 2) ? 1 : 0;
 
             echo " ($number_one, $number_two, $number_three, $number_four): 0x$zero_count, 1x$one_count, 2x$two_count </br> ";
         }
@@ -309,6 +309,7 @@
 
             echo " (sorted) $number_one, $number_two, $number_three, $number_four, $number_five, $number_six </br> ";
         }
+
     }
     
     $sessionOne = new SessionOne;
@@ -323,5 +324,3 @@
     $sessionOne->taskNineFunc();
     $sessionOne->taskTenFunc();
     $sessionOne->taskSpecialFunc();
-
-    // reminder: <pre></pre> 

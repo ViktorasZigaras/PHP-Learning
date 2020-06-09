@@ -67,46 +67,99 @@
             echo 'Create a certain string and count all <a, A> letters: </br></br>';
 
             $original_string = 'An American in Paris';
-            $upper_case_count = substr_count($original_string, 'A');
-            $lower_case_count = substr_count($original_string, 'a');
+            $upper_case_count = mb_substr_count($original_string, 'A');
+            $lower_case_count = mb_substr_count($original_string, 'a');
             
             echo " ($original_string) upper case: $upper_case_count, lower case: $lower_case_count </br> ";
         }
 
         # task 7
+
+        function deleteVowels($string, $vowels) {
+            echo 'string to replace: ' . $string . ' - result: ' . str_replace($vowels, "", $string) . '</br>';
+        }
+
         function taskSevenFunc() {
             echo '</br>=====================</br>Task 7 </br></br>';
-            echo ': </br></br>';
+            echo 'Create certain strings and remove vowels from them: </br></br>';
+
+            $test_values = array('An American in Paris', "Breakfast at Tiffany's", '2001: A Space Odyssey', "It's a Wonderful Life");
+            $vowels = array("a", "e", "i", "o", "u", "A", "E", "I", "O", "U");
+            foreach($test_values as $string) {
+                $this->deleteVowels($string, $vowels);
+            }
         }
-        // Sukurti kintamąjį su stringu: “An American in Paris”. Jame ištrinti visas balses. Rezultatą atspausdinti. Kodą pakartoti su stringais: “Breakfast at Tiffany's”, “2001: A Space Odyssey” ir “It's a Wonderful Life”.
 
         # task 8
+
         function taskEightFunc() {
             echo '</br>=====================</br>Task 8 </br></br>';
-            echo ': </br></br>';
+            echo 'Generate a certain string and find a specific number in it: </br></br>';
+
+            $string = 'Star Wars: Episode '.str_repeat(' ', rand(0,5)). rand(1,9) . ' - A New Hope';
+            $int = (int) filter_var($string, FILTER_SANITIZE_NUMBER_INT);
+            # there are many more ways to find a number and their advantages over others are dependent on a given business logic, specifications, etc.
+
+            echo " original string: $string, extracted number: $int </br> ";
         }
-        // Stringe, kurį generuoja toks kodas: 'Star Wars: Episode '.str_repeat(' ', rand(0,5)). rand(1,9) . ' - A New Hope'; Surasti ir atspausdinti epizodo numerį.
 
         # task 9
+
+        function splitStrings($string) {
+            $pieces = explode(" ", $string);
+            $count = 0;
+            foreach($pieces as $item) {
+                if (mb_strlen($item) <= 5) $count++;
+            }
+            echo " count of words of 5 characters or less in ($string) is: $count </br> ";
+        }
+
         function taskNineFunc() {
             echo '</br>=====================</br>Task 9 </br></br>';
-            echo ': </br></br>';
+            echo 'Count the amount of words of length <= 5 in a string out of a set of strings (array): </br></br>';
+
+            $test_values = array("Don't Be a Menace to South Central While Drinking Your Juice in the Hood", "Tik nereikia gąsdinti Pietų Centro, geriant sultis pas save kvartale");
+            foreach($test_values as $string) {
+                $this->splitStrings($string);
+            }
         }
-        // Suskaičiuoti kiek stringe “Don't Be a Menace to South Central While Drinking Your Juice in the Hood” yra žodžių trumpesnių arba lygių nei 5 raidės. Pakartokite kodą su stringu “Tik nereikia gąsdinti Pietų Centro, geriant sultis pas save kvartale”.
 
          # task 10
+
+        function generateString($length) {
+            $string = substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 3);
+            return $string;
+        }
+
         function taskTenFunc() {
             echo '</br>=====================</br>Task 10 </br></br>';
-            echo ': </br></br>';
+            echo 'Generate a random word of 3 latin lower case symbols: </br></br>';
+
+            # alternatively generate a number and convert to string character (chr function)
+            $string = $this->generateString(3);
+
+            echo " random word: $string </br> ";
+            
         }
-        // Parašyti kodą, kuris generuotų atsitiktinį stringą iš lotyniškų mažųjų raidžių. Stringo ilgis 3 simboliai.
 
         # task 11
         function taskSpecialFunc() {
             echo '</br>=====================</br>Task 11 </br></br>';
-            echo ': </br></br>';
+            echo 'Generate 10 random strings using previous task, ensure that all "words" are unique: </br></br>';
+
+            $string_array = array();
+            while (count($string_array) < 10) {
+                array_push($string_array, $this->generateString(3));
+                $string_array = array_unique($string_array);
+            }
+            $sentence = '';
+            foreach($string_array as $string) {
+                $sentence .= ' ' . $string;
+            }
+
+            echo " random sentence: $sentence </br> ";
         }
-        // Parašykite kodą, kuris generuotų atsitiktinį stringą su 10 atsitiktine tvarka išdėliotų žodžių, o žodžius generavimui imtų iš 9-me uždavinyje pateiktų dviejų stringų. Žodžiai neturi kartotis. (reikės masyvo)
+
     }
   
     $sessionTwo = new SessionTwo;
