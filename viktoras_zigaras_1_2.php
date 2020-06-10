@@ -1,12 +1,16 @@
 <?php
-    # launch url: http://localhost/PHP-Learning/SessionTwo.php
+    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_1_2.php
 
     class SessionTwo {
+
+        function taskHeader(string $title, string $description) {
+            echo " </br>=====================</br>$title </br></br> ";
+            echo " $description: </br></br> ";
+        }
        
         # task 1
         function taskOneFunc() {
-            echo '</br>=====================</br>Task 1 </br></br>';
-            echo 'Create two strings - famous actor name and surname, display the shorter one: </br></br>';
+            $this->taskHeader('Task 1', 'Create two strings - famous actor name and surname, display the shorter one');
 
             $actor_name = 'Ewan';
             $actor_surname = 'McGregor';
@@ -19,8 +23,7 @@
 
         # task 2
         function taskTwoFunc() {
-            echo '</br>=====================</br>Task 2 </br></br>';
-            echo 'Create two strings - famous actor name and surname, display name uppercase and surname lowercase: </br></br>';
+            $this->taskHeader('Task 2', 'Create two strings - famous actor name and surname, display name uppercase and surname lowercase');
 
             $actor_name = mb_strtoupper('Ewan');
             $actor_surname = mb_strtolower('McGregor');
@@ -30,8 +33,7 @@
 
         # task 3
         function taskThreeFunc() {
-            echo '</br>=====================</br>Task 3 </br></br>';
-            echo 'Create two strings - famous actor name and surname, display their initials: </br></br>';
+            $this->taskHeader('Task 3', 'Create two strings - famous actor name and surname, display their initials');
 
             $actor_name = mb_substr('Ewan', 0, 1);
             $actor_surname = mb_substr('McGregor', 0, 1);
@@ -41,8 +43,7 @@
 
         # task 4
         function taskFourFunc() {
-            echo '</br>=====================</br>Task 4 </br></br>';
-            echo 'Create two strings - famous actor name and surname, display end on their name and surname: </br></br>';
+            $this->taskHeader('Task 4', 'Create two strings - famous actor name and surname, display end on their name and surname');
 
             $actor_name = mb_substr('Ewan', -3);
             $actor_surname = mb_substr('McGregor', -3);
@@ -52,8 +53,7 @@
 
         # task 5
         function taskFiveFunc() {
-            echo '</br>=====================</br>Task 5 </br></br>';
-            echo 'Create a certain string and replace all <a, A> letters with *: </br></br>';
+            $this->taskHeader('Task 5', 'Create a certain string and replace all <a, A> letters with *');
 
             $original_string = 'An American in Paris';
             $string = str_replace('A', '*', str_replace('a', '*', $original_string));
@@ -63,8 +63,7 @@
 
         # task 6
         function taskSixFunc() {
-            echo '</br>=====================</br>Task 6 </br></br>';
-            echo 'Create a certain string and count all <a, A> letters: </br></br>';
+            $this->taskHeader('Task 6', 'Create a certain string and count all <a, A> letters');
 
             $original_string = 'An American in Paris';
             $upper_case_count = mb_substr_count($original_string, 'A');
@@ -80,11 +79,15 @@
         }
 
         function taskSevenFunc() {
-            echo '</br>=====================</br>Task 7 </br></br>';
-            echo 'Create certain strings and remove vowels from them: </br></br>';
+            $this->taskHeader('Task 7', 'Create certain strings and remove vowels from them');
 
-            $test_values = array('An American in Paris', "Breakfast at Tiffany's", '2001: A Space Odyssey', "It's a Wonderful Life");
-            $vowels = array("a", "e", "i", "o", "u", "A", "E", "I", "O", "U");
+            $test_values = [
+                'An American in Paris', 
+                "Breakfast at Tiffany's", 
+                '2001: A Space Odyssey', 
+                "It's a Wonderful Life"
+            ];
+            $vowels = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
             foreach($test_values as $string) {
                 $this->deleteVowels($string, $vowels);
             }
@@ -93,8 +96,7 @@
         # task 8
 
         function taskEightFunc() {
-            echo '</br>=====================</br>Task 8 </br></br>';
-            echo 'Generate a certain string and find a specific number in it: </br></br>';
+            $this->taskHeader('Task 8', 'Generate a certain string and find a specific number in it');
 
             $string = 'Star Wars: Episode '.str_repeat(' ', rand(0,5)). rand(1,9) . ' - A New Hope';
             $int = (int) filter_var($string, FILTER_SANITIZE_NUMBER_INT);
@@ -115,10 +117,12 @@
         }
 
         function taskNineFunc() {
-            echo '</br>=====================</br>Task 9 </br></br>';
-            echo 'Count the amount of words of length <= 5 in a string out of a set of strings (array): </br></br>';
+            $this->taskHeader('Task 9', 'Count the amount of words of length <= 5 in a string out of a set of strings (array)');
 
-            $test_values = array("Don't Be a Menace to South Central While Drinking Your Juice in the Hood", "Tik nereikia gąsdinti Pietų Centro, geriant sultis pas save kvartale");
+            $test_values = [
+                "Don't Be a Menace to South Central While Drinking Your Juice in the Hood", 
+                "Tik nereikia gąsdinti Pietų Centro, geriant sultis pas save kvartale"
+            ];
             foreach($test_values as $string) {
                 $this->splitStrings($string);
             }
@@ -127,50 +131,49 @@
          # task 10
 
         function generateString($length) {
-            $string = substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 3);
+            $string = substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, $length);
             return $string;
         }
 
         function taskTenFunc() {
-            echo '</br>=====================</br>Task 10 </br></br>';
-            echo 'Generate a random word of 3 latin lower case symbols: </br></br>';
+            $this->taskHeader('Task 10', 'Generate a random word of 3 latin lower case symbols');
 
             # alternatively generate a number and convert to string character (chr function)
+            # additionally create an array and use random indexes
             $string = $this->generateString(3);
 
             echo " random word: $string </br> ";
-            
         }
 
         # task 11
         function taskSpecialFunc() {
-            echo '</br>=====================</br>Task 11 </br></br>';
-            echo 'Generate 10 random strings using previous task, ensure that all "words" are unique: </br></br>';
+            $this->taskHeader('Task 11', 'Generate 10 random strings using previous task, ensure that all "words" are unique');
 
-            $string_array = array();
+            $string_array = [];
             while (count($string_array) < 10) {
                 array_push($string_array, $this->generateString(3));
                 $string_array = array_unique($string_array);
             }
-            $sentence = '';
-            foreach($string_array as $string) {
-                $sentence .= ' ' . $string;
-            }
+            $sentence = implode(' ', $string_array);
 
             echo " random sentence: $sentence </br> ";
         }
 
     }
+
+    echo "  </br> Viktoras Zigaras - Session 1 - Part 2  </br></br> ";
   
-    $sessionTwo = new SessionTwo;
-    $sessionTwo->taskOneFunc();
-    $sessionTwo->taskTwoFunc();
-    $sessionTwo->taskThreeFunc();
-    $sessionTwo->taskFourFunc();
-    $sessionTwo->taskFiveFunc();
-    $sessionTwo->taskSixFunc();
-    $sessionTwo->taskSevenFunc();
-    $sessionTwo->taskEightFunc();
-    $sessionTwo->taskNineFunc();
-    $sessionTwo->taskTenFunc();
-    $sessionTwo->taskSpecialFunc();
+    $session = new SessionTwo;
+    $session->taskOneFunc();
+    $session->taskTwoFunc();
+    $session->taskThreeFunc();
+    $session->taskFourFunc();
+    $session->taskFiveFunc();
+    $session->taskSixFunc();
+    $session->taskSevenFunc();
+    $session->taskEightFunc();
+    $session->taskNineFunc();
+    $session->taskTenFunc();
+    $session->taskSpecialFunc();
+
+    // range, arr random, arr flip

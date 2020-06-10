@@ -1,12 +1,16 @@
 <?php
-    # launch url: http://localhost/PHP-Learning/SessionOne.php
+    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_1_1.php
 
     class SessionOne {
+
+        function taskHeader(string $title, string $description) {
+            echo " </br>=====================</br>$title </br></br> ";
+            echo " $description: </br></br> ";
+        }
        
         # task 1
         function taskOneFunc() {
-            echo '</br>=====================</br>Task 1 </br></br>';
-            echo 'Create 4 vars: name, surname, birth year and a given year; calculate age and output full info: </br></br>';
+            $this->taskHeader('Task 1', 'Create 4 vars: name, surname, birth year and a given year; calculate age and output full info');
 
             $own_name = 'Viktoras';
             $own_surname = 'Zigaras';
@@ -19,8 +23,7 @@
 
         # task 2
         function taskTwoFunc() {
-            echo '</br>=====================</br>Task 2 </br></br>';
-            echo 'Generate two random numbers, choose bigger one and divide from smaller one, use two digits after comma format: </br></br>';
+            $this->taskHeader('Task 2', 'Generate two random numbers, choose bigger one and divide from smaller one, use two digits after comma format');
 
             $number_one = rand(0, 4);
             $number_two = rand(0, 4);
@@ -39,8 +42,7 @@
 
         # task 3
         function taskThreeFunc() {
-            echo '</br>=====================</br>Task 3 </br></br>';
-            echo 'Generate three random numbers - choose the middle value between them: </br></br>';
+            $this->taskHeader('Task 3', 'Generate three random numbers - choose the middle value between them');
 
             $number_one = rand(0, 25);
             $number_two = rand(0, 25);
@@ -70,8 +72,7 @@
 
         # task 4
         function taskFourFunc() {
-            echo '</br>=====================</br>Task 4 </br></br>';
-            echo 'Generate three random numbers - try to make a triangle out of them: </br></br>';
+            $this->taskHeader('Task 4', 'Generate three random numbers - try to make a triangle out of them');
 
             $number_one = rand(1, 10);
             $number_two = rand(1, 10);
@@ -92,8 +93,7 @@
 
         # task 5
         function taskFiveFunc() {
-            echo '</br>=====================</br>Task 5 </br></br>';
-            echo 'Generate four random numbers - list count of all value instances: </br></br>';
+            $this->taskHeader('Task 5', 'Generate four random numbers - list count of all value instances');
 
             $number_one = rand(0, 2);
             $number_two = rand(0, 2);
@@ -121,8 +121,7 @@
 
         # task 6
         function taskSixFunc() {
-            echo '</br>=====================</br>Task 6 </br></br>';
-            echo 'Generate a random number and create a header of that size: </br></br>';
+            $this->taskHeader('Task 6', 'Generate a random number and create a header of that size');
 
             $value = rand(1, 6);
             echo '<h' . $value . '>' . $value . '</h' . $value . '></br>';
@@ -130,8 +129,7 @@
 
         # task 7
         function taskSevenFunc() {
-            echo '</br>=====================</br>Task 7 </br></br>';
-            echo 'Generate three random numbers and color them based on value - negative (green), zero (red), positive (blue): </br></br>';
+            $this->taskHeader('Task 7', 'Generate three random numbers and color them based on value - negative (green), zero (red), positive (blue)');
 
             $number_one = rand(-10, 10);
             $number_two = rand(-10, 10);
@@ -150,8 +148,7 @@
 
         # task 8
         function taskEightFunc() {
-            echo '</br>=====================</br>Task 8 </br></br>';
-            echo 'Generate a random number of items bought and apply discounts at treshholds of 1K and 2K: </br></br>';
+            $this->taskHeader('Task 8', 'Generate a random number of items bought and apply discounts at treshholds of 1K and 2K');
 
             $value = rand(5, 3000);
             $cost = 1;
@@ -164,8 +161,7 @@
 
         # task 9
         function taskNineFunc() {
-            echo '</br>=====================</br>Task 9 </br></br>';
-            echo 'Generate three random numbers and calculate total average and average of values 10-90, format to integer: </br></br>';
+            $this->taskHeader('Task 9', 'Generate three random numbers and calculate total average and average of values 10-90, format to integer');
 
             $number_one = rand(0, 100);
             $number_two = rand(0, 100);
@@ -181,8 +177,7 @@
 
          # task 10
         function taskTenFunc() {
-            echo '</br>=====================</br>Task 10 </br></br>';
-            echo 'Generate HH:MM:SS type of clock and 0-300 second increment, display initial value and the increment effect: </br></br>';
+            $this->taskHeader('Task 10', 'Generate HH:MM:SS type of clock and 0-300 second increment, display initial value and the increment effect');
 
             $hours = rand(0, 23);
             $minutes = rand(0, 59);
@@ -216,111 +211,139 @@
 
         # task 11
         function taskSpecialFunc() {
-            echo '</br>=====================</br>Task 11 </br></br>';
-            echo 'Generate six large numbers and sort them: </br></br>';
+            $this->taskHeader('Task 11', 'Generate six large numbers and sort them');
 
-            $number_one = rand(1000, 9999);
-            $number_two = rand(1000, 9999);
-            $number_three = rand(1000, 9999);
-            $number_four = rand(1000, 9999);
-            $number_five = rand(1000, 9999);
-            $number_six = rand(1000, 9999);
-            $temp;
+            // $number_one = rand(1000, 9999);
+            // $number_two = rand(1000, 9999);
+            // $number_three = rand(1000, 9999);
+            // $number_four = rand(1000, 9999);
+            // $number_five = rand(1000, 9999);
+            // $number_six = rand(1000, 9999);
 
-            if (($number_one <=> $number_two) === -1) {
-                $temp = $number_two;
-                $number_two = $number_one;
-                $number_one = $temp;
+            $values = [];
+            for ($i = 1; $i <= 6; $i++) {
+                array_push($values, rand(1000, 9999));
             }
-            if (($number_one <=> $number_three) === -1) {
-                $temp = $number_three;
-                $number_three = $number_one;
-                $number_one = $temp;
-            }
-            if (($number_one <=> $number_four) === -1) {
-                $temp = $number_four;
-                $number_four = $number_one;
-                $number_one = $temp;
-            }
-            if (($number_one <=> $number_five) === -1) {
-                $temp = $number_five;
-                $number_five = $number_one;
-                $number_one = $temp;
-            }
-            if (($number_one <=> $number_six) === -1) {
-                $temp = $number_six;
-                $number_six = $number_one;
-                $number_one = $temp;
-            }
+            
 
-            if (($number_two <=> $number_three) === -1) {
-                $temp = $number_three;
-                $number_three = $number_two;
-                $number_two = $temp;
-            }
-            if (($number_two <=> $number_four) === -1) {
-                $temp = $number_four;
-                $number_four = $number_two;
-                $number_two = $temp;
-            }
-            if (($number_two <=> $number_five) === -1) {
-                $temp = $number_five;
-                $number_five = $number_two;
-                $number_two = $temp;
-            }
-            if (($number_two <=> $number_six) === -1) {
-                $temp = $number_six;
-                $number_six = $number_two;
-                $number_two = $temp;
-            }
+            // if (($number_one <=> $number_two) === -1) {
+            //     $temp = $number_two;
+            //     $number_two = $number_one;
+            //     $number_one = $temp;
+            // }
+            // if (($number_one <=> $number_three) === -1) {
+            //     $temp = $number_three;
+            //     $number_three = $number_one;
+            //     $number_one = $temp;
+            // }
+            // if (($number_one <=> $number_four) === -1) {
+            //     $temp = $number_four;
+            //     $number_four = $number_one;
+            //     $number_one = $temp;
+            // }
+            // if (($number_one <=> $number_five) === -1) {
+            //     $temp = $number_five;
+            //     $number_five = $number_one;
+            //     $number_one = $temp;
+            // }
+            // if (($number_one <=> $number_six) === -1) {
+            //     $temp = $number_six;
+            //     $number_six = $number_one;
+            //     $number_one = $temp;
+            // }
 
-            if (($number_three <=> $number_four) === -1) {
-                $temp = $number_four;
-                $number_four = $number_three;
-                $number_three = $temp;
-            }
-            if (($number_three <=> $number_five) === -1) {
-                $temp = $number_five;
-                $number_five = $number_three;
-                $number_three = $temp;
-            }
-            if (($number_three <=> $number_six) === -1) {
-                $temp = $number_six;
-                $number_six = $number_three;
-                $number_three = $temp;
-            }
+            // if (($number_two <=> $number_three) === -1) {
+            //     $temp = $number_three;
+            //     $number_three = $number_two;
+            //     $number_two = $temp;
+            // }
+            // if (($number_two <=> $number_four) === -1) {
+            //     $temp = $number_four;
+            //     $number_four = $number_two;
+            //     $number_two = $temp;
+            // }
+            // if (($number_two <=> $number_five) === -1) {
+            //     $temp = $number_five;
+            //     $number_five = $number_two;
+            //     $number_two = $temp;
+            // }
+            // if (($number_two <=> $number_six) === -1) {
+            //     $temp = $number_six;
+            //     $number_six = $number_two;
+            //     $number_two = $temp;
+            // }
 
-            if (($number_four <=> $number_five) === -1) {
-                $temp = $number_five;
-                $number_five = $number_four;
-                $number_four = $temp;
-            }
-            if (($number_four <=> $number_six) === -1) {
-                $temp = $number_six;
-                $number_six = $number_four;
-                $number_four = $temp;
-            }
+            // if (($number_three <=> $number_four) === -1) {
+            //     $temp = $number_four;
+            //     $number_four = $number_three;
+            //     $number_three = $temp;
+            // }
+            // if (($number_three <=> $number_five) === -1) {
+            //     $temp = $number_five;
+            //     $number_five = $number_three;
+            //     $number_three = $temp;
+            // }
+            // if (($number_three <=> $number_six) === -1) {
+            //     $temp = $number_six;
+            //     $number_six = $number_three;
+            //     $number_three = $temp;
+            // }
 
-            if (($number_five <=> $number_six) === -1) {
-                $temp = $number_six;
-                $number_six = $number_five;
-                $number_five = $temp;
-            }
+            // if (($number_four <=> $number_five) === -1) {
+            //     $temp = $number_five;
+            //     $number_five = $number_four;
+            //     $number_four = $temp;
+            // }
+            // if (($number_four <=> $number_six) === -1) {
+            //     $temp = $number_six;
+            //     $number_six = $number_four;
+            //     $number_four = $temp;
+            // }
 
-            echo " (sorted) $number_one, $number_two, $number_three, $number_four, $number_five, $number_six </br> ";
+            // if (($number_five <=> $number_six) === -1) {
+            //     $temp = $number_six;
+            //     $number_six = $number_five;
+            //     $number_five = $temp;
+            // }
+
+            do {
+                $offset = 0;
+                $run = false;
+                for ($i = $offset; $i < count($values) - 1; $i++) {
+                    $current = $values[$i];
+                    $next = $values[$i + 1];
+                    if (($current <=> $next) === -1) {
+                        $values[$i] = $next;
+                        $values[$i + 1] = $current;
+                        $run = true;
+                    }
+                }
+                $offset++;
+            } while ($run);
+
+            $string = '';
+            foreach($values as $number) {
+                $string .= ', ' . $number;
+            }
+            // $sentence = implode(' ', $values); join
+
+            // echo " (sorted) $number_one, $number_two, $number_three, $number_four, $number_five, $number_six </br> ";
+            echo " (sorted) $string </br> ";
         }
 
     }
+
+    echo "  </br> Viktoras Zigaras - Session 1 - Part 1  </br></br> ";
     
-    $sessionOne = new SessionOne;
-    $sessionOne->taskOneFunc();
-    $sessionOne->taskTwoFunc();
-    $sessionOne->taskThreeFunc();
-    $sessionOne->taskFourFunc();
-    $sessionOne->taskFiveFunc();
-    $sessionOne->taskSixFunc();
-    $sessionOne->taskSevenFunc();
-    $sessionOne->taskEightFunc();
-    $sessionOne->taskNineFunc();
-    $sessionOne->taskTenFunc();
-    $sessionOne->taskSpecialFunc();
+    $session = new SessionOne;
+    $session->taskOneFunc();
+    $session->taskTwoFunc();
+    $session->taskThreeFunc();
+    $session->taskFourFunc();
+    $session->taskFiveFunc();
+    $session->taskSixFunc();
+    $session->taskSevenFunc();
+    $session->taskEightFunc();
+    $session->taskNineFunc();
+    $session->taskTenFunc();
+    $session->taskSpecialFunc();
