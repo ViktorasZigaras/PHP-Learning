@@ -158,9 +158,6 @@
                 }
                 $this->extended_aplhabeth = $this->alphabeth;
                 array_push($this->extended_aplhabeth, ...$this->alphabeth);
-                array_push($this->extended_aplhabeth, ...$this->alphabeth);
-                array_push($this->extended_aplhabeth, ...$this->alphabeth);
-                array_push($this->extended_aplhabeth, ...$this->alphabeth);
             }
             
             $string = implode('', 

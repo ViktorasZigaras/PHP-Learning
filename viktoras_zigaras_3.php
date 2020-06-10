@@ -29,7 +29,7 @@
 
             # part 1
             $total_count = 400;
-            $html = '<div style="width:100%; word-break:break-all">';
+            $html = '<div style="width:100%;word-break:break-all">';
             for ($i = 0; $i < $total_count; $i++) {
                 $html .= '*';
             }
@@ -54,25 +54,25 @@
         function taskTwoFunc() {
             $this->taskHeader('Task 2', 'Generate 300 random numbers, 1) print all separated, 2) count all numbers above 150, 3) all numbers above 275 must be colored red');
 
-            // $numbers = [];
-            // for ($i = 0; $i < 300; $i++) {
-            //     array_push($numbers, rand(0, 300));
-            // }
+            $numbers = [];
+            for ($i = 0; $i < 300; $i++) {
+                array_push($numbers, rand(0, 300));
+            }
 
-            // $count = 0;
-            // $html = '<div style="width:100%; word-break:break-all">';
-            // foreach($numbers as &$number) {
-            //     # part 1 and 3
-            //     if ($number > 275) $html .= '<div style="color:red">' . $number . '</div> ';
-            //     else $html .= '<div>' . $number . '</div> ';
-            //     # part 2 
-            //     if ($number > 150) $count++;
-            // }
-            // unset($number);
-            // $html .= '</div>';
+            $count = 0;
+            $html = '<div style="width:100%;display:flex;flex-wrap:wrap">';
+            foreach($numbers as &$number) {
+                # part 1 and 3
+                if ($number > 275) $html .= '<div style="color:red">' . $number . '</div>&nbsp;';
+                else $html .= '<div>' . $number . '</div>&nbsp;';
+                # part 2 
+                if ($number > 150) $count++;
+            }
+            unset($number);
+            $html .= '</div>';
 
-            // echo " $html </br> ";
-            // echo " count over 150: $count </br> ";
+            echo " $html </br> ";
+            echo " count over 150: $count </br> ";
         }
 
         # task 3
@@ -97,32 +97,32 @@
 
         # task 4
         function taskFourFunc() {
-            $this->taskHeader('Task 4', '');
+            $this->taskHeader('Task 4', 'Generate 100 asterisks and make them form a square using css');
 
-            //
+            $html = '<div style="width:200px;font-size:20px;display:flex;flex-wrap:wrap">';
+            for ($i = 0; $i < 100; $i++) {
+                $html .= '<div style="width:20px">*</div>';
+            }
+            $html .= '</div>';
 
-            echo "  </br> ";
+            echo " $html </br> ";
         }
-
-        // Nupieškite kvadratą iš “*”, kurio kraštines sudaro 100 “*”. Panaudokite css stilių, kad kvadratas ekrane atrodytų kvadratinis.
-// * * * * * * * * * * *
-// * * * * * * * * * * *
-// * * * * * * * * * * *
-// * * * * * * * * * * *
-// * * * * * * * * * * *
-// * * * * * * * * * * *
-// * * * * * * * * * * *
 
         # task 5
         function taskFiveFunc() {
-            $this->taskHeader('Task 5', '');
+            $this->taskHeader('Task 5', 'Color cross section of previous "square" red');
 
-            //
+            $offset = 0;
+            $html = '<div style="width:200px;font-size:20px;display:flex;flex-wrap:wrap">';
+            for ($i = 0; $i < 100; $i++) {
+                if ($i % 10 === (0 + $offset) || $i % 10 === (9 - $offset)) $html .= '<div style="width:20px;color:red">*</div>';
+                else $html .= '<div style="width:20px">*</div>';
+                if ($i % 10 === 9) $offset++;
+            }
+            $html .= '</div>';
 
-            echo "  </br> ";
+            echo " $html </br> ";
         }
-
-        // Prieš tai nupieštam kvadratui nupieškite raudonas istrižaines.
 
         # task 6
         function taskSixFunc() {
@@ -214,14 +214,34 @@
         # task 8
 
         function taskEightFunc() {
-            $this->taskHeader('Task 8', '');
+            $this->taskHeader('Task 8', 'Draw a filled "diamond" of 21 rows height, color every asterisk randomly');
 
-            //
+            $size = 21;
+            $offset = 10;
+            $html = '<div style="width:420px;font-size:20px;display:flex;flex-wrap:wrap">';
+            for ($i = 0; $i < $size; $i++) {
+                for ($j = 0; $j < $size; $j++) {
+                    if ($j === $i + $offset) {
+                        $color = 'rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')';
+                        $html .= '<div style="width:20px;color:' . $color . '">*</div>';
+                    }
+                    else $html .= '<div style="width:20px">&nbsp;</div>';
+                }
+                $offset++;
+            }
+            $html .= '</div>';
 
-            echo "  </br> ";
+            echo " $html </br> ";
+
+
+            // 
+            
+            // for ($i = 0; $i < 100; $i++) {
+            //     if ($i % 10 === (0 + $offset) || $i % 10 === (9 - $offset)) $html .= '<div style="width:20px;color:red">*</div>';
+            //     else $html .= '<div style="width:20px">*</div>';
+            //     if ($i % 10 === 9) $offset++;
+            // }
         }
-
-        // Reikia nupaišyti pilnavidurį rombą, taip pat, kaip ir pilnavidurį kvadratą (https://lt.wikipedia.org/wiki/Rombas), kurio aukštis 21 eilutė. Reikia padaryti, kad kiekviena rombo žvaigždutė būtų atsitiktinės RGB spalvos (perkrovus puslapį spalvos turi keistis).
 
         # task 9
 

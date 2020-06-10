@@ -279,7 +279,6 @@
                 array_push($values, rand(1000, 9999));
             }
             
-
             // if (($number_one <=> $number_two) === -1) {
             //     $temp = $number_two;
             //     $number_two = $number_one;
