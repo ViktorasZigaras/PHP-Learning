@@ -107,12 +107,7 @@
             echo "  </br> ";
         }
 
-         # task 10
-
-        function generateString($length) {
-            $string = substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 3);
-            return $string;
-        }
+        # task 10
 
         function taskTenFunc() {
             $this->taskHeader('Task 10', '');
