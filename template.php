@@ -1,7 +1,22 @@
 <?php
-    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_1_3.php
+    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_X.php
 
     class SessionThree {
+
+        function __construct() {
+            echo "  </br> Viktoras Zigaras - Session Y - Part X  </br></br> ";
+            $this->taskOneFunc();
+            $this->taskTwoFunc();
+            $this->taskThreeFunc();
+            $this->taskFourFunc();
+            $this->taskFiveFunc();
+            $this->taskSixFunc();
+            $this->taskSevenFunc();
+            $this->taskEightFunc();
+            $this->taskNineFunc();
+            $this->taskTenFunc();
+            $this->taskSpecialFunc();
+        }
 
         function taskHeader(string $title, string $description) {
             echo " </br>=====================</br>$title </br></br> ";

@@ -1,7 +1,22 @@
 <?php
-    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_1_1.php
+    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_1.php
 
     class SessionOne {
+
+        function __construct() {
+            echo "  </br> Viktoras Zigaras - Session 1 - Part 1  </br></br> ";
+            $this->taskOneFunc();
+            $this->taskTwoFunc();
+            $this->taskThreeFunc();
+            $this->taskFourFunc();
+            $this->taskFiveFunc();
+            $this->taskSixFunc();
+            $this->taskSevenFunc();
+            $this->taskEightFunc();
+            $this->taskNineFunc();
+            $this->taskTenFunc();
+            $this->taskSpecialFunc();
+        }
 
         function taskHeader(string $title, string $description) {
             echo " </br>=====================</br>$title </br></br> ";
@@ -27,16 +42,12 @@
 
             $number_one = rand(0, 4);
             $number_two = rand(0, 4);
+            $value = 0;
             if ($number_one >= 1 && $number_two >= 1) {
-                if ($number_one >= $number_two) {
-                    $value = $number_one / $number_two;
-                } else {
-                    $value = $number_two / $number_one;
-                }
-            } else {
-                $value = 0;
-            }
+                $value = ($number_one >= $number_two) ? $number_one / $number_two : $number_two / $number_one;
+            } 
             $value = number_format($value, 2, '.', '');
+
             echo " ($number_one, $number_two): $value </br> ";
         }
 
@@ -48,6 +59,7 @@
             $number_two = rand(0, 25);
             $number_three = rand(0, 25);
 
+            $value = 'None are completely average.';
             if (
                 ($number_one > $number_two && $number_one < $number_three) || 
                 ($number_one > $number_three && $number_one < $number_two)
@@ -63,10 +75,8 @@
                 ($number_three > $number_two && $number_three < $number_one)
             ) {
                 $value = $number_three;
-            } else {
-                $value = 'None are completely average.';
-            }
-
+            } 
+            
             echo " ($number_one, $number_two, $number_three): $value </br> ";
         }
 
@@ -78,15 +88,11 @@
             $number_two = rand(1, 10);
             $number_three = rand(1, 10);
 
-            if (
+            $value = (
                 ($number_one + $number_two > $number_three) && 
                 ($number_one + $number_three > $number_two) &&
                 ($number_two + $number_three > $number_one)
-            ) {
-                $value = 'Triangle is possible';
-            } else {
-                $value = 'Triangle is impossible';
-            }
+            ) ? 'Triangle is possible' : 'Triangle is impossible';
 
             echo " ($number_one, $number_two, $number_three): $value </br> ";
         }
@@ -95,28 +101,41 @@
         function taskFiveFunc() {
             $this->taskHeader('Task 5', 'Generate four random numbers - list count of all value instances');
 
-            $number_one = rand(0, 2);
-            $number_two = rand(0, 2);
-            $number_three = rand(0, 2);
-            $number_four = rand(0, 2);
+            // $number_one = rand(0, 2);
+            // $number_two = rand(0, 2);
+            // $number_three = rand(0, 2);
+            // $number_four = rand(0, 2);
             $zero_count = 0;
             $one_count = 0;
             $two_count = 0;
 
-            $zero_count += ($number_one === 0) ? 1 : 0;
-            $zero_count += ($number_two === 0) ? 1 : 0;
-            $zero_count += ($number_three === 0) ? 1 : 0;
-            $zero_count += ($number_four === 0) ? 1 : 0;
-            $one_count += ($number_one === 1) ? 1 : 0;
-            $one_count += ($number_two === 1) ? 1 : 0;
-            $one_count += ($number_three === 1) ? 1 : 0;
-            $one_count += ($number_four === 1) ? 1 : 0;
-            $two_count += ($number_one === 2) ? 1 : 0;
-            $two_count += ($number_two === 2) ? 1 : 0;
-            $two_count += ($number_three === 2) ? 1 : 0;
-            $two_count += ($number_four === 2) ? 1 : 0;
+            // $zero_count += ($number_one === 0) ? 1 : 0;
+            // $zero_count += ($number_two === 0) ? 1 : 0;
+            // $zero_count += ($number_three === 0) ? 1 : 0;
+            // $zero_count += ($number_four === 0) ? 1 : 0;
+            // $one_count += ($number_one === 1) ? 1 : 0;
+            // $one_count += ($number_two === 1) ? 1 : 0;
+            // $one_count += ($number_three === 1) ? 1 : 0;
+            // $one_count += ($number_four === 1) ? 1 : 0;
+            // $two_count += ($number_one === 2) ? 1 : 0;
+            // $two_count += ($number_two === 2) ? 1 : 0;
+            // $two_count += ($number_three === 2) ? 1 : 0;
+            // $two_count += ($number_four === 2) ? 1 : 0;
 
-            echo " ($number_one, $number_two, $number_three, $number_four): 0x$zero_count, 1x$one_count, 2x$two_count </br> ";
+            // echo " ($number_one, $number_two, $number_three, $number_four): 0x$zero_count, 1x$one_count, 2x$two_count </br> ";
+
+            # alternative:
+            $numbers = [rand(0, 2), rand(0, 2), rand(0, 2), rand(0, 2)];
+            $all_numbers = join(' ', $numbers);
+            foreach($numbers as &$number) {
+                // ($number === 0) ? $zero_count++ : ($number === 1) ? $one_count++ : ($number === 2) ? $two_count++ : 'neither of those';
+                $zero_count += ($number === 0) ? 1 : 0;
+                $one_count += ($number === 1) ? 1 : 0;
+                $two_count += ($number === 2) ? 1 : 0;
+            }
+            unset($number);
+            
+            echo " ($all_numbers): (0)x$zero_count, (1)x$one_count, (2)x$two_count </br> ";
         }
 
         # task 6
@@ -131,17 +150,26 @@
         function taskSevenFunc() {
             $this->taskHeader('Task 7', 'Generate three random numbers and color them based on value - negative (green), zero (red), positive (blue)');
 
-            $number_one = rand(-10, 10);
-            $number_two = rand(-10, 10);
-            $number_three = rand(-10, 10);
+            // $number_one = rand(-10, 10);
+            // $number_two = rand(-10, 10);
+            // $number_three = rand(-10, 10);
             $html = '<div style="display:flex">';
-            $color = ($number_one < 0) ? 'green' : (($number_one === 0) ? 'red' : (($number_one > 0) ? 'blue' : 'neither'));
-            $html = $html . '<div style="color:' . $color . '">' . $number_one . '/</div>';
-            $color = ($number_two < 0) ? 'green' : (($number_two === 0) ? 'red' : (($number_two > 0) ? 'blue' : 'neither'));
-            $html = $html . '<div style="color:' . $color . '">' . $number_two . '/</div>';
-            $color = ($number_three < 0) ? 'green' : (($number_three === 0) ? 'red' : (($number_three > 0) ? 'blue' : 'neither'));
-            $html = $html . '<div style="color:' . $color . '">' . $number_three . '</div>';
-            $html = $html . '</div>';
+            // $color = ($number_one < 0) ? 'green' : (($number_one === 0) ? 'red' : (($number_one > 0) ? 'blue' : 'neither'));
+            // $html .= '<div style="color:' . $color . '">' . $number_one . '/</div>';
+            // $color = ($number_two < 0) ? 'green' : (($number_two === 0) ? 'red' : (($number_two > 0) ? 'blue' : 'neither'));
+            // $html .= '<div style="color:' . $color . '">' . $number_two . '/</div>';
+            // $color = ($number_three < 0) ? 'green' : (($number_three === 0) ? 'red' : (($number_three > 0) ? 'blue' : 'neither'));
+            // $html .= '<div style="color:' . $color . '">' . $number_three . '</div>';
+            // $html = $html . '</div>';
+
+            # alternative:
+            $numbers = [rand(-10, 10), rand(-10, 10), rand(-10, 10)];
+            foreach($numbers as &$number) {
+                $color = ($number < 0) ? 'green' : (($number === 0) ? 'red' : (($number > 0) ? 'blue' : 'neither'));
+                $html .= '<div style="color:' . $color . '">' . $number . '/</div>';
+            }
+            $html .= '</div>';
+            unset($number);
 
             echo $html;
         }
@@ -163,16 +191,37 @@
         function taskNineFunc() {
             $this->taskHeader('Task 9', 'Generate three random numbers and calculate total average and average of values 10-90, format to integer');
 
-            $number_one = rand(0, 100);
-            $number_two = rand(0, 100);
-            $number_three = rand(0, 100);
-            $total_average = number_format((($number_one + $number_two + $number_three) / 3), 0);
-            $number_one_modified = ($number_one < 10 || $number_one > 90) ? 0 : $number_one;
-            $number_two_modified = ($number_two < 10 || $number_two > 90) ? 0 : $number_two;
-            $number_three_modified = ($number_three < 10 || $number_three > 90) ? 0 : $number_three;
-            $sorted_average = number_format((($number_one_modified + $number_two_modified + $number_three_modified) / 3), 0);
+            // $number_one = rand(0, 100);
+            // $number_two = rand(0, 100);
+            // $number_three = rand(0, 100);
+            // $total_average = number_format((($number_one + $number_two + $number_three) / 3), 0);
+            // $number_one_modified = ($number_one < 10 || $number_one > 90) ? 0 : $number_one;
+            // $number_two_modified = ($number_two < 10 || $number_two > 90) ? 0 : $number_two;
+            // $number_three_modified = ($number_three < 10 || $number_three > 90) ? 0 : $number_three;
+            # missed filtered count here
+            // $sorted_average = number_format((($number_one_modified + $number_two_modified + $number_three_modified) / 3), 0);
 
-            echo " ($number_one, $number_two, $number_three) total average: $total_average, sorted average: $sorted_average </br> ";
+            // echo " ($number_one, $number_two, $number_three) total average: $total_average, sorted average: $sorted_average </br> ";
+
+            # alternative:
+            $numbers = [rand(0, 100), rand(0, 100), rand(0, 100)];
+            $all_numbers = join(' ', $numbers);
+            $total_sum = 0;
+            $filtered_sum = 0;
+            $filtered_count = 0;
+            foreach($numbers as &$number) {
+                $total_sum += $number;
+                if ($number < 10 || $number > 90) {
+                    $filtered_sum += $number;
+                    $filtered_count++;
+                }
+            }
+            unset($number);
+            $total_average = number_format((($total_sum) / count($numbers)), 0);
+            $sorted_average = 0;
+            if ($filtered_count > 0) $sorted_average = number_format((($filtered_sum) / $filtered_count), 0);
+            
+            echo " ($all_numbers) total average: $total_average, sorted average: $sorted_average </br> ";
         }
 
          # task 10
@@ -182,6 +231,9 @@
             $hours = rand(0, 23);
             $minutes = rand(0, 59);
             $seconds = rand(0, 59);
+            if ($seconds < 10) $seconds = '0' . $seconds;
+            if ($minutes < 10) $minutes = '0' . $minutes;
+            if ($hours < 10) $hours = '0' . $hours;
 
             echo " (before) HH:MM:SS - $hours:$minutes:$seconds </br> ";
 
@@ -204,9 +256,11 @@
                 // add a new day
             }
 
-            echo " (after) HH:MM:SS - $hours:$minutes:$seconds - increment: $increment_minutes:$increment_seconds </br> ";
+            if (strlen($seconds) < 2) $seconds = '0' . $seconds;
+            if (strlen($minutes) < 2) $minutes = '0' . $minutes;
+            if (strlen($hours) < 2) $hours = '0' . $hours;
 
-            # extra: format to 00:00:00 -> later
+            echo " (after) HH:MM:SS - $hours:$minutes:$seconds - increment: $increment_minutes:$increment_seconds </br> ";
         }
 
         # task 11
@@ -320,30 +374,12 @@
                 }
                 $offset++;
             } while ($run);
-
-            $string = '';
-            foreach($values as $number) {
-                $string .= ', ' . $number;
-            }
-            // $sentence = implode(' ', $values); join
+            $string = join(' ', $values); 
 
             // echo " (sorted) $number_one, $number_two, $number_three, $number_four, $number_five, $number_six </br> ";
             echo " (sorted) $string </br> ";
         }
 
     }
-
-    echo "  </br> Viktoras Zigaras - Session 1 - Part 1  </br></br> ";
     
     $session = new SessionOne;
-    $session->taskOneFunc();
-    $session->taskTwoFunc();
-    $session->taskThreeFunc();
-    $session->taskFourFunc();
-    $session->taskFiveFunc();
-    $session->taskSixFunc();
-    $session->taskSevenFunc();
-    $session->taskEightFunc();
-    $session->taskNineFunc();
-    $session->taskTenFunc();
-    $session->taskSpecialFunc();

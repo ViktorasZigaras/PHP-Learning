@@ -1,7 +1,22 @@
 <?php
-    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_1_2.php
+    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_2.php
 
     class SessionTwo {
+
+        function __construct() {
+            echo "  </br> Viktoras Zigaras - Session 1 - Part 2  </br></br> ";
+            $this->taskOneFunc();
+            $this->taskTwoFunc();
+            $this->taskThreeFunc();
+            $this->taskFourFunc();
+            $this->taskFiveFunc();
+            $this->taskSixFunc();
+            $this->taskSevenFunc();
+            $this->taskEightFunc();
+            $this->taskNineFunc();
+            $this->taskTenFunc();
+            $this->taskSpecialFunc();
+        }
 
         function taskHeader(string $title, string $description) {
             echo " </br>=====================</br>$title </br></br> ";
@@ -14,9 +29,7 @@
 
             $actor_name = 'Ewan';
             $actor_surname = 'McGregor';
-            $selected_string = '';
-            if (mb_strlen($actor_name) <= mb_strlen($actor_surname)) $selected_string = $actor_name;
-            else $selected_string = $actor_surname;
+            $selected_string = (mb_strlen($actor_name) <= mb_strlen($actor_surname)) ? $actor_name: $actor_surname;
 
             echo " ($actor_name, $actor_surname): $selected_string </br> ";
         } 
@@ -74,7 +87,7 @@
 
         # task 7
 
-        function deleteVowels($string, $vowels) {
+        function deleteVowels(string $string, array $vowels) {
             echo 'string to replace: ' . $string . ' - result: ' . str_replace($vowels, "", $string) . '</br>';
         }
 
@@ -88,9 +101,10 @@
                 "It's a Wonderful Life"
             ];
             $vowels = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
-            foreach($test_values as $string) {
+            foreach($test_values as &$string) {
                 $this->deleteVowels($string, $vowels);
             }
+            unset($string);
         }
 
         # task 8
@@ -107,7 +121,7 @@
 
         # task 9
 
-        function splitStrings($string) {
+        function splitStrings(string $string) {
             $pieces = explode(" ", $string);
             $count = 0;
             foreach($pieces as $item) {
@@ -123,23 +137,44 @@
                 "Don't Be a Menace to South Central While Drinking Your Juice in the Hood", 
                 "Tik nereikia gąsdinti Pietų Centro, geriant sultis pas save kvartale"
             ];
-            foreach($test_values as $string) {
+            foreach($test_values as &$string) {
                 $this->splitStrings($string);
             }
+            unset($string);
         }
 
-         # task 10
+        # task 10
 
-        function generateString($length) {
-            $string = substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, $length);
+        private array $alphabeth = [];
+        private array $extended_aplhabeth = [];
+
+        function generateString(int $length) {
+            # one of the many strategies to join many chars and randomise them
+            // $string = substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, $length);
+
+            if (count($this->extended_aplhabeth) === 0) {
+                if (count($this->alphabeth) === 0) {
+                    $this->alphabeth = range('a', 'z');
+                }
+                $this->extended_aplhabeth = $this->alphabeth;
+                array_push($this->extended_aplhabeth, ...$this->alphabeth);
+                array_push($this->extended_aplhabeth, ...$this->alphabeth);
+                array_push($this->extended_aplhabeth, ...$this->alphabeth);
+                array_push($this->extended_aplhabeth, ...$this->alphabeth);
+            }
+            
+            $string = implode('', 
+                array_rand(
+                    array_flip($this->extended_aplhabeth)
+                , $length)
+            );
+
             return $string;
         }
 
         function taskTenFunc() {
             $this->taskHeader('Task 10', 'Generate a random word of 3 latin lower case symbols');
 
-            # alternatively generate a number and convert to string character (chr function)
-            # additionally create an array and use random indexes
             $string = $this->generateString(3);
 
             echo " random word: $string </br> ";
@@ -160,20 +195,5 @@
         }
 
     }
-
-    echo "  </br> Viktoras Zigaras - Session 1 - Part 2  </br></br> ";
   
     $session = new SessionTwo;
-    $session->taskOneFunc();
-    $session->taskTwoFunc();
-    $session->taskThreeFunc();
-    $session->taskFourFunc();
-    $session->taskFiveFunc();
-    $session->taskSixFunc();
-    $session->taskSevenFunc();
-    $session->taskEightFunc();
-    $session->taskNineFunc();
-    $session->taskTenFunc();
-    $session->taskSpecialFunc();
-
-    // range, arr random, arr flip
