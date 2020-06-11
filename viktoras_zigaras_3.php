@@ -5,14 +5,14 @@
 
         function __construct() {
             echo "  </br> Viktoras Zigaras - Session 1 - Part 3  </br></br> ";
-            $this->taskOneFunc();
-            $this->taskTwoFunc();
-            $this->taskThreeFunc();
-            $this->taskFourFunc();
-            $this->taskFiveFunc();
+            $this->taskOneFunc(400, 50);
+            $this->taskTwoFunc(300, 0, 300);
+            $this->taskThreeFunc(1, 3000, 77);
+            $this->taskFourFunc(100);
+            $this->taskFiveFunc(100);
             $this->taskSixFunc();
-            $this->taskSevenFunc();
-            $this->taskEightFunc();
+            $this->taskSevenFunc(222);
+            $this->taskEightFunc(21);
             $this->taskNineFunc();
             $this->taskTenFunc();
             $this->taskSpecialFunc();
@@ -24,21 +24,19 @@
         }
        
         # task 1
-        function taskOneFunc() {
-            $this->taskHeader('Task 1', 'Generate 400 asterisks, 1) use css to stop them from overflowing 2) and then break them into lines of 50');
+        function taskOneFunc(int $number_count = 0, int $line_count = 50) {
+            $this->taskHeader('Task 1', "Generate $number_count asterisks, 1) use css to stop them from overflowing 2) and then break them into lines of 50");
 
             # part 1
-            $total_count = 400;
             $html = '<div style="width:100%;word-break:break-all">';
-            for ($i = 0; $i < $total_count; $i++) {
+            for ($i = 0; $i < $number_count; $i++) {
                 $html .= '*';
             }
             $html .= '</div>';
             echo " $html </br> ";
 
             # part 2
-            $line_count = 50;
-            $iteration_count = $total_count / $line_count;
+            $iteration_count = $number_count / $line_count;
             $html = '';
             for ($i = 0; $i < $iteration_count; $i++) {
                 $html .= '<div>';
@@ -51,21 +49,18 @@
         } 
 
         # task 2
-        function taskTwoFunc() {
-            $this->taskHeader('Task 2', 'Generate 300 random numbers, 1) print all separated, 2) count all numbers above 150, 3) all numbers above 275 must be colored red');
+        function taskTwoFunc(int $number_count = 0, int $min = 0, int $max = 0) {
+            $this->taskHeader('Task 2', "Generate $number_count random numbers, print all separated, count all numbers above 150, all numbers above 275 must be colored red");
 
             $numbers = [];
-            for ($i = 0; $i < 300; $i++) {
-                array_push($numbers, rand(0, 300));
+            for ($i = 0; $i < $number_count; $i++) {
+                array_push($numbers, rand($min, $max));
             }
 
             $count = 0;
             $html = '<div style="width:100%;display:flex;flex-wrap:wrap">';
             foreach($numbers as &$number) {
-                # part 1 and 3
-                if ($number > 275) $html .= '<div style="color:red">' . $number . '</div>&nbsp;';
-                else $html .= '<div>' . $number . '</div>&nbsp;';
-                # part 2 
+                $html .= '<div ' . (($number > 275) ? 'style="color:red">' : '>') . $number . '</div>&nbsp;';
                 if ($number > 150) $count++;
             }
             unset($number);
@@ -76,63 +71,80 @@
         }
 
         # task 3
-        function taskThreeFunc() {
-            $this->taskHeader('Task 3', 'Display all numbers between 1 and 3000 that are divisable by 77, divide by commas except the last number in line');
+        function taskThreeFunc(int $min = 0, int $max = 0, int $criteria = 0) {
+            $this->taskHeader('Task 3', "Display all numbers between $min and $max that are divisable by $criteria, divide by commas except the last number in line");
 
             $numbers = [];
-            for ($i = 0; $i < 3000; $i++) {
-                if ($i % 77 === 0) array_push($numbers, $i);
+            for ($i = $min; $i < $max; $i++) {
+                if ($i % $criteria === 0) array_push($numbers, $i);
             }
-            $count = 0;
             $html = '<div style="width:100%; word-break:break-all">';
             foreach($numbers as &$number) {
-                $count++;
-                $html .= ' ' . $number;
-                if ($count !== count($numbers)) $html .= ',';
+                $html .= $number . ', ';
             }
-            $html .= '</div>';
+            unset($number);
+            $html = substr($html, 0, strlen($html) - 2) . '</div>';
 
             echo " $html </br> ";
         }
 
         # task 4
-        function taskFourFunc() {
-            $this->taskHeader('Task 4', 'Generate 100 asterisks and make them form a square using css');
+        function taskFourFunc(int $count = 0) {
+            $this->taskHeader('Task 4', "Generate $count asterisks and make them form a square using css");
 
-            $html = '<div style="width:200px;font-size:20px;display:flex;flex-wrap:wrap">';
-            for ($i = 0; $i < 100; $i++) {
-                $html .= '<div style="width:20px">*</div>';
+            $lenght = sqrt($count);
+            if (floor($lenght) != $lenght) {
+                echo " Need a certain number that can form a square </br> ";
+            } else {
+                $standart_width = 20;
+                $width = $lenght * $standart_width;
+                $html = '<div style="width:' . $width . 'px;font-size:20px;display:flex;flex-wrap:wrap">';
+                for ($i = 0; $i < $count; $i++) {
+                    $html .= '<div style="width:' . $standart_width . 'px">*</div>';
+                }
+                $html .= '</div>';
+
+                echo " $html </br> ";
             }
-            $html .= '</div>';
-
-            echo " $html </br> ";
         }
 
         # task 5
-        function taskFiveFunc() {
+        function taskFiveFunc(int $count = 0) {
             $this->taskHeader('Task 5', 'Color cross section of previous "square" red');
 
-            $offset = 0;
-            $html = '<div style="width:200px;font-size:20px;display:flex;flex-wrap:wrap">';
-            for ($i = 0; $i < 100; $i++) {
-                if ($i % 10 === (0 + $offset) || $i % 10 === (9 - $offset)) $html .= '<div style="width:20px;color:red">*</div>';
-                else $html .= '<div style="width:20px">*</div>';
-                if ($i % 10 === 9) $offset++;
-            }
-            $html .= '</div>';
+            $lenght = sqrt($count);
+            if (floor($lenght) != $lenght) {
+                echo " Need a certain number that can form a square </br> ";
+            } else {
+                $offset = 0;
+                $criteria = $lenght - 1;
+                $standart_width = 20;
+                $width = $lenght * $standart_width;
+                $html = '<div style="width:' . $width . 'px;font-size:20px;display:flex;flex-wrap:wrap">';
+                for ($i = 0; $i < $count; $i++) {
+                    $html .= '<div style="width:' . $standart_width . 'px' . (($i % $lenght == $offset || $i % $lenght == ($criteria - $offset)) ? ';color:red">' : '">') . '*</div>';
+                    if ($i % $lenght == $criteria) $offset++;
+                }
+                $html .= '</div>';
 
-            echo " $html </br> ";
+                echo " $html </br> ";
+            }
         }
 
         # task 6
         function taskSixFunc() {
-            $this->taskHeader('Task 6', 'Throw coin (0-H/1-S) until - 1) top (0/H) is rolled, 2) top (0/H) is rolled three times total, 3) top (0/H) is rolled three times in a row');
+            $this->taskHeader('Task 6', 'Throw coin (0-H/1-S) until - 1) head is rolled, 2) head is rolled three times total, 3) head is rolled three times in a row');
+
+            $min = 0;
+            $max = 1;
+            $head = 0; // H
+            $tail = 1; // S
 
             # part 1
             $string = '';
             do {
-                $throw = rand(0, 1);
-                if ($throw === 0) {
+                $throw = rand($min, $max);
+                if ($throw === $head) {
                     $run = false;
                     $string .= 'H ';
                 } else {
@@ -147,8 +159,8 @@
             $counter = 0;
             do {
                 $run = true;
-                $throw = rand(0, 1);
-                if ($throw === 0) {
+                $throw = rand($min, $max);
+                if ($throw === $head) {
                     $string .= 'H ';
                     if (++$counter === 3) $run = false;
                 } else {
@@ -162,8 +174,8 @@
             $counter = 0;
             do {
                 $run = true;
-                $throw = rand(0, 1);
-                if ($throw === 0) {
+                $throw = rand($min, $max);
+                if ($throw === $head) {
                     $string .= 'H ';
                     if (++$counter === 3) $run = false;
                 } else {
@@ -176,10 +188,13 @@
 
         # task 7
 
-        function taskSevenFunc() {
-            $this->taskHeader('Task 7', 'One player rolls 10-20, another 5-25, repeat rounds until one player collects 222 points first');
+        function taskSevenFunc(int $end_points = 1) {
+            $player_one_min = 10;
+            $player_one_max = 20;
+            $player_two_min = 5;
+            $player_two_max = 25;
+            $this->taskHeader('Task 7', "One player rolls $player_one_min-$player_one_max, another $player_two_min-$player_two_max, repeat rounds until one player collects $end_points points first");
 
-            $end_points = 222;
             $player_one_points = 0;
             $player_two_points = 0;
             $player_one_name = 'Kazys';
@@ -189,8 +204,8 @@
             $points = 0;
             $counter = 0;
             do {
-                $player_one_increment = rand(10, 20);
-                $player_two_increment = rand(5, 25);
+                $player_one_increment = rand($player_one_min, $player_one_max);
+                $player_two_increment = rand($player_two_min, $player_two_max);
                 $player_one_points += $player_one_increment;
                 $player_two_points += $player_two_increment;
                 $counter++;
@@ -213,34 +228,44 @@
 
         # task 8
 
-        function taskEightFunc() {
+        function randomColor(){
+            return '<span style="color:rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')">*</span>';
+        } 
+
+        function taskEightFunc(int $heigth = 0) {
             $this->taskHeader('Task 8', 'Draw a filled "diamond" of 21 rows height, color every asterisk randomly');
 
-            $size = 21;
-            $offset = 10;
-            $html = '<div style="width:420px;font-size:20px;display:flex;flex-wrap:wrap">';
-            for ($i = 0; $i < $size; $i++) {
-                for ($j = 0; $j < $size; $j++) {
-                    if ($j === $i + $offset) {
-                        $color = 'rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')';
-                        $html .= '<div style="width:20px;color:' . $color . '">*</div>';
+            if ($heigth < 1 || $heigth % 2 === 0) {
+                echo " Need an odd height number above 0 </br> ";
+            } else {
+                $configuration = 1; // 1 is for slim diamond, 2 for symetric diamond but &nbsp; needs to be replaced by something like '~'
+                $mid_height = ceil($heigth / 2); 
+                $next_length = 1;
+                $offset = 1;
+                $rhombus = '<div style="line-height: 10px;">';
+                for($i = 1; $i <= $heigth; $i++){
+                    for($j = 0; $j < $next_length; $j++){
+                        if($j == 0){
+                            for($k = 0; $k < $mid_height - $offset; $k++){
+                                $rhombus .= "&nbsp;";
+                            }
+                        }
+                        $rhombus .= $this->randomColor();
                     }
-                    else $html .= '<div style="width:20px">&nbsp;</div>';
+                    $rhombus .= "<br>";
+                    if ($i < $mid_height) {
+                        $next_length += $configuration;
+                        $offset++;
+                    }
+                    else {
+                        $next_length -= $configuration;
+                        $offset--;
+                    }
                 }
-                $offset++;
+                $rhombus .= '</div>';
+
+                echo " $rhombus </br> ";
             }
-            $html .= '</div>';
-
-            echo " $html </br> ";
-
-
-            // 
-            
-            // for ($i = 0; $i < 100; $i++) {
-            //     if ($i % 10 === (0 + $offset) || $i % 10 === (9 - $offset)) $html .= '<div style="width:20px;color:red">*</div>';
-            //     else $html .= '<div style="width:20px">*</div>';
-            //     if ($i % 10 === 9) $offset++;
-            // }
         }
 
         # task 9
@@ -298,18 +323,38 @@
         }
 
         # task 11
+
+        # mathematics borrowed from internet
+        function checkPrime(int $number){ 
+            if ($number === 1) return false; 
+            for ($i = 2; $i <= sqrt($number); $i++){ 
+                if ($number % $i === 0) return false; 
+            } 
+            return true;
+        } 
+
         function taskSpecialFunc() {
-            $this->taskHeader('Task 11', '');
+            $this->taskHeader('Task 11', 'Generate a string of 50 random numbers (separated, sorted), each number has to be unique; filter numbers from previous sequence to leave primary numbers only');
 
-            //
+            # random numbers
+            $numbers = [];
+            while (count($numbers) < 50) {
+                array_push($numbers, rand(1, 200));
+                $numbers = array_unique($numbers);
+            }
+            sort($numbers);
+            $string = join(' ', $numbers);
+            echo " random numbers: $string </br> ";
 
-            echo "  </br> ";
+            # prime random numbers
+            $prime_numbers = [];
+            foreach($numbers as &$number) {
+                if ($this->checkPrime($number)) array_push($prime_numbers, $number);
+            }
+            unset($number);
+            $string = join(' ', $prime_numbers);
+            echo " prime random numbers: $string </br> ";
         }
-
-        // Sugeneruokite stringą, kurį sudarytų 50 atsitiktinių skaičių nuo 1 iki 200, atskirtų tarpais. 
-        // Skaičiai turi būti unikalūs (t.y. nesikartoti). 
-        // Sugeneruokite antrą stringą, pasinaudodami pirmu, palikdami jame tik pirminius skaičius (t.y tokius, kurie dalinasi be liekanos tik iš 1 ir patys savęs). 
-        // Skaičius stringe sudėliokite didėjimo tvarka, nuo mažiausio iki didžiausio.
 
     }
   
