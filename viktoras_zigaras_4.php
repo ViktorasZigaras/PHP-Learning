@@ -1,10 +1,10 @@
 <?php
-    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_X.php
+    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_4.php
 
-    class SessionThree {
+    class SessionFour {
 
         function __construct() {
-            echo "  </br> Viktoras Zigaras - Session Y - Part X  </br></br> ";
+            echo "  </br> Viktoras Zigaras - Session 1 - Part 4  </br></br> ";
             $this->taskOneFunc();
             $this->taskTwoFunc();
             $this->taskThreeFunc();
@@ -128,4 +128,4 @@
 
     }
   
-    $session = new SessionThree;
+    $session = new SessionFour;

@@ -13,9 +13,9 @@
             $this->taskSixFunc();
             $this->taskSevenFunc(222);
             $this->taskEightFunc(21);
-            $this->taskNineFunc();
-            $this->taskTenFunc();
-            $this->taskSpecialFunc();
+            $this->taskNineFunc(10000000);
+            $this->taskTenFunc(5, 8500, 5, 20, 20, 30);
+            $this->taskSpecialFunc(50, 1, 200);
         }
 
         function taskHeader(string $title, string $description) {
@@ -228,12 +228,8 @@
 
         # task 8
 
-        function randomColor(){
-            return '<span style="color:rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')">*</span>';
-        } 
-
         function taskEightFunc(int $heigth = 0) {
-            $this->taskHeader('Task 8', 'Draw a filled "diamond" of 21 rows height, color every asterisk randomly');
+            $this->taskHeader('Task 8', "Draw a filled 'diamond' of $heigth rows height, color every asterisk randomly");
 
             if ($heigth < 1 || $heigth % 2 === 0) {
                 echo " Need an odd height number above 0 </br> ";
@@ -245,12 +241,8 @@
                 $rhombus = '<div style="line-height: 10px;">';
                 for($i = 1; $i <= $heigth; $i++){
                     for($j = 0; $j < $next_length; $j++){
-                        if($j == 0){
-                            for($k = 0; $k < $mid_height - $offset; $k++){
-                                $rhombus .= "&nbsp;";
-                            }
-                        }
-                        $rhombus .= $this->randomColor();
+                        if ($j == 0) $rhombus .= str_repeat("&nbsp;", $mid_height - $offset);
+                        $rhombus .= '<span style="color:rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')">*</span>';
                     }
                     $rhombus .= "<br>";
                     if ($i < $mid_height) {
@@ -270,18 +262,22 @@
 
         # task 9
 
-        function taskNineFunc() {
-            $this->taskHeader('Task 9', 'Run two identical strings with different notation one million times to compare');
+        function formatMiliseconds(float $time = 0) {
+            return number_format($time * 1000, 0) . ' ms';
+        }
+
+        function taskNineFunc(int $count = 0) {
+            $this->taskHeader('Task 9', "Run two identical strings with different notation $count times to compare");
 
             $start_time = microtime(true);
-            for ($i = 1; $i <= 1000000; $i++) {
+            for ($i = 1; $i <= $count; $i++) {
                 $c = "10 bezdzioniu suvalge 20 bananu.";
             }
             $end_time = microtime(true);
             $total_time_first = $end_time - $start_time;
 
             $start_time = microtime(true);
-            for ($i = 1; $i <= 1000000; $i++) {
+            for ($i = 1; $i <= $count; $i++) {
                 $c = '10 bezdzioniu suvalge 20 bananu.';
             }
             $end_time = microtime(true);
@@ -289,22 +285,24 @@
 
             $total_time_difference = abs($total_time_first - $total_time_second);
 
+            $total_time_first = $this->formatMiliseconds($total_time_first);
+            $total_time_second = $this->formatMiliseconds($total_time_second);
+            $total_time_difference = $this->formatMiliseconds($total_time_difference);
+
             echo " First: $total_time_first, Second: $total_time_second, Total difference: $total_time_difference </br> ";
         }
 
         # task 10
 
-        function taskTenFunc() {
-            $this->taskHeader('Task 10', 'Hit the nail a certain random amount; nail is 8.5 cm/units long; 1) insert five nails with small hits (5-20mm), 2) insert five nails with heavy hits (possible misses)');
-
-            $nail_lenght = 8500;
+        function taskTenFunc(int $runs = 0, int $nail_lenght = 0, int $light_min = 0, int $light_max = 0, int $heavy_min = 0, int $heavy_max = 0) {
+            $this->taskHeader('Task 10', "Hit the nail a certain random amount; nail is $nail_lenght (mm) long; 1) insert $runs nails with small hits, 2) insert $runs nails with heavy hits (possible misses)");
 
             # part 1
             $count = 0;
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 0; $i < $runs; $i++) {
                 $current_nail = $nail_lenght;
                 while ($current_nail > 0) {
-                    $current_nail -= rand(5, 20);
+                    $current_nail -= rand($light_min, $light_max);
                     $count++;
                 }
             }
@@ -312,10 +310,10 @@
 
             # part 2
             $count = 0;
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 0; $i < $runs; $i++) {
                 $current_nail = $nail_lenght;
                 while ($current_nail > 0) {
-                    if (rand(0, 1) !== 0) $current_nail -= rand(20, 30);
+                    if (rand(0, 1) !== 0) $current_nail -= rand($heavy_min, $heavy_max);
                     $count++;
                 }
             }
@@ -333,13 +331,13 @@
             return true;
         } 
 
-        function taskSpecialFunc() {
-            $this->taskHeader('Task 11', 'Generate a string of 50 random numbers (separated, sorted), each number has to be unique; filter numbers from previous sequence to leave primary numbers only');
+        function taskSpecialFunc(int $count = 0, int $min = 0, int $max = 0) {
+            $this->taskHeader('Task 11', "Generate a string of $count random numbers (separated, sorted), each number has to be unique; filter numbers from previous sequence to leave primary numbers only");
 
             # random numbers
             $numbers = [];
-            while (count($numbers) < 50) {
-                array_push($numbers, rand(1, 200));
+            while (count($numbers) < $count) {
+                array_push($numbers, rand($min, $max));
                 $numbers = array_unique($numbers);
             }
             sort($numbers);
