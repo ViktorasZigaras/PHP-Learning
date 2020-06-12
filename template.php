@@ -18,14 +18,17 @@
             $this->taskSpecialFunc();
         }
 
-        function taskHeader(string $title, string $description) {
+        function taskHeader(
+            string $title, 
+            string $description
+        ) {
             echo " </br>=====================</br>$title </br></br> ";
             echo " $description: </br></br> ";
         }
        
         # task 1
         function taskOneFunc() {
-            $this->taskHeader('Task 1', '');
+            $this->taskHeader('Task 1', "");
 
             //
 
@@ -34,7 +37,7 @@
 
         # task 2
         function taskTwoFunc() {
-            $this->taskHeader('Task 2', '');
+            $this->taskHeader('Task 2', "");
 
             //
 
@@ -43,7 +46,7 @@
 
         # task 3
         function taskThreeFunc() {
-            $this->taskHeader('Task 3', '');
+            $this->taskHeader('Task 3', "");
 
             //
 
@@ -52,7 +55,7 @@
 
         # task 4
         function taskFourFunc() {
-            $this->taskHeader('Task 4', '');
+            $this->taskHeader('Task 4', "");
 
             //
 
@@ -61,7 +64,7 @@
 
         # task 5
         function taskFiveFunc() {
-            $this->taskHeader('Task 5', '');
+            $this->taskHeader('Task 5', "");
 
             //
 
@@ -70,7 +73,7 @@
 
         # task 6
         function taskSixFunc() {
-            $this->taskHeader('Task 6', '');
+            $this->taskHeader('Task 6', "");
 
             //
 
@@ -80,7 +83,7 @@
         # task 7
 
         function taskSevenFunc() {
-            $this->taskHeader('Task 7', '');
+            $this->taskHeader('Task 7', "");
 
             //
 
@@ -90,7 +93,7 @@
         # task 8
 
         function taskEightFunc() {
-            $this->taskHeader('Task 8', '');
+            $this->taskHeader('Task 8', "");
 
             //
 
@@ -100,7 +103,7 @@
         # task 9
 
         function taskNineFunc() {
-            $this->taskHeader('Task 9', '');
+            $this->taskHeader('Task 9', "");
 
             //
 
@@ -110,7 +113,7 @@
         # task 10
 
         function taskTenFunc() {
-            $this->taskHeader('Task 10', '');
+            $this->taskHeader('Task 10', "");
 
             //
 
@@ -119,7 +122,7 @@
 
         # task 11
         function taskSpecialFunc() {
-            $this->taskHeader('Task 11', '');
+            $this->taskHeader('Task 11', "");
 
             //
 

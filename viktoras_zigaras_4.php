@@ -7,10 +7,11 @@
             echo "  </br> Viktoras Zigaras - Session 1 - Part 4  </br></br> ";
             $letter_count = 200;
             $letters = ['A', 'B', 'C', 'D'];
+            # passing functions to functions VS saving values in class variables or otherwise are all debatable strategies here - highly dependent on imagined project business logic and overall app architecture, meaning, there are many ways to achieve what I've done here
             $this->taskTwoFunc($this->taskOneFunc(30, 5, 25), 10, 10, 5, 25, 0, 15, 10);
             $this->taskFourFunc($this->taskThreeFunc($letter_count, $letters));
             $this->taskFiveFunc(3, $letter_count, $letters);
-            $this->taskSixFunc();
+            $this->taskSixFunc(2, 100, 100, 999);
             $this->taskSevenFunc();
             $this->taskEightFunc();
             $this->taskNineFunc();
@@ -18,12 +19,16 @@
             $this->taskSpecialFunc();
         }
 
-        function taskHeader(string $title, string $description) {
+        function taskHeader(
+            string $title, 
+            string $description
+        ) {
             echo " </br>=====================</br>$title </br></br> ";
             echo " $description: </br></br> ";
         }
        
         # task 1
+
         // function generateNumberArray(int $count = 0, int $min = 0, int $max = 0) {
         //     $numbers = [];
         //     for ($i = 0; $i < $count; $i++) {
@@ -32,7 +37,11 @@
         //     return $numbers;
         // }
 
-        function taskOneFunc(int $count = 0, int $min = 0, int $max = 0) {
+        function taskOneFunc(
+            int $count = 0, 
+            int $min = 0, 
+            int $max = 0
+        ) {
             $this->taskHeader('Task 1', "Generate $count numbers ($min, $max)");
 
             // $numbers = $this->generateNumberArray($count, $min, $max);
@@ -48,6 +57,7 @@
         } 
 
         # task 2
+
         function taskTwoFunc(
             array $numbers = [], 
             int $compare_value = 0, 
@@ -83,16 +93,23 @@
                 # 1
                 if ($number > $compare_value) $compare_count++;
                 # 2
-                if ($index === 0 || $number > $max_number) $max_number = $number;
+                if ($index === 0 || $number > $max_number) {
+                    $max_number = $number;
+                }
                 # 3
                 $sum += $number;
                 # 4
                 array_push($indexed_array, $number - $index);
                 # 6
-                if ($index % 2 === 0) array_push($even_array, $number);
-                else array_push($odd_array, $number);
+                if ($index % 2 === 0) {
+                    array_push($even_array, $number);
+                } else {
+                    array_push($odd_array, $number);
+                }
                 # 7
-                if ($index % 2 === 0 && $number > $replace_compare) $compared_array[$index] = $replace_compare_value;
+                if ($index % 2 === 0 && $number > $replace_compare) {
+                    $compared_array[$index] = $replace_compare_value;
+                }
                 # 8
                 if (!$index_compare_location_set && $number > $index_compare) {
                     $index_compare_location = $index;
@@ -128,7 +145,10 @@
 
         # task 3
 
-        function generateLetterArray(int $count = 0, array $values = []) {
+        function generateLetterArray(
+            int $count = 0, 
+            array $values = []
+        ) {
             $letters = [];
             $no_of_letters_index = count($values) - 1;
             for ($i = 0; $i < $count; $i++) {
@@ -137,7 +157,10 @@
             return $letters;
         }
 
-        function taskThreeFunc(int $count = 0, array $values = []) {
+        function taskThreeFunc(
+            int $count = 0, 
+            array $values = []
+        ) {
             $letters_values = '[ ' . join(' ', $values) . ' ]';
             $this->taskHeader('Task 3', "Generate $count letters from $letters_values and count occurences of each letter");
 
@@ -159,7 +182,7 @@
             $letters_string = join(' ', $letters);
             $count_string = '[ ' . join(' ', $counts) . ' ]';
 
-            echo " all letters: $letters_string </br> ";
+            echo " all letters:</br> $letters_string </br> ";
             echo " $letters_values: $count_string </br> ";
 
             return $letters;
@@ -167,7 +190,10 @@
 
         # task 4
 
-        function sortArray(array $array = [], int $direction = 1) {
+        function sortArray(
+            array $array = [], 
+            int $direction = 1
+        ) {
             do {
                 $offset = 0;
                 $run = false;
@@ -185,16 +211,23 @@
             return join(' ', $array);
         }
 
-        function taskFourFunc(array $letters = []) {
+        function taskFourFunc(
+            array $letters = []
+        ) {
             $this->taskHeader('Task 4', 'Sort previous array in ascending order');
 
             $sorted_array = $this->sortArray($letters, 1);
 
-            echo " sorted array: $sorted_array </br> ";
+            echo " sorted array:</br> $sorted_array </br> ";
         }
 
         # task 5
-        function taskFiveFunc(int $count = 0, int $letter_count = 0, array $values = []) {
+        
+        function taskFiveFunc(
+            int $count = 0, 
+            int $letter_count = 0, 
+            array $values = []
+        ) {
             $this->taskHeader('Task 5', "Generate $count letter arrays, add all of them in words, count unique variations");
 
             $arrays = [];
@@ -219,56 +252,119 @@
         }
 
         # task 6
-        function taskSixFunc() {
-            $this->taskHeader('Task 6', '');
 
-            //
-
-            echo "  </br> ";
+        function generateUniqueNumberArray(
+            int $number_count = 0, 
+            int $min = 0, 
+            int $max = 0
+        ) {
+            $numbers = [];
+            while (count($numbers) < $number_count) {
+                array_push($numbers, rand($min, $max));
+                $numbers = array_unique($numbers);
+            }
+            return $numbers;
         }
 
-        // Sugeneruokite du masyvus, kurių reikšmės yra atsitiktiniai skaičiai nuo 100 iki 999. Masyvų ilgiai 100. Masyvų reikšmės turi būti unikalios savo masyve (t.y. neturi kartotis).
+        function generateUniqueNumberArrays(
+            int $array_count = 0, 
+            int $number_count = 0, 
+            int $min = 0, 
+            int $max = 0
+        ) {
+            $number_array = [];
+            for ($i = 0; $i < $array_count; $i++) {
+                array_push($number_array, $this->generateUniqueNumberArray($number_count, $min, $max));
+            }
+            return $number_array;
+        }
+
+        private $numbers_array = [];
+
+        function taskSixFunc(
+            int $array_count = 0, 
+            int $number_count = 0, 
+            int $min = 0, 
+            int $max = 0
+        ) {
+            $this->taskHeader('Task 6', "Generate $array_count arrays, $number_count long, values being ($min-$max); all values must be unique");
+
+            $this->numbers_array = $this->generateUniqueNumberArrays($array_count, $number_count, $min, $max);
+
+            foreach ($this->numbers_array as $array_index=>&$array) {
+                echo 'array at ' . $array_index . ':</br> ' . join(' ', $array) . '</br>';
+            }
+            unset($array);
+        }
 
         # task 7
 
         function taskSevenFunc() {
-            $this->taskHeader('Task 7', '');
+            $this->taskHeader('Task 7', "Use previous data structure and filter values that are in the first array but not in the second");
 
-            //
+            if (count($this->numbers_array) < 2) {
+                echo "At least two arrays are needed, generated with previous functions!";
+                return;
+            }
 
-            echo "  </br> ";
+            $filtered_array = [];
+            foreach ($this->numbers_array[0] as &$number) {
+                if (!in_array($number, $this->numbers_array[1])) array_push($filtered_array, $number);
+            }
+            unset($number);
+            $string = join(' ', $filtered_array);
+
+            echo " filtered array:</br> $string </br> ";
         }
-
-        // Sugeneruokite masyvą, kuris būtų sudarytas iš reikšmių, kurios yra pirmame 6 uždavinio masyve, bet nėra antrame 6 uždavinio masyve.
 
         # task 8
 
         function taskEightFunc() {
-            $this->taskHeader('Task 8', '');
+            $this->taskHeader('Task 8', "Use previous data structure and filter values that are present in both arrays");
 
-            //
+            if (count($this->numbers_array) < 2) {
+                echo "At least two arrays are needed, generated with previous functions!";
+                return;
+            }
 
-            echo "  </br> ";
+            # it is possible that one array's indexes won't be the same as the other's!
+            $filtered_array = [];
+            foreach ($this->numbers_array[0] as &$number) {
+                if (in_array($number, $this->numbers_array[1])) array_push($filtered_array, $number);
+            }
+            unset($number);
+            $string = join(' ', $filtered_array);
+
+            echo " filtered array:</br> $string </br> ";
         }
-
-        // Sugeneruokite masyvą iš elementų, kurie kartojasi abiejuose 6 uždavinio masyvuose.
 
         # task 9
 
         function taskNineFunc() {
-            $this->taskHeader('Task 9', '');
+            $this->taskHeader('Task 9', "Use previous data structure to assign indexes from first and values from second arrays");
 
-            //
+            if (count($this->numbers_array) < 2) {
+                echo "At least two arrays are needed, generated with previous functions!";
+                return;
+            }
 
-            echo "  </br> ";
+            # it is possible that one array's indexes won't be the same as the other's!
+            $altered_array = [];
+            $string = '';
+            foreach ($this->numbers_array[0] as $index=>&$number) {
+                $value = $this->numbers_array[1][$index];
+                $altered_array[$number] = $value;
+                $string .= '[' . $number . ']->' . $value . ' ';
+            }
+            unset($number);
+
+            echo " filtered array:</br> $string </br> ";
         }
-
-        // Sugeneruokite masyvą, kurio indeksus sudarytų pirmo 6 uždavinio masyvo reikšmės, o jo reikšmės iš būtų antrojo masyvo.
 
         # task 10
 
         function taskTenFunc() {
-            $this->taskHeader('Task 10', '');
+            $this->taskHeader('Task 10', "");
 
             //
 
@@ -279,7 +375,7 @@
 
         # task 11
         function taskSpecialFunc() {
-            $this->taskHeader('Task 11', '');
+            $this->taskHeader('Task 11', "");
 
             //
 

@@ -6,25 +6,31 @@
         function __construct() {
             echo "  </br> Viktoras Zigaras - Session 1 - Part 3  </br></br> ";
             $this->taskOneFunc(400, 50);
-            $this->taskTwoFunc(300, 0, 300);
+            $this->taskTwoFunc(300, 0, 300, 150, 275);
             $this->taskThreeFunc(1, 3000, 77);
             $this->taskFourFunc(100);
             $this->taskFiveFunc(100);
             $this->taskSixFunc();
-            $this->taskSevenFunc(222);
+            $this->taskSevenFunc(222, 10, 20, 5, 25);
             $this->taskEightFunc(21);
             $this->taskNineFunc(10000000);
             $this->taskTenFunc(5, 8500, 5, 20, 20, 30);
             $this->taskSpecialFunc(50, 1, 200);
         }
 
-        function taskHeader(string $title, string $description) {
+        function taskHeader(
+            string $title, 
+            string $description
+        ) {
             echo " </br>=====================</br>$title </br></br> ";
             echo " $description: </br></br> ";
         }
        
         # task 1
-        function taskOneFunc(int $number_count = 0, int $line_count = 50) {
+        function taskOneFunc(
+            int $number_count = 0, 
+            int $line_count = 50
+        ) {
             $this->taskHeader('Task 1', "Generate $number_count asterisks, 1) use css to stop them from overflowing 2) and then break them into lines of 50");
 
             # part 1
@@ -49,7 +55,13 @@
         } 
 
         # task 2
-        function taskTwoFunc(int $number_count = 0, int $min = 0, int $max = 0) {
+        function taskTwoFunc(
+            int $number_count = 0, 
+            int $min = 0, 
+            int $max = 0, 
+            int $count_over = 0, 
+            int $color_red_at = 0
+        ) {
             $this->taskHeader('Task 2', "Generate $number_count random numbers, print all separated, count all numbers above 150, all numbers above 275 must be colored red");
 
             $numbers = [];
@@ -60,18 +72,22 @@
             $count = 0;
             $html = '<div style="width:100%;display:flex;flex-wrap:wrap">';
             foreach($numbers as &$number) {
-                $html .= '<div ' . (($number > 275) ? 'style="color:red">' : '>') . $number . '</div>&nbsp;';
-                if ($number > 150) $count++;
+                $html .= '<div ' . (($number > $color_red_at) ? 'style="color:red">' : '>') . $number . '</div>&nbsp;';
+                if ($number > $count_over) $count++;
             }
             unset($number);
             $html .= '</div>';
 
             echo " $html </br> ";
-            echo " count over 150: $count </br> ";
+            echo " count over $count_over: $count </br> ";
         }
 
         # task 3
-        function taskThreeFunc(int $min = 0, int $max = 0, int $criteria = 0) {
+        function taskThreeFunc(
+            int $min = 0, 
+            int $max = 0, 
+            int $criteria = 0
+        ) {
             $this->taskHeader('Task 3', "Display all numbers between $min and $max that are divisable by $criteria, divide by commas except the last number in line");
 
             $numbers = [];
@@ -89,46 +105,50 @@
         }
 
         # task 4
-        function taskFourFunc(int $count = 0) {
+        function taskFourFunc(
+            int $count = 0
+        ) {
             $this->taskHeader('Task 4', "Generate $count asterisks and make them form a square using css");
 
             $lenght = sqrt($count);
             if (floor($lenght) != $lenght) {
                 echo " Need a certain number that can form a square </br> ";
-            } else {
-                $standart_width = 20;
-                $width = $lenght * $standart_width;
-                $html = '<div style="width:' . $width . 'px;font-size:20px;display:flex;flex-wrap:wrap">';
-                for ($i = 0; $i < $count; $i++) {
-                    $html .= '<div style="width:' . $standart_width . 'px">*</div>';
-                }
-                $html .= '</div>';
-
-                echo " $html </br> ";
+                return;
             }
+            $standart_width = 20;
+            $width = $lenght * $standart_width;
+            $html = '<div style="width:' . $width . 'px;font-size:20px;display:flex;flex-wrap:wrap">';
+            for ($i = 0; $i < $count; $i++) {
+                $html .= '<div style="width:' . $standart_width . 'px">*</div>';
+            }
+            $html .= '</div>';
+
+            echo " $html </br> ";
         }
 
         # task 5
-        function taskFiveFunc(int $count = 0) {
+        function taskFiveFunc(
+            int $count = 0
+        ) {
             $this->taskHeader('Task 5', 'Color cross section of previous "square" red');
 
             $lenght = sqrt($count);
             if (floor($lenght) != $lenght) {
                 echo " Need a certain number that can form a square </br> ";
-            } else {
-                $offset = 0;
-                $criteria = $lenght - 1;
-                $standart_width = 20;
-                $width = $lenght * $standart_width;
-                $html = '<div style="width:' . $width . 'px;font-size:20px;display:flex;flex-wrap:wrap">';
-                for ($i = 0; $i < $count; $i++) {
-                    $html .= '<div style="width:' . $standart_width . 'px' . (($i % $lenght == $offset || $i % $lenght == ($criteria - $offset)) ? ';color:red">' : '">') . '*</div>';
-                    if ($i % $lenght == $criteria) $offset++;
-                }
-                $html .= '</div>';
-
-                echo " $html </br> ";
+                return;
             }
+            $offset = 0;
+            $criteria = $lenght - 1;
+            $standart_width = 20;
+            $width = $lenght * $standart_width;
+            $html = '<div style="width:' . $width . 'px;font-size:20px;display:flex;flex-wrap:wrap">';
+            for ($i = 0; $i < $count; $i++) {
+                $html .= '<div style="width:' . $standart_width . 'px' . (($i % $lenght == $offset || $i % $lenght == ($criteria - $offset)) ? ';color:red">' : '">') . '*</div>';
+                if ($i % $lenght == $criteria) $offset++;
+            }
+            $html .= '</div>';
+
+            echo " $html </br> ";
         }
 
         # task 6
@@ -137,8 +157,10 @@
 
             $min = 0;
             $max = 1;
-            $head = 0; // H
-            $tail = 1; // S
+            $head = 0;
+            $tail = 1;
+            $head_string = 'H';
+            $tail_string = 'S';
 
             # part 1
             $string = '';
@@ -146,10 +168,10 @@
                 $throw = rand($min, $max);
                 if ($throw === $head) {
                     $run = false;
-                    $string .= 'H ';
+                    $string .= "$head_string ";
                 } else {
                     $run = true;
-                    $string .= 'S ';
+                    $string .= "$tail_string ";
                 }
             } while ($run);
             echo " sequence: $string </br> ";
@@ -161,10 +183,10 @@
                 $run = true;
                 $throw = rand($min, $max);
                 if ($throw === $head) {
-                    $string .= 'H ';
+                    $string .= "$head_string ";
                     if (++$counter === 3) $run = false;
                 } else {
-                    $string .= 'S ';
+                    $string .= "$tail_string ";
                 }
             } while ($run);
             echo " sequence: $string </br> ";
@@ -176,10 +198,10 @@
                 $run = true;
                 $throw = rand($min, $max);
                 if ($throw === $head) {
-                    $string .= 'H ';
+                    $string .= "$head_string ";
                     if (++$counter === 3) $run = false;
                 } else {
-                    $string .= 'S ';
+                    $string .= "$tail_string ";
                     $counter = 0;
                 }
             } while ($run);
@@ -188,11 +210,13 @@
 
         # task 7
 
-        function taskSevenFunc(int $end_points = 1) {
-            $player_one_min = 10;
-            $player_one_max = 20;
-            $player_two_min = 5;
-            $player_two_max = 25;
+        function taskSevenFunc(
+            int $end_points = 1, 
+            int $player_one_min = 0, 
+            int $player_one_max = 0, 
+            int $player_two_min = 0, 
+            int $player_two_max = 0
+        ) {
             $this->taskHeader('Task 7', "One player rolls $player_one_min-$player_one_max, another $player_two_min-$player_two_max, repeat rounds until one player collects $end_points points first");
 
             $player_one_points = 0;
@@ -228,45 +252,50 @@
 
         # task 8
 
-        function taskEightFunc(int $heigth = 0) {
+        function taskEightFunc(
+            int $heigth = 0
+        ) {
             $this->taskHeader('Task 8', "Draw a filled 'diamond' of $heigth rows height, color every asterisk randomly");
 
             if ($heigth < 1 || $heigth % 2 === 0) {
                 echo " Need an odd height number above 0 </br> ";
-            } else {
-                $configuration = 1; // 1 is for slim diamond, 2 for symetric diamond but &nbsp; needs to be replaced by something like '~'
-                $mid_height = ceil($heigth / 2); 
-                $next_length = 1;
-                $offset = 1;
-                $rhombus = '<div style="line-height: 10px;">';
-                for($i = 1; $i <= $heigth; $i++){
-                    for($j = 0; $j < $next_length; $j++){
-                        if ($j == 0) $rhombus .= str_repeat("&nbsp;", $mid_height - $offset);
-                        $rhombus .= '<span style="color:rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')">*</span>';
-                    }
-                    $rhombus .= "<br>";
-                    if ($i < $mid_height) {
-                        $next_length += $configuration;
-                        $offset++;
-                    }
-                    else {
-                        $next_length -= $configuration;
-                        $offset--;
-                    }
-                }
-                $rhombus .= '</div>';
-
-                echo " $rhombus </br> ";
+                return;
             }
+            $configuration = 1; # 1 is for slim diamond, 2 for symetric diamond but &nbsp; needs to be replaced by something like '~'
+            $mid_height = ceil($heigth / 2); 
+            $next_length = 1;
+            $offset = 1;
+            $rhombus = '<div style="line-height: 10px;">';
+            for($i = 1; $i <= $heigth; $i++){
+                for($j = 0; $j < $next_length; $j++){
+                    if ($j == 0) $rhombus .= str_repeat("&nbsp;", $mid_height - $offset);
+                    $rhombus .= '<span style="color:rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')">*</span>';
+                }
+                $rhombus .= "<br>";
+                if ($i < $mid_height) {
+                    $next_length += $configuration;
+                    $offset++;
+                } else {
+                    $next_length -= $configuration;
+                    $offset--;
+                }
+            }
+            $rhombus .= '</div>';
+
+            echo " $rhombus </br> ";
         }
 
         # task 9
 
-        function formatMiliseconds(float $time = 0) {
+        function formatMiliseconds(
+            float $time = 0
+        ) {
             return number_format($time * 1000, 0) . ' ms';
         }
 
-        function taskNineFunc(int $count = 0) {
+        function taskNineFunc(
+            int $count = 0
+        ) {
             $this->taskHeader('Task 9', "Run two identical strings with different notation $count times to compare");
 
             $start_time = microtime(true);
@@ -294,7 +323,14 @@
 
         # task 10
 
-        function taskTenFunc(int $runs = 0, int $nail_lenght = 0, int $light_min = 0, int $light_max = 0, int $heavy_min = 0, int $heavy_max = 0) {
+        function taskTenFunc(
+            int $runs = 0, 
+            int $nail_lenght = 0, 
+            int $light_min = 0, 
+            int $light_max = 0, 
+            int $heavy_min = 0, 
+            int $heavy_max = 0
+        ) {
             $this->taskHeader('Task 10', "Hit the nail a certain random amount; nail is $nail_lenght (mm) long; 1) insert $runs nails with small hits, 2) insert $runs nails with heavy hits (possible misses)");
 
             # part 1
@@ -331,7 +367,11 @@
             return true;
         } 
 
-        function taskSpecialFunc(int $count = 0, int $min = 0, int $max = 0) {
+        function taskSpecialFunc(
+            int $count = 0, 
+            int $min = 0, 
+            int $max = 0
+        ) {
             $this->taskHeader('Task 11', "Generate a string of $count random numbers (separated, sorted), each number has to be unique; filter numbers from previous sequence to leave primary numbers only");
 
             # random numbers
