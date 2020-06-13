@@ -7,16 +7,17 @@
             echo "  </br> Viktoras Zigaras - Session 1 - Part 4  </br></br> ";
             $letter_count = 200;
             $letters = ['A', 'B', 'C', 'D'];
-            # passing functions to functions VS saving values in class variables or otherwise are all debatable strategies here - highly dependent on imagined project business logic and overall app architecture, meaning, there are many ways to achieve what I've done here
-            $this->taskTwoFunc($this->taskOneFunc(30, 5, 25), 10, 10, 5, 25, 0, 15, 10);
-            $this->taskFourFunc($this->taskThreeFunc($letter_count, $letters));
+            $number_array = $this->taskOneFunc(30, 5, 25);
+            $this->taskTwoFunc($number_array, 10, 10, 5, 25, 0, 15, 10);
+            $letter_array = $this->taskThreeFunc($letter_count, $letters);
+            $this->taskFourFunc($letter_array);
             $this->taskFiveFunc(3, $letter_count, $letters);
             $this->taskSixFunc(2, 100, 100, 999);
             $this->taskSevenFunc();
             $this->taskEightFunc();
             $this->taskNineFunc();
-            $this->taskTenFunc();
-            $this->taskSpecialFunc();
+            $this->taskTenFunc(10, 5, 25);
+            $this->taskSpecialFunc(101, 0, 300, 150); # difference of 30 too small because average differences range around 150
         }
 
         function taskHeader(
@@ -29,14 +30,6 @@
        
         # task 1
 
-        // function generateNumberArray(int $count = 0, int $min = 0, int $max = 0) {
-        //     $numbers = [];
-        //     for ($i = 0; $i < $count; $i++) {
-        //         array_push($numbers, rand($min, $max));
-        //     }
-        //     return $numbers;
-        // }
-
         function taskOneFunc(
             int $count = 0, 
             int $min = 0, 
@@ -44,7 +37,6 @@
         ) {
             $this->taskHeader('Task 1', "Generate $count numbers ($min, $max)");
 
-            // $numbers = $this->generateNumberArray($count, $min, $max);
             $numbers = [];
             for ($i = 0; $i < $count; $i++) {
                 array_push($numbers, rand($min, $max));
@@ -208,7 +200,7 @@
                 }
                 $offset++;
             } while ($run);
-            return join(' ', $array);
+            return $array;
         }
 
         function taskFourFunc(
@@ -217,8 +209,9 @@
             $this->taskHeader('Task 4', 'Sort previous array in ascending order');
 
             $sorted_array = $this->sortArray($letters, 1);
+            $sorted_string = join(' ', $sorted_array);
 
-            echo " sorted array:</br> $sorted_array </br> ";
+            echo " sorted array:</br> $sorted_string </br> ";
         }
 
         # task 5
@@ -354,7 +347,7 @@
             foreach ($this->numbers_array[0] as $index=>&$number) {
                 $value = $this->numbers_array[1][$index];
                 $altered_array[$number] = $value;
-                $string .= '[' . $number . ']->' . $value . ' ';
+                $string .= "[$number]->$value ";
             }
             unset($number);
 
@@ -363,26 +356,82 @@
 
         # task 10
 
-        function taskTenFunc() {
-            $this->taskHeader('Task 10', "");
+        function taskTenFunc(
+            int $count = 0, 
+            int $min = 0, 
+            int $max = 0
+        ) {
+            $this->taskHeader('Task 10', "Generate array of $count; first numbers are $min-$max, all following ones are sums of previous two numbers");
 
-            //
+            $number_array = [];
+            for ($i = 0; $i < $count; $i++) {
+                if ($i === 0 || $i === 1) {
+                    $current_number = rand($min, $max);
+                    array_push($number_array, $current_number);
+                } else {
+                    $current_number = $previous_number + $previous_before_number;
+                    array_push($number_array, $current_number);
+                }
+                if ($i > 0) $previous_before_number = $previous_number;
+                $previous_number = $current_number;
+            }
+            $string = join(' ', $number_array);
 
-            echo "  </br> ";
+            echo " summed array:</br> $string </br> ";
         }
-
-        // Sugeneruokite 10 skaičių masyvą pagal taisyklę: Du pirmi skaičiai- atsitiktiniai nuo 5 iki 25. Trečias, pirmo ir antro suma. Ketvirtas- antro ir trečio suma. Penktas trečio ir ketvirto suma ir t.t.
 
         # task 11
-        function taskSpecialFunc() {
-            $this->taskHeader('Task 11', "");
 
-            //
+        function generateRadiantArray() {
+            $number_array = $this->generateUniqueNumberArray($count, $min, $max);
+            $number_array = $this->sortArray($number_array, 1);
+            $array_string = join(' ', $number_array);
 
-            echo "  </br> ";
+            echo " array:</br> $array_string </br> ";
         }
 
-        // Sugeneruokite 101 elemento masyvą su atsitiktiniais skaičiais nuo 0 iki 300. Reikšmes kurios tame masyve yra ne unikalios pergeneruokite iš naujo taip, kad visos reikšmės masyve būtų unikalios. Išrūšiuokite masyvą taip, kad jo didžiausia reikšmė būtų masyvo viduryje, o einant nuo jos link masyvo pradžios ir pabaigos reikšmės mažėtų. Paskaičiuokite pirmos ir antros masyvo dalies sumas (neskaičiuojant vidurinės). Jeigu sumų skirtumas (modulis, absoliutus dydis) yra didesnis nei | 30 | rūšiavimą kartokite. (Kad sumos nesiskirtų viena nuo kitos daugiau nei per 30)
+        function taskSpecialFunc(
+            int $count = 0, 
+            int $min = 0, 
+            int $max = 0, 
+            int $difference_criteria = 0
+        ) {
+            $this->taskHeader('Task 11', "Generate an odd lenght ($count) number array with values ($min, $max), all values must be unique; sort the array so that max value is in the middle and other values radiate from it; calculate sum of both sides; if sum difference is over $difference, retry ");
+
+            if ($count % 2 === 0) {
+                echo "Need an odd length count!";
+                return;
+            }
+
+            // $this->generateRadiantArray();
+            
+            do {
+                $number_array = $this->generateUniqueNumberArray($count, $min, $max);
+                $number_array = $this->sortArray($number_array, 1);
+                $even_array = [];
+                $odd_array = [];
+                foreach ($number_array as $index=>&$number) {
+                    if ($index % 2 === 0) {
+                        array_push($even_array, $number);
+                    } else {
+                        array_push($odd_array, $number);
+                    }
+                }
+                unset($number);
+                $max_number = end($even_array);
+                unset($even_array[count($even_array) - 1]);
+                $even_sum = array_sum($even_array);
+                $odd_sum = array_sum($odd_array);
+                $difference = abs($even_sum - $odd_sum);
+            } while ($difference > $difference_criteria);
+            $odd_array = array_reverse($odd_array);
+            $array_string = join(' ', $number_array);
+            $even_string = join(' ', $even_array);
+            $odd_string = join(' ', $odd_array);
+
+            echo " radiant array:</br> $even_string</br><<<-$max_number->>></br>$odd_string </br> ";
+            echo " left array sum: $even_sum; right array sum: $odd_sum; difference: $difference ";
+        }
 
     }
   

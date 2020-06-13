@@ -27,6 +27,7 @@
         }
        
         # task 1
+
         function taskOneFunc() {
             $this->taskHeader('Task 1', "");
 
@@ -38,6 +39,7 @@
         // Sugeneruokite masyvą iš 10 elementų, kurio elementai būtų masyvai iš 5 elementų su reikšmėmis nuo 5 iki 25.
 
         # task 2
+
         function taskTwoFunc() {
             $this->taskHeader('Task 2', "");
 
@@ -55,6 +57,7 @@
 
 
         # task 3
+
         function taskThreeFunc() {
             $this->taskHeader('Task 3', "");
 
@@ -66,6 +69,7 @@
         // Sukurkite masyvą iš 10 elementų. Kiekvienas masyvo elementas turi būti masyvas su atsitiktiniu kiekiu nuo 2 iki 20 elementų. Elementų reikšmės atsitiktinai parinktos raidės iš intervalo A-Z. Išrūšiuokite antro lygio masyvus pagal abėcėlę (t.y. tuos kur su raidėm).
 
         # task 4
+
         function taskFourFunc() {
             $this->taskHeader('Task 4', "");
 
@@ -77,6 +81,7 @@
         // Išrūšiuokite trečio uždavinio pirmo lygio masyvą taip, kad elementai kurių masyvai trumpiausi eitų pradžioje.
 
         # task 5
+
         function taskFiveFunc() {
             $this->taskHeader('Task 5', "");
 
@@ -88,6 +93,7 @@
         // Sukurkite masyvą iš 30 elementų. Kiekvienas masyvo elementas yra masyvas [user_id => xxx, place_in_row => xxx] user_id atsitiktinis unikalus skaičius nuo 1 iki 1000000, place_in_row atsitiktinis skaičius nuo 0 iki 100. 
 
         # task 6
+
         function taskSixFunc() {
             $this->taskHeader('Task 6', "");
 
@@ -147,6 +153,7 @@
         // Sukurkite masyvą iš 10 elementų. Jo reikšmės masyvai iš 10 elementų. Antro lygio masyvų reikšmės masyvai su dviem elementais value ir color. Reikšmė value vienas iš atsitiktinai parinktų simbolių: #%+*@%, o reikšmė color atsitiktinai sugeneruota spalva formatu: #XXXXXX. Pasinaudoję masyvų atspausdinkite “kvadratą” kurį sudarytų masyvo reikšmės nuspalvintos spalva color.
 
         # task 11
+        
         function taskSpecialFunc() {
             $this->taskHeader('Task 11', "");
 

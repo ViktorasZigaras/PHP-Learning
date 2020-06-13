@@ -27,6 +27,7 @@
         }
        
         # task 1
+
         function taskOneFunc() {
             $this->taskHeader('Task 1', "");
 
@@ -36,6 +37,7 @@
         } 
 
         # task 2
+
         function taskTwoFunc() {
             $this->taskHeader('Task 2', "");
 
@@ -45,6 +47,7 @@
         }
 
         # task 3
+
         function taskThreeFunc() {
             $this->taskHeader('Task 3', "");
 
@@ -54,6 +57,7 @@
         }
 
         # task 4
+
         function taskFourFunc() {
             $this->taskHeader('Task 4', "");
 
@@ -63,6 +67,7 @@
         }
 
         # task 5
+
         function taskFiveFunc() {
             $this->taskHeader('Task 5', "");
 
@@ -72,6 +77,7 @@
         }
 
         # task 6
+
         function taskSixFunc() {
             $this->taskHeader('Task 6', "");
 
@@ -121,6 +127,7 @@
         }
 
         # task 11
+        
         function taskSpecialFunc() {
             $this->taskHeader('Task 11', "");
 

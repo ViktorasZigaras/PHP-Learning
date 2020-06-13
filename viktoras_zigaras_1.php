@@ -24,6 +24,7 @@
         }
        
         # task 1
+
         function taskOneFunc() {
             $this->taskHeader('Task 1', 'Create 4 vars: name, surname, birth year and a given year; calculate age and output full info');
 
@@ -37,6 +38,7 @@
         }
 
         # task 2
+
         function taskTwoFunc() {
             $this->taskHeader('Task 2', 'Generate two random numbers, choose bigger one and divide from smaller one, use two digits after comma format');
 
@@ -52,6 +54,7 @@
         }
 
         # task 3
+
         function taskThreeFunc() {
             $this->taskHeader('Task 3', 'Generate three random numbers - choose the middle value between them');
 
@@ -81,6 +84,7 @@
         }
 
         # task 4
+
         function taskFourFunc() {
             $this->taskHeader('Task 4', 'Generate three random numbers - try to make a triangle out of them');
 
@@ -98,6 +102,7 @@
         }
 
         # task 5
+
         function taskFiveFunc() {
             $this->taskHeader('Task 5', 'Generate four random numbers - list count of all value instances');
 
@@ -139,6 +144,7 @@
         }
 
         # task 6
+
         function taskSixFunc() {
             $this->taskHeader('Task 6', 'Generate a random number and create a header of that size');
 
@@ -147,6 +153,7 @@
         }
 
         # task 7
+
         function taskSevenFunc() {
             $this->taskHeader('Task 7', 'Generate three random numbers and color them based on value - negative (green), zero (red), positive (blue)');
 
@@ -175,6 +182,7 @@
         }
 
         # task 8
+
         function taskEightFunc() {
             $this->taskHeader('Task 8', 'Generate a random number of items bought and apply discounts at treshholds of 1K and 2K');
 
@@ -188,6 +196,7 @@
         }
 
         # task 9
+
         function taskNineFunc() {
             $this->taskHeader('Task 9', 'Generate three random numbers and calculate total average and average of values 10-90, format to integer');
 
@@ -225,6 +234,7 @@
         }
 
          # task 10
+
         function taskTenFunc() {
             $this->taskHeader('Task 10', 'Generate HH:MM:SS type of clock and 0-300 second increment, display initial value and the increment effect');
 
@@ -264,6 +274,7 @@
         }
 
         # task 11
+        
         function taskSpecialFunc() {
             $this->taskHeader('Task 11', 'Generate six large numbers and sort them');
 

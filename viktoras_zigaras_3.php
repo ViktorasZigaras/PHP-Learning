@@ -27,6 +27,7 @@
         }
        
         # task 1
+
         function taskOneFunc(
             int $number_count = 0, 
             int $line_count = 50
@@ -55,6 +56,7 @@
         } 
 
         # task 2
+
         function taskTwoFunc(
             int $number_count = 0, 
             int $min = 0, 
@@ -83,6 +85,7 @@
         }
 
         # task 3
+
         function taskThreeFunc(
             int $min = 0, 
             int $max = 0, 
@@ -96,7 +99,7 @@
             }
             $html = '<div style="width:100%; word-break:break-all">';
             foreach($numbers as &$number) {
-                $html .= $number . ', ';
+                $html .= "$number, ";
             }
             unset($number);
             $html = substr($html, 0, strlen($html) - 2) . '</div>';
@@ -105,6 +108,7 @@
         }
 
         # task 4
+
         function taskFourFunc(
             int $count = 0
         ) {
@@ -127,6 +131,7 @@
         }
 
         # task 5
+
         function taskFiveFunc(
             int $count = 0
         ) {
@@ -152,6 +157,7 @@
         }
 
         # task 6
+
         function taskSixFunc() {
             $this->taskHeader('Task 6', 'Throw coin (0-H/1-S) until - 1) head is rolled, 2) head is rolled three times total, 3) head is rolled three times in a row');
 
