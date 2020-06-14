@@ -5,16 +5,17 @@
 
         function __construct() {
             echo "  </br> Viktoras Zigaras - Session 1 - Part 5  </br></br> ";
-            $array_of_arrays = $this->taskOneFunc(10, 5, 5, 25);
-            $this->taskTwoFunc($array_of_arrays, 10, 2, 5, 25);
-            $this->taskThreeFunc();
-            $this->taskFourFunc();
-            $this->taskFiveFunc();
-            $this->taskSixFunc();
-            $this->taskSevenFunc();
-            $this->taskEightFunc();
-            $this->taskNineFunc();
-            $this->taskTenFunc();
+            $arrays_of_numbers = $this->taskOneFunc(10, 5, 5, 25);
+            $this->taskTwoFunc($arrays_of_numbers, 10, 2, 5, 25);
+            $letters = range('A', 'Z');
+            $arrays_of_letters = $this->taskThreeFunc(10, 2, 20, $letters);
+            $this->taskFourFunc($arrays_of_letters);
+            $arrays_of_objects = $this->taskFiveFunc(30, 1, 1000000, 0, 100);
+            $this->taskSixFunc($arrays_of_objects);
+            $this->taskSevenFunc($arrays_of_objects,  $letters, 5, 15);
+            $arrays_of_numbers = $this->taskEightFunc(10, 0, 5, 0, 10, 0, 10);
+            $this->taskNineFunc($arrays_of_numbers);
+            $this->taskTenFunc(['#', '%', '+', '*', '@'], 10, 10);
             $this->taskSpecialFunc();
         }
 
@@ -36,27 +37,27 @@
         ) {
             $this->taskHeader('Task 1', "Generate an array of $count with $sub_count sub-dimension with ($min, $max) values each");
 
-            $array_of_arrays = [];
+            $arrays_of_numbers = [];
             for ($i = 0; $i < $count; $i++) {
                 $internal_array = [];
                 for ($j = 0; $j < $sub_count; $j++) {
                     array_push($internal_array, rand($min, $max));
                 }
-                echo 'index of ' . $i . ': '. join(' ', $internal_array) . '</br>';
-                array_push($array_of_arrays, $internal_array);
+                echo 'index of ' . $i . ': ' . join(' ', $internal_array) . '</br>';
+                array_push($arrays_of_numbers, $internal_array);
             }
 
-            return $array_of_arrays;
+            return $arrays_of_numbers;
         } 
 
         # task 2
 
         function taskTwoFunc(
-            array $array_of_arrays = [],
-            $compare_above = 0,
-            $add_count = 0,
-            $min = 0,
-            $max = 0
+            array $arrays_of_numbers = [],
+            int $compare_above = 0,
+            int $add_count = 0,
+            int $min = 0,
+            int $max = 0
         ) {
             $this->taskHeader('Task 2', "Using previous array do the following: </br>
                 1) calculate all numbers above $compare_above; </br>
@@ -70,7 +71,7 @@
             $max_number = 0;
             $sum_array = [];
             $sum_expanded_array = [];
-            foreach ($array_of_arrays as $index=>&$array) {
+            foreach ($arrays_of_numbers as $index=>&$array) {
                 foreach ($array as $sub_index=>&$number) {
                     # 1
                     if ($number > $compare_above) $compare_count++;
@@ -94,11 +95,11 @@
             }
             unset($sum);
             # 4
-            foreach ($array_of_arrays as $index=>&$array) {
+            foreach ($arrays_of_numbers as $index=>&$array) {
                 for ($i = 0; $i < $add_count; $i++) {
                     array_push($array, rand($min, $max));
                 }
-                echo '4) index of ' . $index . ': '. join(' ', $array) . '</br>';
+                echo '4) index of ' . $index . ': ' . join(' ', $array) . '</br>';
                 # 5
                 array_push($sum_expanded_array, array_sum($array));
             }
@@ -118,99 +119,211 @@
 
         # task 3
 
-        function taskThreeFunc() {
-            $this->taskHeader('Task 3', "");
+        function taskThreeFunc(
+            int $count = 0,
+            int $min = 0,
+            int $max = 0,
+            array $letters = []
+        ) {
+            $letters_values = '[ ' . join(' ', $letters) . ' ]';
+            $this->taskHeader('Task 3', "Generate a $count long array, every element of it has to be ($min-$max) long and have values ($letters_values); sort the arrays in ascending order");
 
-            //
+            $arrays_of_letters = [];
+            for ($i = 0; $i < $count; $i++) {
+                $internal_array = [];
+                for ($j = 0; $j < rand($min, $max); $j++) {
+                    array_push($internal_array, $letters[array_rand($letters)]);
+                }
+                sort($internal_array);
+                echo 'index of ' . $i . ': ' . join(' ', $internal_array) . '</br>';
+                array_push($arrays_of_letters, $internal_array);
+            }
 
-            echo "  </br> ";
+            return $arrays_of_letters;
         }
-
-        // Sukurkite masyvą iš 10 elementų. Kiekvienas masyvo elementas turi būti masyvas su atsitiktiniu kiekiu nuo 2 iki 20 elementų. Elementų reikšmės atsitiktinai parinktos raidės iš intervalo A-Z. Išrūšiuokite antro lygio masyvus pagal abėcėlę (t.y. tuos kur su raidėm).
 
         # task 4
 
-        function taskFourFunc() {
-            $this->taskHeader('Task 4', "");
+        function taskFourFunc(
+            array $arrays_of_letters = []
+        ) {
+            $this->taskHeader('Task 4', "Sort previous array by length of sub-arrays");
 
-            //
+            uasort($arrays_of_letters, function($a, $b) {
+                return -(count($b) <=> count($a));
+            });
 
-            echo "  </br> ";
+            foreach ($arrays_of_letters as $index=>&$array) {
+                echo 'index of ' . $index . ': ' . join(' ', $array) . '</br>';
+            }
+            unset($array);
         }
-
-        // Išrūšiuokite trečio uždavinio pirmo lygio masyvą taip, kad elementai kurių masyvai trumpiausi eitų pradžioje.
 
         # task 5
 
-        function taskFiveFunc() {
-            $this->taskHeader('Task 5', "");
+        function taskFiveFunc(
+            int $count = 0,
+            int $min_user = 0,
+            int $max_user = 0,
+            int $min_place = 0,
+            int $max_place = 0
+        ) {
+            $this->taskHeader('Task 5', "Generate an array of $count, each element is object of [user_id => ($min_user-$max_user), place_in_row => ($min_place-$max_place)]");
 
-            //
+            $arrays_of_objects = [];
+            for ($i = 0; $i < $count; $i++) {
+                array_push($arrays_of_objects, ['user_id' => rand($min_user, $max_user), 'place_in_row' => rand($min_place, $max_place)]);
+            }
 
-            echo "  </br> ";
-        }
+            foreach ($arrays_of_objects as $index=>&$array) {
+                echo 'index of ' . $index . ': ' . $array['user_id'] . ' (' . $array['place_in_row'] . ')</br>';
+            }
+            unset($array);
 
-        // Sukurkite masyvą iš 30 elementų. Kiekvienas masyvo elementas yra masyvas [user_id => xxx, place_in_row => xxx] user_id atsitiktinis unikalus skaičius nuo 1 iki 1000000, place_in_row atsitiktinis skaičius nuo 0 iki 100. 
+            return $arrays_of_objects;
+        } 
 
         # task 6
 
-        function taskSixFunc() {
-            $this->taskHeader('Task 6', "");
+        function taskSixFunc(
+            array $arrays_of_objects = []
+        ) {
+            $this->taskHeader('Task 6', "Sort previous array by user (ascending) and then place id's (descending)");
 
-            //
+            uasort($arrays_of_objects, function($a, $b) {
+                return -($b['user_id'] <=> $a['user_id']);
+            });
 
-            echo "  </br> ";
+            foreach ($arrays_of_objects as $index=>&$array) {
+                echo 'index of ' . $index . ': ' . $array['user_id'] . ' (' . $array['place_in_row'] . ')</br>';
+            }
+            unset($array);
+
+            echo "</br> ======================= </br></br>";
+
+            uasort($arrays_of_objects, function($a, $b) {
+                return $b['place_in_row'] <=> $a['place_in_row'];
+            });
+
+            foreach ($arrays_of_objects as $index=>&$array) {
+                echo 'index of ' . $index . ': ' . $array['user_id'] . ' (' . $array['place_in_row'] . ')</br>';
+            }
+            unset($array);
         }
-
-        // Išrūšiuokite 6 uždavinio masyvą pagal user_id didėjančia tvarka. Ir paskui išrūšiuokite pagal place_in_row mažėjančia tvarka.
 
         # task 7
 
-        function taskSevenFunc() {
-            $this->taskHeader('Task 7', "");
+        function taskSevenFunc(
+            array $arrays_of_objects = [],
+            array $letters = [],
+            int $min = 0,
+            int $max = 0
+        ) {
+            $this->taskHeader('Task 7', "Expand previous array with [name, surname], use random strings from letters $min-$max long");
 
-            //
+            foreach ($arrays_of_objects as $index=>&$array) {
+                $name_string = '';
+                for ($i = 0; $i < rand($min, $max); $i++) {
+                    $name_string .= $letters[array_rand($letters)];
+                }
+                $array['name'] = $name_string;
+                $surname_string = '';
+                for ($i = 0; $i < rand($min, $max); $i++) {
+                    $surname_string .= $letters[array_rand($letters)];
+                }
+                $array['surname'] = $surname_string;
+            }
+            unset($array);
 
-            echo "  </br> ";
+            foreach ($arrays_of_objects as $index=>&$array) {
+                echo 'index of ' . $index . ': ' . $array['name'] . ' ' . $array['surname'] . ' -> ' . $array['user_id'] . ' (' . $array['place_in_row'] . ')</br>';
+            }
+            unset($array);
         }
-
-        // Prie 6 uždavinio masyvo antro lygio masyvų pridėkite dar du elementus: name ir surname. Elementus užpildykite stringais iš atsitiktinai sugeneruotų lotyniškų raidžių, kurių ilgiai nuo 5 iki 15.
 
         # task 8
 
-        function taskEightFunc() {
-            $this->taskHeader('Task 8', "");
+        function taskEightFunc(
+            int $count = 0,
+            int $min_length = 0,
+            int $max_length = 0,
+            int $min_main = 0,
+            int $max_main = 0,
+            int $min_extra = 0,
+            int $max_extra = 0
+        ) {
+            $this->taskHeader('Task 8', "Generate array of $count, each element is a sub-array of ($min_length-$max_length) with values ($min_main-$max_main) and empty arrays have values ($min_extra-$max_extra)");
 
-            //
+            $arrays_of_numbers = [];
+            for ($i = 0; $i < $count; $i++) {
+                $internal_array = [];
+                for ($j = 0; $j < rand($min_length, $max_length); $j++) {
+                    array_push($internal_array, rand($min_main, $max_main));
+                }
+                if (count($internal_array) === 0) array_push($internal_array, rand($min_extra, $max_extra));
+                echo 'index of ' . $i . ': ' . join(' ', $internal_array) . '</br>';
+                array_push($arrays_of_numbers, $internal_array);
+            }
 
-            echo "  </br> ";
+            return $arrays_of_numbers;
         }
-
-        // Sukurkite masyvą iš 10 elementų. Masyvo reikšmes užpildykite pagal taisyklę: generuokite skaičių nuo 0 iki 5. Ir sukurkite tokio ilgio masyvą. Jeigu reikšmė yra 0 masyvo nekurkite. Antro lygio masyvo reikšmes užpildykite atsitiktiniais skaičiais nuo 0 iki 10. Ten kur masyvo nekūrėte reikšmę nuo 0 iki 10 įrašykite tiesiogiai.
 
         # task 9
 
-        function taskNineFunc() {
-            $this->taskHeader('Task 9', "");
+        function taskNineFunc(
+            array $arrays_of_numbers = []
+        ) {
+            $this->taskHeader('Task 9', "Calculate total sum of entire previous array and its sub-array sums, sort individual sums in ascending order");
 
-            //
+            $sum_array = [];
+            foreach ($arrays_of_numbers as &$array) {
+                array_push($sum_array, array_sum($array));
+            }
+            unset($array);
+            uasort($sum_array, function($a, $b) {
+                return -($b <=> $a);
+            });
+            foreach ($sum_array as $index=>&$sum) {
+                echo "sum of index $index: $sum </br>";
+            }
+            unset($sum);
+            $total_sum = array_sum($sum_array);
 
-            echo "  </br> ";
+            echo " total sum: $total_sum </br> ";
         }
-
-        // Sukurkite Paskaičiuokite 8 uždavinio masyvo visų reikšmių sumą ir išrūšiuokite masyvą taip, kad pirmiausiai eitų mažiausios masyvo reikšmės arba jeigu reikšmė yra masyvas, to masyvo reikšmių sumos.
 
         # task 10
 
-        function taskTenFunc() {
-            $this->taskHeader('Task 10', "");
+        function taskTenFunc(
+            array $symbols = [],
+            int $x_count = 0,
+            int $y_count = 0
+        ) {
+            $this->taskHeader('Task 10', "Create rectangle of $x_count x $y_count, each element has value  and color");
 
-            //
+            # generate
+            $symbol_array = [];
+            for ($i = 0; $i < $x_count; $i++) {
+                $internal_array = [];
+                for ($j = 0; $j < $y_count; $j++) {
+                    array_push($internal_array, [ 'value' => $symbols[array_rand($symbols)], 'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)) ]);
+                }
+                array_push($symbol_array, $internal_array);
+            }
 
-            echo "  </br> ";
+            # view
+            $html = '';
+            foreach ($symbol_array as &$array) {
+                $html .= '<div>';
+                foreach ($array as &$symbol) {
+                    $html .= '<span style="color:' . $symbol['color'] . ';width:15px;display:inline-block">' . $symbol['value'] . '</span>';
+                }
+                $html .= '</div>';
+            }
+            unset($array, $symbol);
+
+            echo "$html";
         }
-
-        // Sukurkite masyvą iš 10 elementų. Jo reikšmės masyvai iš 10 elementų. Antro lygio masyvų reikšmės masyvai su dviem elementais value ir color. Reikšmė value vienas iš atsitiktinai parinktų simbolių: #%+*@%, o reikšmė color atsitiktinai sugeneruota spalva formatu: #XXXXXX. Pasinaudoję masyvų atspausdinkite “kvadratą” kurį sudarytų masyvo reikšmės nuspalvintos spalva color.
 
         # task 11
         
