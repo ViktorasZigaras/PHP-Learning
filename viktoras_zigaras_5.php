@@ -5,8 +5,8 @@
 
         function __construct() {
             echo "  </br> Viktoras Zigaras - Session 1 - Part 5  </br></br> ";
-            $this->taskOneFunc();
-            $this->taskTwoFunc();
+            $array_of_arrays = $this->taskOneFunc(10, 5, 5, 25);
+            $this->taskTwoFunc($array_of_arrays, 10, 2, 5, 25);
             $this->taskThreeFunc();
             $this->taskFourFunc();
             $this->taskFiveFunc();
@@ -28,33 +28,93 @@
        
         # task 1
 
-        function taskOneFunc() {
-            $this->taskHeader('Task 1', "");
+        function taskOneFunc(
+            int $count = 0,
+            int $sub_count = 0,
+            $min = 0,
+            $max = 0
+        ) {
+            $this->taskHeader('Task 1', "Generate an array of $count with $sub_count sub-dimension with ($min, $max) values each");
 
-            //
+            $array_of_arrays = [];
+            for ($i = 0; $i < $count; $i++) {
+                $internal_array = [];
+                for ($j = 0; $j < $sub_count; $j++) {
+                    array_push($internal_array, rand($min, $max));
+                }
+                echo 'index of ' . $i . ': '. join(' ', $internal_array) . '</br>';
+                array_push($array_of_arrays, $internal_array);
+            }
 
-            echo "  </br> ";
+            return $array_of_arrays;
         } 
-
-        // Sugeneruokite masyvą iš 10 elementų, kurio elementai būtų masyvai iš 5 elementų su reikšmėmis nuo 5 iki 25.
 
         # task 2
 
-        function taskTwoFunc() {
-            $this->taskHeader('Task 2', "");
+        function taskTwoFunc(
+            array $array_of_arrays = [],
+            $compare_above = 0,
+            $add_count = 0,
+            $min = 0,
+            $max = 0
+        ) {
+            $this->taskHeader('Task 2', "Using previous array do the following: </br>
+                1) calculate all numbers above $compare_above; </br>
+                2) find highest value; </br>
+                3) sum all same indexes of sub-arrays; </br>
+                4) add every sub-array by $add_count; </br>
+                5) sum expanded arrays and make a new array from them; </br>
+            ");
 
-            //
+            $compare_count = 0;
+            $max_number = 0;
+            $sum_array = [];
+            $sum_expanded_array = [];
+            foreach ($array_of_arrays as $index=>&$array) {
+                foreach ($array as $sub_index=>&$number) {
+                    # 1
+                    if ($number > $compare_above) $compare_count++;
+                    # 3
+                    if (isset($sum_array[$sub_index])) {
+                        $sum_array[$sub_index] += $number;
+                    } else {
+                        $sum_array[$sub_index] = $number;
+                    }
+                }
+                # 2
+                $max_local_number = max($array);
+                echo " 2) largest local number at $index: $max_local_number </br> ";
+                $max_number = max($max_local_number, $max_number);
+            }
+            unset($array, $number);
+            # 3
+            $sum_string = '';
+            foreach ($sum_array as $index=>&$sum) {
+                $sum_string .= "[$index]->($sum) ";
+            }
+            unset($sum);
+            # 4
+            foreach ($array_of_arrays as $index=>&$array) {
+                for ($i = 0; $i < $add_count; $i++) {
+                    array_push($array, rand($min, $max));
+                }
+                echo '4) index of ' . $index . ': '. join(' ', $array) . '</br>';
+                # 5
+                array_push($sum_expanded_array, array_sum($array));
+            }
+            unset($array, $number);
+            # 5
+            $sum_expanded_string = '';
+            foreach ($sum_expanded_array as $index=>&$sum) {
+                $sum_expanded_string .= "[$index]->($sum) ";
+            }
+            unset($sum);
 
-            echo "  </br> ";
+            echo " 1) numbers above $compare_above: $compare_count </br> ";
+            echo " 2) largest total number: $max_number </br> ";
+            echo " 3) sum of all same indexes: $sum_string </br> ";
+            echo " 5) sum of all expanded arrays: $sum_expanded_string </br> ";
         }
-
-        // Naudodamiesi 1 uždavinio masyvu:
-        //     Suskaičiuokite kiek masyve yra elementų didesnių už 10;
-        //     Raskite didžiausio elemento reikšmę;
-        //     Suskaičiuokite kiekvieno antro lygio masyvų su vienodais indeksais sumas (t.y. suma reikšmių turinčių indeksą 0, 1 ir t.t.)
-        //     Visus masyvus “pailginkite” iki 7 elementų
-        //     Suskaičiuokite kiekvieno iš antro lygio masyvų elementų sumą atskirai ir sumas panaudokite kaip reikšmes sukuriant naują masyvą. T.y. pirma naujo masyvo reikšmė turi būti lygi mažesnio masyvo, turinčio indeksą 0 dideliame masyve, visų elementų sumai 
-
 
         # task 3
 
