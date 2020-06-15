@@ -150,7 +150,7 @@
             $this->taskHeader('Task 4', "Sort previous array by length of sub-arrays");
 
             uasort($arrays_of_letters, function($a, $b) {
-                return -(count($b) <=> count($a));
+                return count($a) <=> count($b);
             });
 
             foreach ($arrays_of_letters as $index=>&$array) {
@@ -191,7 +191,7 @@
             $this->taskHeader('Task 6', "Sort previous array by user (ascending) and then place id's (descending)");
 
             uasort($arrays_of_objects, function($a, $b) {
-                return -($b['user_id'] <=> $a['user_id']);
+                return $a['user_id'] <=> $b['user_id'];
             });
 
             foreach ($arrays_of_objects as $index=>&$array) {
@@ -281,7 +281,7 @@
             }
             unset($array);
             uasort($sum_array, function($a, $b) {
-                return -($b <=> $a);
+                return $a <=> $b;
             });
             foreach ($sum_array as $index=>&$sum) {
                 echo "sum of index $index: $sum </br>";
@@ -328,40 +328,60 @@
         # task 11
         
         function taskSpecialFunc() {
-            $this->taskHeader('Task 11', "");
+            $this->taskHeader('Task 11', "Find out exact number of occurences of given values from given code using only mathematics");
 
-            //
+            # provided code, a lot of it can be parametrised
+            do {
+                $a = rand(0, 1000);
+                $b = rand(0, 1000);
+            } while ($a == $b);
+            $long = rand(10,30);
+            $count1 = $count2 = 0;
+            echo "<h3>Values $a and $b</h3>";
+            $array = [];
+            for ($i=0; $i<$long; $i++) {
+                $array[] = array_rand(array_flip([$a, $b]));
+            }
+            echo "<h4>Array:</h4><pre>";
+            print_r($array);
+            echo "</pre></br>";
 
-            echo "  </br> ";
+            # restricions: no comparison, no regex and string functions; allowed functions: https://www.php.net/manual/en/ref.math.php - like floor and ceil.
+
+            # cheaty way would be iterating an array and counting which also doubles as confirming the result below:
+            foreach ($array as &$number) {
+                if ($number === $a) $count1++;
+                if ($number === $b) $count2++;
+            }
+            unset($number);
+            echo "<h3>Number $a repeats: $count1, number $b repeats: $count2</h3>";
+
+            # expected way is to use only mathematics but for that I need to know sum and length of array
+            $sum = array_sum($array);
+            $count = count($array);
+            $average = $sum / $count ;
+            $a_difference = abs($a - $average);
+            $b_difference = abs($b - $average);
+            # an exception to no ifs rule to deal with division from zero
+            if ($b_difference === 0) {
+                $count1 = 0;
+                $count2 = $count;
+            }
+            else {
+                $ratio = $a_difference / $b_difference;
+
+                // a x n1 + b x n2 = sum
+                // a x n1 + b x ratio x n1 = sum
+
+                // (1 + ratio) x n1 = count
+                // n1 = count / (1 + ratio)
+
+                $count1 = $count / (1 + $ratio);
+                $count2 = $count1 * $ratio;
+            }
+            
+            echo "<h3>Number $a repeats: $count1, number $b repeats: $count2</h3>";
         }
-
-        // Duotas kodas, generuojantis masyvą:
-        // do {
-        //     $a = rand(0, 1000);
-        //     $b = rand(0, 1000);
-        // } while ($a == $b);
-        // $long = rand(10,30);
-        // $sk1 = $sk2 = 0;
-        // echo '<h3>Skaičiai '.$a.' ir '.$b.'</h3>';
-        // $c = [];
-        // for ($i=0; $i<$long; $i++) {
-        //     $c[] = array_rand(array_flip([$a, $b]));
-        // }
-        // echo '<h4>Masyvas:</h4>';
-        // echo '<pre>';
-        // print_r($c);
-        // echo '</pre>';
-        // Reikia apskaičiuoti kiek buvo $sk1 ir $sk2 naudojantis matematika.
-        // NEGALIMA! naudoti jokių palyginimo operatorių (if-else, swich, ()?:)
-        // NEGALIMA! naudoti jokių regex ir string funkcijų.
-        // GALIMA naudotis tik aritmetiniais veiksmais ir matematinėmis funkcijomis iš skyrelio: https://www.php.net/manual/en/ref.math.php
-
-        // Jeigu reikia, kodo patogumui galima panaudoti įvairias funkcijas, bet sprendimo pagrindas turi būti matematinis.
-
-        // Atsakymą reikia pateikti formatu:
-        // echo '<h3>Skaičius 789 yra pakartotas '.$sk1.' kartų, o skaičius 123 - '.$sk2.' kartų.</h3>';
-
-        // Kur rudi skaičiai yra pakeisti skaičiais $a ir $b generuojamais kodo.
 
     }
   
