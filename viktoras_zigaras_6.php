@@ -189,7 +189,7 @@
         ) {
             $this->id++;
             $level++;
-            $this->html .= '<div id="' . $this->id . '" style="background-color:rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ')">';
+            $this->html .= '<div id="' . $this->id . '" style="background-color:rgb(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ');margin-left:' . ($level * 20) . 'px;display: table">';
             $this->html .= "($this->id)&nbsp;";
             foreach ($array as &$node) {
                 if (is_array($node)) {
@@ -233,16 +233,14 @@
                 array_push($array, $this->generateArray($count, $min_internal, $max_internal, $min_percent, $max_percent, $min_value, $max_value));
             }
 
-            $this->number_count = 0;
-            $this->sum = 0;
-            $this->level = 0;
-            $this->id = 0;
+            $this->number_count = $this->sum = $this->level = $this->id = 0;
             $this->html = '';
             $this->traverseArray($array, 0);
 
             echo " total count is: $this->number_count </br>";
             echo " total sum is: $this->sum </br>";
             echo " total level is: $this->level </br>";
+            echo " total id count is: $this->id </br>";
             echo " $this->html </br>";
             print('<pre>' . print_r($array, true) . '</pre>');
         }
