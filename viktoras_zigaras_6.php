@@ -136,6 +136,28 @@
             //
             ###########
             echo "  </br> ";
+
+            $primaries = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31];
+            print('<pre>' . print_r($primaries, true) . '</pre>');
+            $array = [];
+            for ($i = 0; $i < 3; $i++) {
+                $rand = rand(1, 33);
+                array_push($array, $rand);
+            }
+            do {
+                $input = false;
+                for ($i = count($array) - 3; $i < count($array); $i++) {
+                    foreach ($primaries as &$primary) {
+                        if ($array[$i] === $primary) {
+                            $input = true;
+                            array_push($array, rand(1,33));
+                        }
+                    }
+                }
+                unset($number, $primary);
+            } while ($input);
+            print('<pre>' . print_r($array, true) . '</pre>');
+
         }
 
         // Sugeneruokite masyvą iš trijų elementų, kurie yra atsitiktiniai skaičiai nuo 1 iki 33. Jeigu tarp trijų paskutinių elementų yra nors vienas ne pirminis skaičius, prie masyvo pridėkite dar vieną elementą- atsitiktinį skaičių nuo 1 iki 33. Vėl patikrinkite pradinę sąlygą ir jeigu reikia pridėkite dar vieną elementą. Kartokite, kol sąlyga nereikalaus pridėti elemento. 

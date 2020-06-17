@@ -1,5 +1,9 @@
 <?php
 
+# launch url: http://localhost/PHP-Learning/s7/t4/blue.php
+
+// create two pages, on link click redirect to the other
+
 print('<pre>' . print_r($_GET, true) . '</pre>');
 
 if (!empty($_GET) && isset($_GET['redirect'])) {
