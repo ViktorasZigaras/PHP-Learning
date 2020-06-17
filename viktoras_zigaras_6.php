@@ -160,6 +160,14 @@
 
         }
 
+        function checkPrime(int $number){ 
+            if ($number === 1) return false; 
+            for ($i = 2; $i <= sqrt($number); $i++){ 
+                if ($number % $i === 0) return false; 
+            } 
+            return true;
+        }
+
         // Sugeneruokite masyvą iš trijų elementų, kurie yra atsitiktiniai skaičiai nuo 1 iki 33. Jeigu tarp trijų paskutinių elementų yra nors vienas ne pirminis skaičius, prie masyvo pridėkite dar vieną elementą- atsitiktinį skaičių nuo 1 iki 33. Vėl patikrinkite pradinę sąlygą ir jeigu reikia pridėkite dar vieną elementą. Kartokite, kol sąlyga nereikalaus pridėti elemento. 
 
         # task 10
