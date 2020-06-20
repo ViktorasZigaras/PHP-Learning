@@ -1,12 +1,10 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t4/red.php
+# launch url: http://localhost/PHP-Learning/s7/t5/red.php
 
 // create two pages, on link click redirect to the other
 
-print('<pre>' . print_r($_GET, true) . '</pre>');
-
-if (!empty($_GET) && isset($_GET['redirect'])) {
+if (isset($_GET['redirect'])) {
     header("Location: http://localhost/PHP-Learning/s7/t5/blue.php");
     die();
 }

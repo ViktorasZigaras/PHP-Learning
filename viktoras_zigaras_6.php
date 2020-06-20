@@ -60,7 +60,26 @@
             $temp = md5(time());
             #####
             echo " $temp </br> ";
+
+
+            $array1 = [1, 2, 3, 4, 5];
+            $array2 = [2, 4, 5];
+            $newArray = [];
+            foreach ($array1 as $value1) {
+                $add = true;
+                foreach ($array2 as $value2) {
+                    if ($value1 === $value2){
+                        $add = false;
+                    }
+                }
+                if ($add) {
+                    $newArray[] = $value1;
+                }
+            }
+            print('<pre>' . print_r($newArray, true) . '</pre>');
         }
+
+        
 
         # task 4
 

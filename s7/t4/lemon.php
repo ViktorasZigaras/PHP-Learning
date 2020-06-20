@@ -8,5 +8,4 @@
 header("Location: http://localhost/PHP-Learning/s7/t4/orange.php");
 die();
 
-echo "<div style='background-color: lemon; width: 500px; height: 500px'>";
-echo "</div>";
+echo "<div style='background-color: lemon; width: 500px; height: 500px'></div>";

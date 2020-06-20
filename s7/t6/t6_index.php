@@ -5,25 +5,28 @@
 // create a site with two buttons, one button is in GET and another in POST form
 // depending on what was clicked color it green - GET and yellow - POST
 
-### Pakartokite 6 uždavinį. Papildykite jį kodu, kuris naršyklę po POST metodo peradresuotų tuo pačiu adresu (t.y. į patį save) jau GET metodu.
+// additionally use POST form to reload itself and color pink
 
-$color = 'pink';
-if (!empty($_GET) && isset($_GET['type'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_GET['type'])) $color = 'pink';
+    else $color = 'yellow';
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $color = 'green';
-}
-if (!empty($_POST) && isset($_POST['type'])) {
-    $color = 'yellow';
 }
 
 echo "<div style='background-color: $color; width: 500px; height: 500px'>";
 
 ?>
 
-    <form action="?type=get" method="get">
+    <form action="" method="get">
         <button type="submit">GET</button>
     </form>
     <br>
-    <form action="?type=post" method="post">
+    <form action="" method="post">
         <button type="submit">POST</button>
+    </form>
+    <br>
+    <form action="?type=post" method="post">
+        <button type="submit">POST + PARAM</button>
     </form>
 </div>
