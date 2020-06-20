@@ -1,8 +1,25 @@
 // print("<pre>".print_r($array, true) ."</pre>");
 
+/*
+$array1 = [1, 2, 3, 4, 5];
+$array2 = [2, 4, 5];
+$newArray = [];
+foreach ($array1 as $value1) {
+    $add = true;
+    foreach ($array2 as $value2) {
+        if ($value1 === $value2){
+            $add = false;
+        }
+    }
+    if ($add) {
+        $newArray[] = $value1;
+    }
+}
+print('<pre>' . print_r($newArray, true) . '</pre>');
+*/
+
 # PHP only
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +48,10 @@ label {
         </form>
     </div>
 </body>
-</html><?phpif (isset($_POST['button']) && !isset($_POST['briedis'])) {
+</html>
+
+<?php
+if (isset($_POST['button']) && !isset($_POST['briedis'])) {
     $result = 'Tai pasirink kažką';
 }
 elseif (isset($_POST['briedis'])) {
@@ -77,7 +97,8 @@ label {
 
 # JS + PHP_ROUND_HALF_DOWN
 
-<?phpif ($_SERVER['REQUEST_METHOD'] == 'POST') {// sleep(5);    $rawData = file_get_contents("php://input");
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {// sleep(5);    $rawData = file_get_contents("php://input");
     $rawData = json_decode($rawData, 1);    if ($rawData['answer'] == 111) {
         $response = 'Pasirink kazka';
     }    else {

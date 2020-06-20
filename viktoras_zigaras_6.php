@@ -8,9 +8,9 @@
             $this->taskOneFunc('first text');
             $this->taskTwoFunc('second text', 5);
             $this->taskThreeFunc();
-            $this->taskFourFunc();
-            $this->taskFiveFunc();
-            $this->taskSixFunc();
+            $this->taskFourFunc(444);
+            $this->taskFiveFunc(100, 33, 77);
+            $this->taskSixFunc(100, 333, 777);
             $this->taskSevenFunc(10, 20, 0, 10, 10, 30, 0);
             $this->taskEightFunc();
             $this->taskNineFunc();
@@ -57,65 +57,110 @@
         function taskThreeFunc() {
             $this->taskHeader('Task 3', "Generate a random string, split all numbers in it into groups and put them all to separate H1 tags");
 
-            $temp = md5(time());
-            #####
-            echo " $temp </br> ";
-
-
-            $array1 = [1, 2, 3, 4, 5];
-            $array2 = [2, 4, 5];
-            $newArray = [];
-            foreach ($array1 as $value1) {
-                $add = true;
-                foreach ($array2 as $value2) {
-                    if ($value1 === $value2){
-                        $add = false;
-                    }
-                }
-                if ($add) {
-                    $newArray[] = $value1;
-                }
+            $string = md5(time());
+            $numbers = preg_replace('/[^0-9]/', '', preg_split('/(?<=[0-9])(?=[a-z]+)/i', $string));  
+            $html = '';
+            foreach ($numbers as &$number) {
+                $html .= "<h1> $number </h1> </br>";
             }
-            print('<pre>' . print_r($newArray, true) . '</pre>');
+            unset($number);  
+
+            echo " $string:</br> $html </br> ";                                                    
         }
-
         
-
         # task 4
 
-        function taskFourFunc() {
-            $this->taskHeader('Task 4', "Create a function that determines ????");
+        function taskFourFunc(
+            int $number = 0
+        ) {
+            $this->taskHeader('Task 4', "Create a function that determines from how many integers a number divides fully");
 
-            //
-            ############
-            echo "  </br> ";
+            if (!is_int($number) || abs($number) < 1) {
+                echo "Value is not integer or less than 1!";
+                return;
+            }
+            $number = abs($number);
+            $values = '';
+            // don't use 1 or self
+            for ($i = 2; $i < $number; $i++) { 
+                if ($number % $i === 0) $values .= " $i ";
+            }
+
+            echo " 1 $values ($number) </br> ";
         }
-
-        // Parašykite funkciją, kuri skaičiuotų, iš kiek sveikų skaičių jos argumentas dalijasi be liekanos (išskyrus vienetą ir patį save) Argumentą užrašykite taip, kad būtų galima įvesti tik sveiką skaičių;
 
         # task 5
 
-        function taskFiveFunc() {
-            $this->taskHeader('Task 5', "");
+        function taskFiveFunc(
+            int $count = 0,
+            int $min = 0,
+            int $max = 0
+        ) {
+            $this->taskHeader('Task 5', "Generate an array of $count with values ($min-$max), sort it by amount of divisible numbers within values");
 
-            //
-            #########
-            echo "  </br> ";
+            $numbers = [];
+            for ($i = 0; $i < $count; $i++) { 
+                $number = rand($min, $max);
+                $count_dividers = 0;
+                for ($j = 2; $j < $number; $j++) { 
+                    if ($number % $j === 0) $count_dividers++;
+                }
+                array_push($numbers, ['value' => $number, 'count' => $count_dividers]);
+            }
+
+            uasort($numbers, function($a, $b) {
+                $result = $a['count'] <=> $b['count'];
+                if ($result === 0) {
+                    if ($a <=> $b) {
+                        return 1;
+                    } else return $result;
+                } else return $result;
+            });
+
+            $string = '';
+            foreach ($numbers as &$number) {
+                $string .= ' ' . $number['value'] . '-(' . $number['count'] . ')';
+            }
+            unset($number);  
+
+            echo " $string </br> ";
         }
-
-        // Sugeneruokite masyvą iš 100 elementų, kurio reikšmės atsitiktiniai skaičiai nuo 33 iki 77. Išrūšiuokite masyvą pagal daliklių be liekanos kiekį mažėjimo tvarka, panaudodami ketvirto uždavinio funkciją.
 
         # task 6
 
-        function taskSixFunc() {
-            $this->taskHeader('Task 6', "");
+        function checkPrime(int $number){ 
+            if ($number === 1) return false; 
+            for ($i = 2; $i <= sqrt($number); $i++){ 
+                if ($number % $i === 0) return false; 
+            } 
+            return true;
+        } 
 
-            //
-            ##########
-            echo "  </br> ";
+        function taskSixFunc(
+            int $count = 0,
+            int $min = 0,
+            int $max = 0
+        ) {
+            $this->taskHeader('Task 6', "Generate an array of $count with values ($min-$max), filter out all primary numbers (and sort)");
+
+            $numbers = [];
+            for ($i = 0; $i < $count; $i++) { 
+                array_push($numbers, rand($min, $max));
+            }
+            uasort($numbers, function($a, $b) {
+                return $a <=> $b;
+            });
+            $original = join(' ', $numbers);
+            echo " original array:</br> $original </br></br> ";
+
+            $filtered_numbers = [];
+            foreach ($numbers as &$number) {
+                if ($this->checkPrime($number)) array_push($filtered_numbers, $number);
+            }
+            unset($number); 
+            $filtered = join(' ', $filtered_numbers);
+            echo " filtered array:</br> $filtered </br> ";
         }
-
-        // Sugeneruokite masyvą iš 100 elementų, kurio reikšmės atsitiktiniai skaičiai nuo 333 iki 777. Naudodami 4 uždavinio funkciją iš masyvo ištrinkite pirminius skaičius.
 
         # task 7
 
@@ -177,14 +222,6 @@
             } while ($input);
             print('<pre>' . print_r($array, true) . '</pre>');
 
-        }
-
-        function checkPrime(int $number){ 
-            if ($number === 1) return false; 
-            for ($i = 2; $i <= sqrt($number); $i++){ 
-                if ($number % $i === 0) return false; 
-            } 
-            return true;
         }
 
         // Sugeneruokite masyvą iš trijų elementų, kurie yra atsitiktiniai skaičiai nuo 1 iki 33. Jeigu tarp trijų paskutinių elementų yra nors vienas ne pirminis skaičius, prie masyvo pridėkite dar vieną elementą- atsitiktinį skaičių nuo 1 iki 33. Vėl patikrinkite pradinę sąlygą ir jeigu reikia pridėkite dar vieną elementą. Kartokite, kol sąlyga nereikalaus pridėti elemento. 
