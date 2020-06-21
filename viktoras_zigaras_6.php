@@ -11,9 +11,9 @@
             $this->taskFourFunc(444);
             $this->taskFiveFunc(100, 33, 77);
             $this->taskSixFunc(100, 333, 777);
-            $this->taskSevenFunc(10, 20, 0, 10, 10, 30, 0);
-            $this->taskEightFunc();
-            $this->taskNineFunc();
+            $snake_array = $this->taskSevenFunc(2, 5, 0, 10, 3, 6, 0);
+            $this->taskEightFunc($snake_array);
+            $this->taskNineFunc(3, 3, 1, 33);
             $this->taskTenFunc();
             $this->taskSpecialFunc(5, 15, 1, 5, 70, 100, 0, 100);
         }
@@ -128,7 +128,9 @@
 
         # task 6
 
-        function checkPrime(int $number){ 
+        function checkPrime(
+            int $number = 0
+        ) { 
             if ($number === 1) return false; 
             for ($i = 2; $i <= sqrt($number); $i++){ 
                 if ($number % $i === 0) return false; 
@@ -164,6 +166,27 @@
 
         # task 7
 
+        function generateSnakeArray(
+            int $count_min = 0,
+            int $count_max = 0,
+            int $value_min = 0,
+            int $value_max = 0,
+            int $final_value = 0,
+            int $repeat_count = 0
+        ) {
+            $inner_array = [];
+            $count = rand($count_min, $count_max) - 1;
+            for ($i = 0; $i < $count; $i++) {
+                array_push($inner_array, rand($value_min, $value_max));
+            }
+            if ($repeat_count > 0) {
+                array_push($inner_array, $this->generateSnakeArray($count_min, $count_max, $value_min, $value_max, $final_value, $repeat_count - 1));
+            } else {
+                array_push($inner_array, $final_value);
+            }
+            return $inner_array;
+        }
+
         function taskSevenFunc(
             int $count_min = 0,
             int $count_max = 0,
@@ -175,56 +198,69 @@
         ) {
             $this->taskHeader('Task 7', "Generate array of ($count_min-$count_max) with values of ($value_min-$value_max), last element is using same formulae - repeat it for ($repeat_min-$repeat_max) times; final element is $final_value");
 
-            //
-            ##############
-            echo "  </br> ";
+            $snake_array = [];
+            $repeat_count = rand($repeat_min, $repeat_max);
+            array_push($snake_array, $this->generateSnakeArray($count_min, $count_max, $value_min, $value_max, $final_value, $repeat_count - 1));
+
+            print('<pre>' . print_r($snake_array, true) . '</pre>');
+            return $snake_array;
         }
 
         # task 8
 
-        function taskEightFunc() {
-            $this->taskHeader('Task 8', "");
-
-            //
-            ##############
-            echo "  </br> ";
+        function traverseSnakeArray(
+            array $array = [],
+            int $sum = 0
+        ) {
+            foreach ($array as &$node) {
+                if (is_array($node)) {
+                    $sum = $this->traverseSnakeArray($node, $sum);
+                } else {
+                    $sum += $node;
+                }
+            }
+            unset($node);
+            
+            return $sum;
         }
 
-        // Suskaičiuokite septinto uždavinio elementų, kurie nėra masyvai, sumą.
+        function taskEightFunc(
+            array $snake_array = []
+        ) {
+            $this->taskHeader('Task 8', "Sum all numbers from previous array");
+
+            $sum = $this->traverseSnakeArray($snake_array, 0);
+
+            echo " sum is: $sum </br> ";
+        }
 
         # task 9
 
-        function taskNineFunc() {
-            $this->taskHeader('Task 9', "");
+        function taskNineFunc(
+            int $count = 0,
+            int $count_last = 0,
+            int $min = 0,
+            int $max = 0
+        ) {
+            $this->taskHeader('Task 9', "Generate array of $count with values ($min-$max), check last $count_last values for primary numbers and if found, add another value to the array");
 
-            //
-            ###########
-            echo "  </br> ";
-
-            $primaries = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31];
-            print('<pre>' . print_r($primaries, true) . '</pre>');
             $array = [];
-            for ($i = 0; $i < 3; $i++) {
-                $rand = rand(1, 33);
-                array_push($array, $rand);
+            for ($i = 0; $i < $count; $i++) {
+                array_push($array, rand($min, $max));
             }
             do {
-                $input = false;
-                for ($i = count($array) - 3; $i < count($array); $i++) {
-                    foreach ($primaries as &$primary) {
-                        if ($array[$i] === $primary) {
-                            $input = true;
-                            array_push($array, rand(1,33));
-                        }
+                $add = false;
+                # it is assumed that indexes are integer in ascending order
+                for ($i = count($array) - $count_last; $i < count($array); $i++) {
+                    if ($this->checkPrime($array[$i])) {
+                        $add = true;
+                        array_push($array, rand($min, $max));
                     }
                 }
-                unset($number, $primary);
-            } while ($input);
+            } while ($add);
+
             print('<pre>' . print_r($array, true) . '</pre>');
-
         }
-
-        // Sugeneruokite masyvą iš trijų elementų, kurie yra atsitiktiniai skaičiai nuo 1 iki 33. Jeigu tarp trijų paskutinių elementų yra nors vienas ne pirminis skaičius, prie masyvo pridėkite dar vieną elementą- atsitiktinį skaičių nuo 1 iki 33. Vėl patikrinkite pradinę sąlygą ir jeigu reikia pridėkite dar vieną elementą. Kartokite, kol sąlyga nereikalaus pridėti elemento. 
 
         # task 10
 
