@@ -1,0 +1,17 @@
+use nice fonts,
+layout, style
+responsive??
+
+php API
+json DB
+JS frontend
+
+LOGIN
+
+test various scenarios
+
+object oriented??
+use statics?
+use magics?
+
+autoloader?

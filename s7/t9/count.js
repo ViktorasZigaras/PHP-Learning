@@ -5,14 +5,14 @@ button.addEventListener("click", () => {
     count.forEach((input) => {
         if (input.checked) checkedCount++;
     });    
-    document.querySelector('#count').innerHTML = 'Count are: ' + count.length;
-    document.querySelector('#selected').innerHTML = 'Selected are: ' + checkedCount;
-    // axios.post('./t9_index.php', {
-    //     count: count.length
-    // })
-    // .then(function(response) {            
-    //     document.querySelector('#count').innerHTML = 'Count is: ' + response.data.count;
-    //     console.log(response.data, response.data.count);
-    // })
-    // .catch(function(error) {console.log(error);});
+    
+    axios.post('./t9_index.php?redraw', {
+        // count: count.length
+    })
+    .then(function(response) {            
+        document.querySelector('body').innerHTML = response.data;
+        document.querySelector('#count').innerHTML = 'Count are: ' + count.length;
+        document.querySelector('#selected').innerHTML = 'Selected are: ' + checkedCount;
+    })
+    .catch(function(error) {console.log(error);});
 });
