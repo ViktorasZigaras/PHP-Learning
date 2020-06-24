@@ -19,11 +19,14 @@ if (!empty($_POST)) {
             die();
         }
     }
-
+    if (!isset($_SESSION['login']) || (isset($_SESSION['login']) && $_SESSION['login'] !== 1)) {
+        echo '<br> [ Login Failed ] <br><br>';
+    }
 }
 
 if (isset($_GET['logout'])) {
     session_destroy();
+    echo '<br> [ Logout Successful ] <br><br>';
 }
 
 if (isset($_SESSION['login']) && $_SESSION['login'] === 1 && !isset($_GET['logout'])) {
@@ -31,7 +34,7 @@ if (isset($_SESSION['login']) && $_SESSION['login'] === 1 && !isset($_GET['logou
     echo '<button type="submit">Logout</button>';
     echo '</form><br><br><br>';
 } else {
-    echo '<form action="" method="post">';
+    echo '<form action="?" method="post">';
     echo '<input type="text" name="user"> User Name<br>';
     echo '<input type="password" name="password"> User Password<br>';
     echo '<button type="submit">Login</button>';

@@ -22,13 +22,13 @@ if (!empty($_POST)) {
 
     file_put_contents(__DIR__ .'/data.json', json_encode($data));
 
+    echo '<br> [ Account Created ] <br><br>';
+
 }
 
 print('<pre>' . print_r($data, true) . '</pre>');
 
 echo "newlist <br>";
-
-### review risks
 
 ?>
 
