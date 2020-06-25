@@ -15,3 +15,10 @@ use statics?
 use magics?
 
 autoloader?
+
+
+!!! ignore composer vendor (libs)
+!!! separate bank into 2(4) versions
+?? rename composer to bank?
+
+composer dumpautoload
