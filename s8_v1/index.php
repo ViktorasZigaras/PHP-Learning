@@ -1,11 +1,8 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s8/index.php
+# launch url: http://localhost/PHP-Learning/s8_v1/index.php
 
-session_start();
-
-#### bootstrap, session, imports!!!
-#### json calls?
+require __DIR__ . '/bootstrap.php';
 
 echo "index <br>";
 
@@ -15,6 +12,7 @@ if (!empty($_POST)) {
         if ($user['user'] === $_POST['user'] &&
         $user['password'] === md5($_POST['password'])) {
             $_SESSION['login'] = 1;
+            $_SESSION['role'] = $user['role'];
             header('Location: ./list.php');
             die();
         }

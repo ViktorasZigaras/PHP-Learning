@@ -1,17 +1,20 @@
 <?php
 
-// require __DIR__ . '/index.php';
-session_start();
+require __DIR__ . '/bootstrap.php';
 
 if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
     header('Location: ./index.php');
     die();
 }
 
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ./list.php');
+    die();
+}
+
 if (!isset($_GET['id'])) {
     echo '<br> [ No Account ID ] <br><br>';
 } else {
-    $data = json_decode(file_get_contents(__DIR__ .'/data.json'), 1);
     $account_found = false;
     foreach ($data as &$account) {
 
@@ -19,14 +22,13 @@ if (!isset($_GET['id'])) {
         
         // echo $accountId . ' | ' . $_GET['id'] . '<br> ';
         if ($accountId === $_GET['id']) {
-            if (!empty($_POST) && isset($_POST['remove'])) {
-                if (is_numeric($_POST['remove'])) {
-                    if ($_POST['remove'] < 0) {
+            if (!empty($_POST) && isset($_POST['add'])) {
+                if (is_numeric($_POST['add'])) {
+                    if ($_POST['add'] < 0) {
                         echo '<br> [ Negative Amount Is Not Allowed ] <br><br>';
-                    } elseif (($account['value'] - $_POST['remove']) >= 0) {
-                        $account['value'] -= $_POST['remove'];
                     } else {
-                        echo '<br> [ Can Not Remove Given Amount ] <br><br>';
+                        $account['value'] += $_POST['add'];
+                        echo '<br> [ ' . $_POST['add'] . ' Has Been Added ] <br><br>';
                     }
                 } else {
                     echo '<br> [ No Amount Was Provided ] <br><br>';
@@ -40,8 +42,10 @@ if (!isset($_GET['id'])) {
                 $account['value'] . ' - ' .
                 $accountId . ' - ' . 
                 $account['personId'] . ' </span>';
-            echo '<input type="text" id="remove" name="remove" value="0">';
-            echo '<button type="submit">Remove</button>';
+            echo '<input type="text" id="add" name="add" value="0">';
+            if ($_SESSION['role'] === 'admin') {
+                echo '<button type="submit">Add</button>';
+            }
             echo '</form><br>';
             $account_found = true;
             break;
@@ -57,7 +61,7 @@ if (!isset($_GET['id'])) {
     }
 }
 
-echo "remove <br>";
+echo "add <br>";
 
 ?>
 

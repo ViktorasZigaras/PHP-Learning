@@ -1,14 +1,11 @@
 <?php
 
-// require __DIR__ . '/index.php';
-session_start();
+require __DIR__ . '/bootstrap.php';
 
 if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
     header('Location: ./index.php');
     die();
 }
-
-$data = json_decode(file_get_contents(__DIR__ .'/data.json'), 1);
 
 uasort($data, function($a, $b) {
     return $a['surname'] <=> $b['surname'];
@@ -23,9 +20,11 @@ function displayItem($item, $accountId) {
         $accountId . ' - ' . 
         $item['personId'] . ' </span>';
     echo '<input type="hidden" id="delete" name="delete" value="' . $accountId . '">';
-    echo '<button type="submit">Delete</button>';
-    echo ' <a href="./add.php?id=' . $accountId . '">Add</a> ';
-    echo ' <a href="./remove.php?id=' . $accountId . '">Remove</a> ';
+    if ($_SESSION['role'] === 'admin') {
+        echo '<button type="submit">Delete</button>';
+        echo ' <a href="./add.php?id=' . $accountId . '">Add</a> ';
+        echo ' <a href="./remove.php?id=' . $accountId . '">Remove</a> ';
+    }
     echo '</form><br>';
 }
 
