@@ -14,7 +14,7 @@
             $snake_array = $this->taskSevenFunc(2, 5, 0, 10, 3, 6, 0);
             $this->taskEightFunc($snake_array);
             $this->taskNineFunc(3, 3, 1, 33);
-            $this->taskTenFunc();
+            $this->taskTenFunc(10, 10, 1, 100, 70, 3);
             $this->taskSpecialFunc(5, 15, 1, 5, 70, 100, 0, 100);
         }
 
@@ -264,15 +264,63 @@
 
         # task 10
 
-        function taskTenFunc() {
-            $this->taskHeader('Task 10', "");
+        function taskTenFunc(
+            int $row_count = 0,
+            int $col_count = 0,
+            int $min = 0,
+            int $max = 0,
+            int $avg = 0,
+            int $add_value = 0
+        ) {
+            $this->taskHeader('Task 10', "Generate array of ($row_count x $col_count) with values ($min-$max), while average of primary numbers is below int $avg, add $add_value to lowest existing value");
 
-            //
-            ##########
-            echo "  </br> ";
+            $numbers = [];
+            for ($i = 0; $i < $row_count; $i++) {
+                $inner_numbers = [];
+                for ($j = 0; $j < $col_count; $j++) {
+                    array_push($inner_numbers, rand($min, $max));
+                }
+                array_push($numbers, $inner_numbers);
+            }
+
+            $iterations = 0;
+            do {
+                $iterations++;
+                $primary_sum = 0;
+                $primary_count = 0;
+                $min_value = 0;
+                $continue = false;
+                foreach ($numbers as &$array) {
+                    foreach ($array as &$number) {
+                        if ($min_value === 0 || $number < $min_value) {
+                            $min_value = $number;
+                        }
+                        if ($this->checkPrime($number)) {
+                            $primary_count++;
+                            $primary_sum += $number;
+                        }
+                    }
+                }
+                unset($array, $number);
+                $primary_avg = $primary_sum / $primary_count;
+                if ($primary_avg < $avg) {
+                    $continue = true;
+                    foreach ($numbers as &$array) {
+                        foreach ($array as &$number) {
+                            if ($number === $min_value) {
+                                $number += $add_value;
+                                break 2;
+                            }
+                        }
+                    }
+                    unset($array, $number);
+                }
+            } while($continue);
+            
+            echo " total average is: $primary_avg, increased $iterations times </br> ";
+
+            print('<pre>' . print_r($numbers, true) . '</pre>');
         }
-
-        // Sugeneruokite masyvą iš 10 elementų, kurie yra masyvai iš 10 elementų, kurie yra atsitiktiniai skaičiai nuo 1 iki 100. Jeigu tokio masyvo pirminių skaičių vidurkis mažesnis už 70, suraskite masyve mažiausią skaičių (nebūtinai pirminį) ir prie jo pridėkite 3. Vėl paskaičiuokite masyvo pirminių skaičių vidurkį ir jeigu mažesnis nei 70 viską kartokite.
 
         # task 11
 
