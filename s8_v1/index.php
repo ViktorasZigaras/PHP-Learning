@@ -4,7 +4,8 @@
 
 require __DIR__ . '/bootstrap.php';
 
-echo "index <br>";
+setBody();
+setHeader();
 
 if (!empty($_POST)) {
     $users = json_decode(file_get_contents(__DIR__ .'/users.json'), 1);
@@ -18,29 +19,22 @@ if (!empty($_POST)) {
         }
     }
     if (!isset($_SESSION['login']) || (isset($_SESSION['login']) && $_SESSION['login'] !== 1)) {
-        echo '<br> [ Login Failed ] <br><br>';
+        failureMessage('Login Failed');
     }
 }
 
 if (isset($_GET['logout'])) {
     session_destroy();
-    echo '<br> [ Logout Successful ] <br><br>';
+    successMessage('Logout Successful');
 }
 
-if (isset($_SESSION['login']) && $_SESSION['login'] === 1 && !isset($_GET['logout'])) {
-    echo '<form action="?logout" method="post">';
-    echo '<button type="submit">Logout</button>';
-    echo '</form><br><br><br>';
-} else {
-    echo '<form action="?" method="post">';
-    echo '<input type="text" name="user"> User Name<br>';
-    echo '<input type="password" name="password"> User Password<br>';
-    echo '<button type="submit">Login</button>';
-    echo '</form><br><br><br>';
-}
+echo '<div class="container">';
+echo '<form action="?" method="post">';
+echo '<input type="text" name="user"> User Name<br>';
+echo '<input type="password" name="password"> User Password<br>';
+echo '<button type="submit">Login</button>';
+echo '</form>';
+echo '</div>';
 
-?>
-
-<a href="./index.php">login</a><br>
-<a href="./list.php">list</a><br>
-<a href="./new.php">new</a><br>
+setFooter();
+finishBody();

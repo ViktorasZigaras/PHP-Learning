@@ -12,36 +12,32 @@ if ($_SESSION['role'] !== 'admin') {
     die();
 }
 
+setBody();
+setHeader();
+setMenu(true, false);
+
 if (!empty($_POST)) {
 
-    if (!isset($_POST['name'])) {
-        echo '<br> [ Name Is Not Provided ] <br><br>';
-    } elseif (!isset($_POST['surname'])) {
-        echo '<br> [ Surname Is Not Provided ] <br><br>';
-    } elseif (!isset($_POST['accountId'])) {
-        echo '<br> [ Account Is Not Provided ] <br><br>';
-    } elseif (!isset($_POST['personId'])) {
-        echo '<br> [ Personal ID Is Not Provided ] <br><br>';
-    } elseif (
+    if (!isset($_POST['name'])) failureMessage('Name Is Not Provided');
+    elseif (!isset($_POST['surname'])) failureMessage('Surname Is Not Provided');
+    elseif (!isset($_POST['accountId'])) failureMessage('Account Is Not Provided');
+    elseif (!isset($_POST['personId'])) failureMessage('Personal ID Is Not Provided');
+    elseif (
         $_POST['name'] === '' || 
         $_POST['surname'] === '' || 
         $_POST['accountId'] === '' || 
-        $_POST['personId'] === '') {
-        echo '<br> [ Some Fields Are Empty ] <br><br>';
-    } elseif (mb_strlen($_POST['name']) < 3) {
-        echo '<br> [ Name Has To Be 3 Characters Long ] <br><br>';
-    } elseif (mb_strlen($_POST['surname']) < 3) {
-        echo '<br> [ Surname Has To Be 3 Characters Long ] <br><br>';
-    } else {
+        $_POST['personId'] === '') failureMessage('Some Fields Are Empty');
+    elseif (mb_strlen($_POST['name']) < 3) failureMessage('Name Has To Be 3 Characters Long');
+    elseif (mb_strlen($_POST['surname']) < 3) failureMessage('Surname Has To Be 3 Characters Long');
+    else {
         $ids = [];
         foreach ($data as &$account) {
             $ids[] = $account['personId'];
         }
         $ids[] = $_POST['personId'];
         unset($account);
-
         if (count($ids) !== count(array_unique($ids))) {
-            echo '<br> [ Personal ID Is Not Unique ] <br><br>';
+            failureMessage('Personal ID Is Not Unique');
         } else {
             $data[] = [
                 'name' => $_POST['name'], 
@@ -50,17 +46,11 @@ if (!empty($_POST)) {
                 'personId' => $_POST['personId'],
                 'value' => 0
             ];
-        
             file_put_contents(__DIR__ .'/data.json', json_encode($data));
-        
-            echo '<br> [ Account Created ] <br><br>';
+            successMessage('Account Created');
         }
     }
 }
-
-print('<pre>' . print_r($data, true) . '</pre>');
-
-echo "newlist <br>";
 
 $numbers = range('0', '9');
 $person_id = '';
@@ -72,16 +62,15 @@ for ($i = 0; $i < 20; $i++) {
     $account_id .= $numbers[rand(0, count($numbers) - 1)];
 }
 
-?>
+echo '<div class="container">';
+echo '<form action="" method="post">';
+echo '<input type="text" name="name" value="test name ' . rand(1, 50) . '"> name <br>';
+echo '<input type="text" name="surname" value="test surname ' . rand(1, 50) . '"> surname <br>';
+echo '<input type="text" name="accountId" value="' . $account_id . '" readonly> accountId <br>';
+echo '<input type="text" name="personId" value="' . $person_id . '"> personId <br>';
+echo '<button type="submit">Create</button>';
+echo '</form>';
+echo '</div>';
 
-<form action="" method="post">
-<input type="text" name="name" value="test name <?= rand(1, 50) ?>"> name <br>
-<input type="text" name="surname" value="test surname <?= rand(1, 50) ?>"> surname <br>
-<input type="text" name="accountId" value="<?= $account_id ?>" readonly> accountId <br>
-<input type="text" name="personId" value="<?= $person_id ?>"> personId <br>
-<button type="submit">Create</button>
-</form>
-
-<a href="./index.php">login</a><br>
-<a href="./list.php">list</a><br>
-<a href="./new.php">new</a><br>
+setFooter();
+finishBody();

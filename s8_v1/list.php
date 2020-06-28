@@ -11,14 +11,33 @@ uasort($data, function($a, $b) {
     return $a['surname'] <=> $b['surname'];
 });
 
-function displayItem($item, $accountId) {
+setBody();
+setHeader();
+setMenu(false, ($_SESSION['role'] === 'admin') ? true : false);
+
+if (!empty($_POST) && isset($_POST['delete'])) {
+    foreach ($data as $index => $account) {
+        if (!empty($_POST) && $account['accountId'] === $_POST['delete']) {
+            if ($account['value'] === 0) {
+                unset($data[$index]);
+                successMessage('Account Deleted');
+            } else {
+                failureMessage('Account Has To Be Empty And Not Have Negative Balance');
+            }
+        }       
+    }
+}
+
+echo '<div class="container">';
+foreach ($data as $account) {
+    $accountId = $account['accountId'];
     echo '<form action="" method="post">';
     echo '<span>' . 
-        $item['name'] . ' - ' . 
-        $item['surname'] . ' - ' . 
-        $item['value'] . ' - ' .
+        $account['name'] . ' - ' . 
+        $account['surname'] . ' - ' . 
+        $account['value'] . ' - ' .
         $accountId . ' - ' . 
-        $item['personId'] . ' </span>';
+        $account['personId'] . ' </span>';
     echo '<input type="hidden" id="delete" name="delete" value="' . $accountId . '">';
     if ($_SESSION['role'] === 'admin') {
         echo '<button type="submit">Delete</button>';
@@ -27,34 +46,11 @@ function displayItem($item, $accountId) {
     }
     echo '</form><br>';
 }
-
-foreach ($data as $index => $account) {
-    $display = true;
-    $accountId = $account['accountId'];
-    if (!empty($_POST) && $accountId === $_POST['delete']) {
-        if ($account['value'] === 0) {
-            unset($data[$index]);
-            echo '<br> [ Account Deleted ] <br><br>';
-            $display = false;
-        } else {
-            echo '<br> [ Account Has To Be Empty And Not Have Negative Balance ] <br><br>';
-            // displayItem($account, $accountId);
-        }
-    } 
-    if ($display) {
-        displayItem($account, $accountId);
-    }
-   
-}
+echo '</div>';
 
 if (!empty($_POST)) {
     file_put_contents(__DIR__ .'/data.json', json_encode($data));
 }
 
-echo "list <br>";
-
-?>
-
-<a href="./index.php">login</a><br>
-<a href="./list.php">list</a><br>
-<a href="./new.php">new</a><br>
+setFooter();
+finishBody();

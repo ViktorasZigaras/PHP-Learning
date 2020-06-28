@@ -6,65 +6,54 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
     header('Location: ./index.php');
     die();
 }
-
 if ($_SESSION['role'] !== 'admin') {
     header('Location: ./list.php');
     die();
 }
 
+setBody();
+setHeader();
+setMenu(true, true);
+
 if (!isset($_GET['id'])) {
-    echo '<br> [ No Account ID ] <br><br>';
+    failureMessage('No Account ID');
 } else {
     $account_found = false;
     foreach ($data as &$account) {
-
-        $accountId = $account['accountId'];
-        
-        // echo $accountId . ' | ' . $_GET['id'] . '<br> ';
-        if ($accountId === $_GET['id']) {
+        if ($account['accountId'] === $_GET['id']) {
             if (!empty($_POST) && isset($_POST['add'])) {
                 if (is_numeric($_POST['add'])) {
                     if ($_POST['add'] < 0) {
-                        echo '<br> [ Negative Amount Is Not Allowed ] <br><br>';
+                        failureMessage('Negative Amount Is Not Allowed');
                     } else {
                         $account['value'] += $_POST['add'];
-                        echo '<br> [ ' . $_POST['add'] . ' Has Been Added ] <br><br>';
+                        successMessage($_POST['add'] . ' Has Been Added');
+                        file_put_contents(__DIR__ .'/data.json', json_encode($data));
                     }
                 } else {
-                    echo '<br> [ No Amount Was Provided ] <br><br>';
+                    failureMessage('No Amount Was Provided');
                 }
             }
-            
+            echo '<div class="container">';
             echo '<form action="" method="post">';
             echo '<span>' . 
                 $account['name'] . ' - ' . 
                 $account['surname'] . ' - ' . 
                 $account['value'] . ' - ' .
-                $accountId . ' - ' . 
+                $account['accountId'] . ' - ' . 
                 $account['personId'] . ' </span>';
             echo '<input type="text" id="add" name="add" value="0">';
             if ($_SESSION['role'] === 'admin') {
                 echo '<button type="submit">Add</button>';
             }
-            echo '</form><br>';
+            echo '</form></div>';
             $account_found = true;
             break;
         }
-    
     }
     unset($account);
-    if (!$account_found) {
-        echo '<br> [ Account Is Not Found ] <br><br>';
-    }
-    if (!isset($_GET['delete'])) {
-        file_put_contents(__DIR__ .'/data.json', json_encode($data));
-    }
+    if (!$account_found) failureMessage('Account Is Not Found');
 }
 
-echo "add <br>";
-
-?>
-
-<a href="./index.php">login</a><br>
-<a href="./list.php">list</a><br>
-<a href="./new.php">new</a><br>
+setFooter();
+finishBody();
