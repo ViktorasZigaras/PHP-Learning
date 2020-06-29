@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t5/blue.php
+# launch url: http://localhost/PHP-Learning/part_7/task_5/blue.php
 
 // create two pages, on link click redirect to the other
 

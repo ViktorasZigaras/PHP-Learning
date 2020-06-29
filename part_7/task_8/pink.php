@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t8/pink.php
+# launch url: http://localhost/PHP-Learning/part_7/task_8/pink.php
 
 // create two pages, Pink has a form that forwards to Rose
 

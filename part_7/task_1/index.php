@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t1/t1_index.php
+# launch url: http://localhost/PHP-Learning/part_7/task_1/index.php
 
 // create page with two links to self (black BG);
 // one link is plain with this file, and another also has a parameter color=1;

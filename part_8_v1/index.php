@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s8_v1/index.php
+# launch url: http://localhost/PHP-Learning/part_8_v1/index.php
 
 require __DIR__ . '/bootstrap.php';
 

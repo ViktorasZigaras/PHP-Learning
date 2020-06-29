@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t4/lemon.php
+# launch url: http://localhost/PHP-Learning/part_7/task_4/lemon.php
 
 // create two pages, lemon and ornage;
 // lemon redirects to orange

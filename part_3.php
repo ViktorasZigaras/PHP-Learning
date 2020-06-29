@@ -1,5 +1,5 @@
 <?php
-    # launch url: http://localhost/PHP-Learning/viktoras_zigaras_3.php
+    # launch url: http://localhost/PHP-Learning/part_3.php
 
     class SessionThree {
 

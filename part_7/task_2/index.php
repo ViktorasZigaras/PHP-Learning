@@ -6,9 +6,9 @@
 
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t2/t2_index.php,
-# http://localhost/PHP-Learning/s7/t2/t2_index.php?color=purple,
-# http://localhost/PHP-Learning/s7/t2/t2_index.php?color=599955, etc
+# launch url: http://localhost/PHP-Learning/part_7/task_2/index.php,
+# http://localhost/PHP-Learning/part_7/task_2/index.php?color=purple,
+# http://localhost/PHP-Learning/part_7/task_2/index.php?color=599955, etc
 
 // create similar page to task 1;
 // pass a link manually color=value;

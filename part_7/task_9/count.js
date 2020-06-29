@@ -6,7 +6,7 @@ button.addEventListener("click", () => {
         if (input.checked) checkedCount++;
     });    
     
-    axios.post('./t9_index.php?redraw', {
+    axios.post('./index.php?redraw', {
         // count: count.length
     })
     .then(function(response) {            

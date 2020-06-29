@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t8/rose.php + '?'
+# launch url: http://localhost/PHP-Learning/part_7/task_8/rose.php + '?'
 
 // create two pages, Rose redirects to Pink on GET method
 

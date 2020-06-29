@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t9/t9_index.php
+# launch url: http://localhost/PHP-Learning/part_7/task_9/index.php
 
 // create a POST form with a button and 3-10 checkboxes
 // on submit change BG color to white, hide form and show count of selected checkboxes

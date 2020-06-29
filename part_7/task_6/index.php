@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t6/t6_index.php
+# launch url: http://localhost/PHP-Learning/part_7/task_6/index.php
 
 // create a site with two buttons, one button is in GET and another in POST form
 // depending on what was clicked color it green - GET and yellow - POST

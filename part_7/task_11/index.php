@@ -1,6 +1,6 @@
 <?php
 
-# launch url: http://localhost/PHP-Learning/s7/t11/t11_index.php
+# launch url: http://localhost/PHP-Learning/part_7/task_11/index.php
 
 // enter two player names (use defaults), press Start to begin/restart
 // each player has a score, roll dice 6 (could press buttons to roll but automatic process is faster)
