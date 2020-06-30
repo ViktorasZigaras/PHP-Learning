@@ -1,8 +1,8 @@
-<style><?php include './main.css'; ?></style>
+<style><?php include './css/main.css'; ?></style>
 <?php
 session_start();
 
-$data = json_decode(file_get_contents(__DIR__ .'/data.json'), 1);
+$data = json_decode(file_get_contents(__DIR__ .'/data/data.json'), 1);
 
 function setBody() {
     echo '<div class="main-container">';
@@ -14,12 +14,12 @@ function finishBody() {
 
 function setHeader() {
     echo '<div class="header">';
-    echo '<div><img class="image" src="bank.jpg" alt="bank"></div>';
+    echo '<div><img class="image" src="pictures/bank.jpg" alt="bank"></div>';
     echo '<div class="header-text">';
     echo '<h2>Čiupčius and Griebčius Inc.</h2>';
     echo '<div>Give Us All Of Your Money NOW!!!</div>';
     echo '</div>';
-    echo '<div><img class="image" src="money.jpg" alt="money"></div>';
+    echo '<div><img class="image" src="pictures/money.jpg" alt="money"></div>';
     echo '</div>';
 }
 

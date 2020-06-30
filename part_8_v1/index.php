@@ -8,7 +8,7 @@ setBody();
 setHeader();
 
 if (!empty($_POST)) {
-    $users = json_decode(file_get_contents(__DIR__ .'/users.json'), 1);
+    $users = json_decode(file_get_contents(__DIR__ .'/data/users.json'), 1);
     foreach ($users as $user) {
         if ($user['user'] === $_POST['user'] &&
         $user['password'] === md5($_POST['password'])) {

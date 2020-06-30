@@ -13,23 +13,58 @@ uasort($data, function($a, $b) {
 
 setBody();
 setHeader();
-setMenu(false, ($_SESSION['role'] === 'admin') ? true : false);
+setMenu(false, $_SESSION['role'] === 'admin');
 
-if (!empty($_POST) && isset($_POST['delete'])) {
-    foreach ($data as $index => $account) {
-        if (!empty($_POST) && $account['accountId'] === $_POST['delete']) {
+if (!empty($_POST)) {
+    foreach ($data as $index => &$account) {
+        # delete
+        if (isset($_POST['delete_id']) && $account['accountId'] === $_POST['delete_id']) {
             if ($account['value'] === 0) {
                 unset($data[$index]);
                 successMessage('Account Deleted');
+                break;
             } else {
                 failureMessage('Account Has To Be Empty And Not Have Negative Balance');
             }
-        }       
+        } 
+        # add
+        if (isset($_POST['add_id']) && $account['accountId'] === $_POST['add_id']) {
+            if (is_numeric($_POST['amount'])) {
+                if ($_POST['amount'] < 0) {
+                    failureMessage('Negative Amount Is Not Allowed');
+                } else {
+                    $account['value'] += $_POST['amount'];
+                    successMessage($_POST['amount'] . ' Has Been Added');
+                    break;
+                }
+            } else {
+                failureMessage('No Amount Was Provided');
+            }
+        }
+        # remove
+        if (isset($_POST['remove_id']) && $account['accountId'] === $_POST['remove_id']) {
+            if (is_numeric($_POST['amount'])) {
+                if ($_POST['amount'] < 0) {
+                    failureMessage('Negative Amount Is Not Allowed');
+                } elseif ($_POST['amount'] > 0 && $account['value'] < $_POST['amount']) {
+                    failureMessage('Not Enough Money In Balance');
+                } else {
+                    $account['value'] -= $_POST['amount'];
+                    successMessage($_POST['amount'] . ' Has Been Removed');
+                    break;
+                }
+            } else {
+                failureMessage('No Amount Was Provided');
+            }
+        }
     }
+    unset($account);
+    # save
+    file_put_contents(__DIR__ .'/data/data.json', json_encode($data));
 }
 
 echo '<div class="container">';
-foreach ($data as $account) {
+foreach ($data as &$account) {
     $accountId = $account['accountId'];
     echo '<form action="" method="post">';
     echo '<span>' . 
@@ -38,19 +73,28 @@ foreach ($data as $account) {
         $account['value'] . ' - ' .
         $accountId . ' - ' . 
         $account['personId'] . ' </span>';
-    echo '<input type="hidden" id="delete" name="delete" value="' . $accountId . '">';
+    echo '<input type="hidden" id="delete_id" name="delete_id" value="' . $accountId . '">';
     if ($_SESSION['role'] === 'admin') {
         echo '<button type="submit">Delete</button>';
-        echo ' <a href="./add.php?id=' . $accountId . '">Add</a> ';
-        echo ' <a href="./remove.php?id=' . $accountId . '">Remove</a> ';
-    }
-    echo '</form><br>';
-}
-echo '</div>';
+        echo '</form><br>';
 
-if (!empty($_POST)) {
-    file_put_contents(__DIR__ .'/data.json', json_encode($data));
+        echo '<form action="" method="post">';
+        echo '<input type="text" id="amount" name="amount" value="0">';
+        echo '<input type="hidden" id="add_id" name="add_id" value="' . $accountId . '">';
+        echo '<button type="submit">Add</button>';
+        echo '</form><br>';
+
+        echo '<form action="" method="post">';
+        echo '<input type="text" id="amount" name="amount" value="0">';
+        echo '<input type="hidden" id="remove_id" name="remove_id" value="' . $accountId . '">';
+        echo '<button type="submit">Remove</button>';
+        echo '</form><br>';
+    } else {
+        echo '</form><br>';
+    }
 }
+unset($account);
+echo '</div>';
 
 setFooter();
 finishBody();
