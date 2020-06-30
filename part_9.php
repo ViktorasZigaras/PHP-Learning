@@ -6,36 +6,32 @@
     class Purse {
 
         private
-            $paperMoney = 0,
-            $metalMoney = 0;
+            $paperMoney = [],
+            $metalMoney = [];
 
-        function __construct() {
-            //
-        }
-
-        function add(
+        public function add(
             float $amount = 0 
         ) {
-            if ($amount < 2) $this->metalMoney += $amount;
-            else $this->paperMoney += $amount;
+            if ($amount < 2) $this->metalMoney[] = $amount;
+            else $this->paperMoney[] = $amount;
             return $this;
         }
 
-        function getPaperMoney() {
-            return $this->paperMoney;
+        public function measurePaperMoney() {
+            echo 'Total paper money: ' . array_sum($this->paperMoney) . ' (x' . count($this->paperMoney) . ')<br>';
         }
 
-        function getMetalMoney() {
-            return $this->metalMoney;
+        public function measureMetalMoney() {
+            echo 'Total metal money ' . array_sum($this->metalMoney) . ' (x' . count($this->metalMoney) . ')<br>';
         }
 
-        function measure() {
-            echo 'Total paper money: ' . $this->getPaperMoney() . '<br>';
-            echo 'Total metal money ' . $this->getMetalMoney() . '<br>';
+        public function measure() {
+            $this->measurePaperMoney();
+            $this->measureMetalMoney();
         }
        
-        function sum() {
-            echo 'Total: ' . ($this->paperMoney + $this->metalMoney) . '<br>';
+        public function sum() {
+            echo 'Total: ' . (array_sum($this->paperMoney) + array_sum($this->metalMoney)) . '<br>';
             return $this;
         }
 
@@ -47,23 +43,26 @@
             $volume = 0,
             $amount = 0;
 
-        function __construct(int $volume = 0) {
+            public function __construct(int $volume = 0) {
             $this->volume = $volume;
         }
 
-        function add(
+        public function add(
             float $amount = 0 
         ) {
             $this->amount += $amount;
             if ($this->amount > $this->volume) $this->amount = $this->volume;
+            return $this;
         }
        
-        function measure() {
+        public function measure() {
             echo 'Total: ' . $this->amount . ' of ' . $this->volume . '<br>';
         }
 
-        function remove() {
-            return $this->amount;
+        public function remove() {
+            $temp = $this->amount;
+            $this->amount = 0;
+            return $temp;
         }
 
     }
@@ -75,50 +74,46 @@
             $wormed = false,
             $weight = 0;
 
-        function __construct() {
+        public function __construct() {
             $this->edible = (bool) rand(0, 1);
             $this->wormed = (bool) rand(0, 1);
             $this->weight = rand(5, 45);
         }
 
-        function getEdible() {
-            return $this->edible;
-        }
-
-        function getWormed() {
-            return $this->wormed;
-        }
-
-        function getWeight() {
-            return $this->weight;
+        public function __get($prop) {
+            if (in_array($prop, ['edible', 'wormed', 'weight'])) {
+                return $this->$prop;
+            }
         }
 
     }
 
     class Basket {
 
+        const VOLUME = 500;
         private
             $amount = 0;
 
-        function __construct() {
-            //
+        public function add(
+            Mushroom $mushroom
+        ) : bool {
+            if ($mushroom != null && $mushroom->edible && !$mushroom->wormed) { 
+                $this->amount += $mushroom->weight;
+            }
+            return $this->amount < self::VOLUME;
         }
 
-        function add(
-            float $amount = 0 
-        ) {
-            $this->amount += $amount;
-        }
-
-        function measure() {
-            return $this->amount;
+        public function __get($prop) {
+            if (in_array($prop, ['amount'])) {
+                return $this->$prop;
+            }
         }
 
     }
 
     class SessionNine {
 
-        function __construct() {
+        public function __construct() {
             $purse = new Purse;
             $purse->add(1.5)->add(4.5)->sum();
             $purse->measure();
@@ -134,13 +129,8 @@
             $glass3->measure();
 
             $basket = new Basket;
-            do {
-                $mushroom = new Mushroom;
-                if ($mushroom->getEdible() && !$mushroom->getWormed()) {
-                    $basket->add($mushroom->getWeight());
-                }
-            } while ($basket->measure() < 500);
-            echo 'Mushrooms collected: ' . $basket->measure();
+            while ($basket->add(new Mushroom)) {}
+            echo 'Mushrooms collected: ' . $basket->amount;
         }
 
     }
