@@ -18,7 +18,7 @@ setMenu(false, $_SESSION['role'] === 'admin');
 if (!empty($_POST)) {
     foreach ($data as $index => &$account) {
         # delete
-        if (isset($_POST['delete_id']) && $account['accountId'] === $_POST['delete_id']) {
+        if (isset($_POST['delete']) && $account['accountId'] === $_POST['id']) {
             if ($account['value'] === 0) {
                 unset($data[$index]);
                 successMessage('Account Deleted');
@@ -28,7 +28,7 @@ if (!empty($_POST)) {
             }
         } 
         # add
-        if (isset($_POST['add_id']) && $account['accountId'] === $_POST['add_id']) {
+        if (isset($_POST['add']) && $account['accountId'] === $_POST['id']) {
             if (is_numeric($_POST['amount'])) {
                 if ($_POST['amount'] < 0) {
                     failureMessage('Negative Amount Is Not Allowed');
@@ -42,7 +42,7 @@ if (!empty($_POST)) {
             }
         }
         # remove
-        if (isset($_POST['remove_id']) && $account['accountId'] === $_POST['remove_id']) {
+        if (isset($_POST['remove']) && $account['accountId'] === $_POST['id']) {
             if (is_numeric($_POST['amount'])) {
                 if ($_POST['amount'] < 0) {
                     failureMessage('Negative Amount Is Not Allowed');
@@ -63,34 +63,23 @@ if (!empty($_POST)) {
     file_put_contents(__DIR__ .'/data/data.json', json_encode($data));
 }
 
-echo '<div class="container">';
+echo '<div class="container list-container">';
 foreach ($data as &$account) {
-    $accountId = $account['accountId'];
-    echo '<form action="" method="post">';
     echo '<span>' . 
-        $account['name'] . ' - ' . 
-        $account['surname'] . ' - ' . 
-        $account['value'] . ' - ' .
-        $accountId . ' - ' . 
-        $account['personId'] . ' </span>';
-    echo '<input type="hidden" id="delete_id" name="delete_id" value="' . $accountId . '">';
+        $account['accountId'] .
+        ' (' . $account['personId'] . ') ' .
+        $account['name'] . ' ' .
+        $account['surname'] . ': ' . 
+        $account['value'] . ' &euro;' . 
+        ' </span>';
     if ($_SESSION['role'] === 'admin') {
-        echo '<button type="submit">Delete</button>';
-        echo '</form><br>';
-
         echo '<form action="" method="post">';
-        echo '<input type="text" id="amount" name="amount" value="0">';
-        echo '<input type="hidden" id="add_id" name="add_id" value="' . $accountId . '">';
-        echo '<button type="submit">Add</button>';
-        echo '</form><br>';
-
-        echo '<form action="" method="post">';
-        echo '<input type="text" id="amount" name="amount" value="0">';
-        echo '<input type="hidden" id="remove_id" name="remove_id" value="' . $accountId . '">';
-        echo '<button type="submit">Remove</button>';
-        echo '</form><br>';
-    } else {
-        echo '</form><br>';
+        echo '<input type="hidden" id="id" name="id" value="' . $account['accountId'] . '">';
+        echo '<button type="submit" name="delete" value="delete">Delete</button>';
+        echo '<button type="submit" name="add" value="add">Add</button>';
+        echo '<button type="submit" name="remove" value="remove">Remove</button>';
+        echo '<input class="list-input" type="text" id="amount" name="amount" value="0">';
+        echo '</form>';
     }
 }
 unset($account);

@@ -3,19 +3,21 @@
     --mainContainerBgColor: #ffffff;
     --primarySolidColor: #304696;
     --primaryContentColor: #cfcb9f;
+    --secondaryContentColor: #f7f1c8;
     --mainTextColor: #ffffff;
     --successColor: #21bfbd;
     --failColor: #b50b30;
-    --linkColor: #6b9acf;
+    --secondarySolidColor: #6b9acf;
 }
 
 body {
     background-color: var(--mainBgColor);
+    min-width: 800px;
 }
 
 .main-container {
     width: 800px;
-    height: 98vh;
+    min-height: 98vh;
     display: inline-block;
     margin-left: calc(50% - 400px);
     background-color: var(--mainContainerBgColor);
@@ -39,15 +41,15 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
-    width: 250px;
+    width: 248px;
     height: 100%;
 }
 
 .header {
-    width: 100%;
+    width: calc(100% - 4px);
     display: flex;
     height: 200px;
-    border: var(--primarySolidColor) solid 1px;
+    border: var(--primarySolidColor) solid 2px;
 }
 
 .header-text {
@@ -96,9 +98,14 @@ body {
     padding: 0 15px;
     display: inline-block;
     text-align: center;
-    border: var(--linkColor) solid 2px;
+    border: var(--secondarySolidColor) solid 2px;
     text-decoration: none;
     color: var(--mainTextColor);
+    font-weight: bold;
+}
+
+.menu-item:hover {
+    background-color: var(--secondarySolidColor);
 }
 
 .container {
@@ -111,6 +118,55 @@ body {
     margin: 25px 7%;
 }
 
+.container span {
+    color: var(--primarySolidColor);
+    font-size: 18px;
+    width: 100%;
+    display: inline-block;
+    line-height: 36px;
+    font-weight: bold;
+}
+
 button {
     cursor: pointer;
+    color: var(--mainTextColor);
+    border: var(--primarySolidColor) solid 2px;
+    background-color: var(--secondarySolidColor);
+    border-radius: 10px;
+    display: inline-block;
+    padding: 0 10px;
+    margin: 5px 5px;
+    line-height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: var(--primarySolidColor);
+}
+
+.list-input {
+    width: 100px;
+}
+
+.new-input {
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+.login-input {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+input {
+    display: inline-block;
+    border: var(--primarySolidColor) solid 2px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+input:hover {
+    background-color: var(--secondaryContentColor);
 }

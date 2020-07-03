@@ -11,26 +11,26 @@
 
         public function add(
             float $amount = 0 
-        ) {
+        ) : Purse {
             if ($amount < 2) $this->metalMoney[] = $amount;
             else $this->paperMoney[] = $amount;
             return $this;
         }
 
-        public function measurePaperMoney() {
+        public function measurePaperMoney() : void {
             echo 'Total paper money: ' . array_sum($this->paperMoney) . ' (x' . count($this->paperMoney) . ')<br>';
         }
 
-        public function measureMetalMoney() {
+        public function measureMetalMoney() : void {
             echo 'Total metal money ' . array_sum($this->metalMoney) . ' (x' . count($this->metalMoney) . ')<br>';
         }
 
-        public function measure() {
+        public function measure() : void {
             $this->measurePaperMoney();
             $this->measureMetalMoney();
         }
        
-        public function sum() {
+        public function sum() : Purse {
             echo 'Total: ' . (array_sum($this->paperMoney) + array_sum($this->metalMoney)) . '<br>';
             return $this;
         }
@@ -49,17 +49,17 @@
 
         public function add(
             float $amount = 0 
-        ) {
+        ) : Glass {
             $this->amount += $amount;
             if ($this->amount > $this->volume) $this->amount = $this->volume;
             return $this;
         }
        
-        public function measure() {
+        public function measure() : void {
             echo 'Total: ' . $this->amount . ' of ' . $this->volume . '<br>';
         }
 
-        public function remove() {
+        public function remove() : float {
             $temp = $this->amount;
             $this->amount = 0;
             return $temp;

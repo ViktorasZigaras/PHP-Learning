@@ -46,7 +46,7 @@ if (!empty($_POST)) {
                 'personId' => $_POST['personId'],
                 'value' => 0
             ];
-            file_put_contents(__DIR__ .'/data.json', json_encode($data));
+            file_put_contents(__DIR__ .'/data/data.json', json_encode($data));
             successMessage('Account Created');
         }
     }
@@ -62,12 +62,12 @@ for ($i = 0; $i < 20; $i++) {
     $account_id .= $numbers[rand(0, count($numbers) - 1)];
 }
 
-echo '<div class="container">';
+echo '<div class="container new-container">';
 echo '<form action="" method="post">';
-echo '<input type="text" name="name" value="test name ' . rand(1, 50) . '"> name <br>';
-echo '<input type="text" name="surname" value="test surname ' . rand(1, 50) . '"> surname <br>';
-echo '<input type="text" name="accountId" value="' . $account_id . '" readonly> accountId <br>';
-echo '<input type="text" name="personId" value="' . $person_id . '"> personId <br>';
+echo '<span>Customer Name: </span><input class="new-input" type="text" name="name" value="name ' . rand(1, 50) . '"><br>';
+echo '<span>Customer Surname: </span><input class="new-input" type="text" name="surname" value="surname ' . rand(1, 50) . '"><br>';
+echo '<span>Customer Account ID: </span><input class="new-input" type="text" name="accountId" value="' . $account_id . '" readonly><br>';
+echo '<span>Customer Person ID: </span><input class="new-input" type="text" name="personId" value="' . $person_id . '"><br>';
 echo '<button type="submit">Create</button>';
 echo '</form>';
 echo '</div>';
