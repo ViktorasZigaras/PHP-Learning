@@ -63,6 +63,7 @@ if (!empty($_POST)) {
     file_put_contents(__DIR__ .'/data/data.json', json_encode($data));
 }
 
+echo '<div class="main">';
 echo '<div class="container list-container">';
 foreach ($data as &$account) {
     echo '<span>' . 
@@ -83,7 +84,7 @@ foreach ($data as &$account) {
     }
 }
 unset($account);
-echo '</div>';
+echo '</div></div>';
 
 setFooter();
 finishBody();

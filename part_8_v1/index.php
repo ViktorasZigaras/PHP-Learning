@@ -28,13 +28,14 @@ if (isset($_GET['logout'])) {
     successMessage('Logout Successful');
 }
 
+echo '<div class="main">';
 echo '<div class="container login-container">';
 echo '<form action="?" method="post">';
 echo '<span>User Name: </span><input class="login-input" type="text" name="user"><br>';
 echo '<span>User Password: </span><input class="login-input" type="password" name="password"><br>';
 echo '<button type="submit">Login</button>';
 echo '</form>';
-echo '</div>';
+echo '</div></div>';
 
 setFooter();
 finishBody();

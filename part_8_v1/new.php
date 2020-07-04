@@ -62,6 +62,7 @@ for ($i = 0; $i < 20; $i++) {
     $account_id .= $numbers[rand(0, count($numbers) - 1)];
 }
 
+echo '<div class="main">';
 echo '<div class="container new-container">';
 echo '<form action="" method="post">';
 echo '<span>Customer Name: </span><input class="new-input" type="text" name="name" value="name ' . rand(1, 50) . '"><br>';
@@ -70,7 +71,7 @@ echo '<span>Customer Account ID: </span><input class="new-input" type="text" nam
 echo '<span>Customer Person ID: </span><input class="new-input" type="text" name="personId" value="' . $person_id . '"><br>';
 echo '<button type="submit">Create</button>';
 echo '</form>';
-echo '</div>';
+echo '</div></div>';
 
 setFooter();
 finishBody();
