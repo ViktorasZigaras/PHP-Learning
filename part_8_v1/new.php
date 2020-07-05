@@ -17,7 +17,6 @@ setHeader();
 setMenu(true, false);
 
 if (!empty($_POST)) {
-
     if (!isset($_POST['name'])) failureMessage('Name Is Not Provided');
     elseif (!isset($_POST['surname'])) failureMessage('Surname Is Not Provided');
     elseif (!isset($_POST['accountId'])) failureMessage('Account Is Not Provided');

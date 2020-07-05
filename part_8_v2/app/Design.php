@@ -1,6 +1,8 @@
 <?php
 namespace Main;
 
+use Main\App;
+
 class Design {
 
     public static function setBody() : void {
@@ -31,9 +33,9 @@ class Design {
     
     public static function setMenu(bool $link_to_list = false, bool $link_to_new = false) : void {
         echo '<div class="menu">';
-        echo '<a href="./index.php?logout" class="menu-item">LOGOUT</a>';
-        if ($link_to_list) echo '<a href="./list.php" class="menu-item">Account List</a>';
-        if ($link_to_new) echo '<a href="./new.php" class="menu-item">Create New Account</a>';
+        echo '<a href="' . App::URL . 'logout" class="menu-item">LOGOUT</a>';
+        if ($link_to_list) echo '<a href="' . App::URL . 'list" class="menu-item">Account List</a>';
+        if ($link_to_new) echo '<a href="' . App::URL . 'new" class="menu-item">Create New Account</a>';
         echo '</div>';
     }
     

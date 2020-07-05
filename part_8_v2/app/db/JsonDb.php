@@ -3,34 +3,44 @@ namespace App\DB;
 
 use App\DB\DataBase;
 use Ramsey\Uuid\Uuid;
+use Main\Design;
 
 class JsonDb implements DataBase {
     
     public static function create(array $customerData) : void {
-        $data = $this->open();
+        $data = self::open();
         $data[(string) Uuid::uuid4()] = $customerData;
-        $this->save($data);
+        self::save($data);
     }
  
     public static function update(string $customerUUID, array $customerData) : void {
-        $data = $this->open();
+        $data = self::open();
         $data[$customerUUID] = $customerData;
-        $this->save($data);
+        self::save($data);
     }
  
     public static function delete(string $customerUUID) : void {
-        $data = $this->open();
-        unset($data[$customerUUID]);
-        $this->save($data);
+        $data = self::open();
+        if ($data[$customerUUID]) {
+            if ($data[$customerUUID]['value'] === 0) {
+                unset($data[$customerUUID]);
+                self::save($data);
+                $_SESSION['message'] = Design::successMessage('Account Deleted');
+            } else {
+                $_SESSION['message'] = Design::failureMessage('Account Has To Be Empty And Not Have Negative Balance');
+            }
+        } else {
+            $_SESSION['message'] = Design::failureMessage('Account Not Found');
+        }
     }
  
     public static function show(string $customerUUID) : array {
-        $data = $this->open();
+        $data = self::open();
         return $data[$customerUUID];
     }
     
     public static function showAll() : array {
-        $data = $this->open();
+        $data = self::open();
         return $data;
     }
 

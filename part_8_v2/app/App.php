@@ -3,8 +3,9 @@ namespace Main;
 
 use Main\Login;
 use Main\Design;
-// use Main\User;
-// use App\DB\JsonDb as DB;
+use Main\ListLogic;
+use Main\NewLogic;
+use App\DB\JsonDb as DB;
 
 class App {
     const DIR = '/PHP-Learning/part_8_v2/public/';
@@ -12,28 +13,12 @@ class App {
     const URL = 'http://localhost/PHP-Learning/part_8_v2/public/';
 
     private static $params = [];
-    private static $guarded = ['slaptas-1'];
+    private static $guarded = ['list', 'new'];
     private static $message = '';
 
     public static function start() {
         session_start();
         self::$params = explode('/', str_replace(self::DIR, '', $_SERVER['REQUEST_URI']));
-        /*
-        if (count(self::$params) === 2) {
-            if (self::$params[0] === 'users') {
-                if (self::$params[1] === 'addUser') {
-                    $newUser = ['name' => $_POST['user'], 'pass' => md5($_POST['password'])];
-                    // User::createNew();
-                    $db = new DB; # static methods!
-                    $db->create($newUser); # static methods!
-                }
-                if (file_exists(self::VIEW_DIR . self::$params[0] . '/' . self::$params[1] . '.php')) {
-                    require(self::VIEW_DIR . self::$params[0] . '/' . self::$params[1] . '.php');
-                }
-            }
-        }
-        else 
-        */
         if (isset($_SESSION['message'])) self::$message = $_SESSION['message'];
         $_SESSION['message'] = '';
 
@@ -42,11 +27,20 @@ class App {
             if (self::$params[0] === 'doLogin') {
                 $login = new Login; # make static??
                 if ($login->getResult()) {
-                    self::redirect('slaptas-1');
+                    $_SESSION['message'] = Design::successMessage('Login Successful');
+                    self::redirect('list');
                 } else {
                     $_SESSION['message'] = Design::failureMessage('Login Failed');
                     self::redirect('login');
                 }
+            } elseif (self::$params[0] === 'logout') {
+                $_SESSION['message'] = Design::successMessage('Logout Successful');
+                self::redirect('login');
+                session_destroy();
+            } elseif (self::$params[0] === 'list') {
+                new ListLogic; # make static??
+            } elseif (self::$params[0] === 'new') {
+                new NewLogic; # make static??
             }
             if (in_array(self::$params[0], self::$guarded)) {
                 if (!Login::getAuthStatus()) self::redirect('login');
@@ -65,7 +59,7 @@ class App {
         return self::$message;
     }
 
-    public static function redirect(string $page = '') : void {
+    private static function redirect(string $page = '') : void {
         header('Location: ' . self::URL . $page);
         die();
     }

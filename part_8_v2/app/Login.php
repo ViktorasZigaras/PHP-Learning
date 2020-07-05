@@ -16,6 +16,7 @@ class Login {
             foreach ($data as $user) {
                 if ($user['user'] === $_POST['user'] && $user['password'] === md5($_POST['password'])) {
                     $_SESSION['login'] = 1;
+                    $_SESSION['role'] = $user['role'];
                     $this->loginResult = true;
                     break;
                 }
