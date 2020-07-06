@@ -16,6 +16,7 @@
             ><input class="new-input" type="text" name="accountId" value="<?= Main\NewLogic::generateAccountID() ?>" readonly><br>
             <span>Customer Person ID: </span>
             <input class="new-input" type="text" name="personId" value="<?= Main\NewLogic::generatePersonID() ?>"><br>
+            <input type="hidden" name="csrf" value="<?= Main\App::getCSRF() ?>">
             <button type="submit">Create</button>
         </form>
     </div>

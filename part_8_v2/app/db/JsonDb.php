@@ -21,17 +21,8 @@ class JsonDb implements DataBase {
  
     public static function delete(string $customerUUID) : void {
         $data = self::open();
-        if ($data[$customerUUID]) {
-            if ($data[$customerUUID]['value'] === 0) {
-                unset($data[$customerUUID]);
-                self::save($data);
-                $_SESSION['message'] = Design::successMessage('Account Deleted');
-            } else {
-                $_SESSION['message'] = Design::failureMessage('Account Has To Be Empty And Not Have Negative Balance');
-            }
-        } else {
-            $_SESSION['message'] = Design::failureMessage('Account Not Found');
-        }
+        unset($data[$customerUUID]);
+        self::save($data);
     }
  
     public static function show(string $customerUUID) : array {

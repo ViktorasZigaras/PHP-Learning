@@ -4,6 +4,7 @@
     "autoload": {
         "psr-4": {
             "Main\\": "app",
+            "Exceptions\\": "app/exceptions",
             "App\\DB\\": "app/db"
         }
     },

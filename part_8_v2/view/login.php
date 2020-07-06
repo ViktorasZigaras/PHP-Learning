@@ -11,6 +11,7 @@
             <input class="login-input" type="text" name="user"><br>
             <span>User Password: </span>
             <input class="login-input" type="password" name="password"><br>
+            <input type="hidden" name="csrf" value="<?= Main\App::getCSRF() ?>">
             <button type="submit">Login</button>
         </form>
     </div>

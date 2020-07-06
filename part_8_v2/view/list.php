@@ -29,6 +29,7 @@
                 echo '<button type="submit" name="remove" value="remove">Remove</button>';
                 echo '<input class="list-input" type="text" id="amount" name="amount" value="0">';
                 echo '<input type="hidden" name="uuid" value="' . $index . '">';
+                echo '<input type="hidden" name="csrf" value="' . Main\App::getCSRF() . '">';
                 echo '</form>';
             }
         }
