@@ -19,7 +19,8 @@
                 ' (' . $account['personId'] . ') ' .
                 $account['name'] . ' ' .
                 $account['surname'] . ': ' . 
-                $account['value'] . ' &euro;' . 
+                $account['value'] . ' &euro; ' . 
+                ($account['value'] * Main\App::getUSDrate()) . ' &dollar;' . 
                 ' </span>';
             if ($_SESSION['role'] === 'admin') {
                 echo '<form action="" method="post">';

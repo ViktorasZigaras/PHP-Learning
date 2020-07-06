@@ -18,6 +18,7 @@ class App {
     private static $guarded = ['list', 'new'];
     private static $message = '';
     private static $csrf = '';
+    private static $usd_rate = 1;
 
     public static function start() {
         session_start();
@@ -25,13 +26,25 @@ class App {
         if (isset($_SESSION['message'])) {
             self::$message = $_SESSION['message'];
             unset($_SESSION['message']);
-            // echo 'set';
-        } else {
-            self::$message = '';
-            // echo 'not set';
         }
-
         self::$csrf = md5($_SERVER['HTTP_USER_AGENT'] . 'abcdefgh');
+
+        $output = '';
+        if (file_exists('./../db/currency.json')) {
+            $output = json_decode(file_get_contents('./../db/currency.json'), 1);
+            self::$usd_rate = $output['rates']['USD'];
+        }
+        if (!file_exists('./../db/currency.json') || ($output !== null && $output['time'] - time() > 30)) {
+            $call = curl_init(); 
+            curl_setopt($call, CURLOPT_URL, 'https://api.exchangeratesapi.io/latest?symbols=USD');
+            curl_setopt($call, CURLOPT_RETURNTRANSFER, 1); 
+            $output = json_decode(curl_exec($call)); 
+            curl_close($call);
+            $output->time = time();
+            file_put_contents('./../db/currency.json', json_encode($output));
+            self::$usd_rate = $output->rates->USD;
+        } 
+        // self::$usd_rate = $output->rates->USD;
 
         if (count(self::$params) === 1) {
             try {
@@ -72,9 +85,11 @@ class App {
                     }
                 }
             } catch (FailureException $e) {
-                $_SESSION['message'] = Design::failureMessage($e->getMessage());
+                // $_SESSION['message'] = Design::failureMessage($e->getMessage());
+                self::$message = Design::failureMessage($e->getMessage());
             } catch (SuccessException $e) {
-                $_SESSION['message'] = Design::successMessage($e->getMessage());
+                // $_SESSION['message'] = Design::successMessage($e->getMessage());
+                self::$message = Design::successMessage($e->getMessage());
             }
 
             if (in_array(self::$params[0], self::$guarded)) {
@@ -96,6 +111,10 @@ class App {
 
     public static function getCSRF() : string {
         return self::$csrf;
+    }
+
+    public static function getUSDrate() : float {
+        return self::$usd_rate;
     }
 
     private static function redirect(string $page = '') : void {
