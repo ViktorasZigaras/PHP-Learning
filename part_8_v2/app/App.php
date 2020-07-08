@@ -7,7 +7,6 @@ use Main\ListLogic;
 use Main\NewLogic;
 use Exceptions\FailureException;
 use Exceptions\SuccessException;
-use App\DB\JsonDb as DB;
 
 class App {
     const DIR = '/PHP-Learning/part_8_v2/public/';
@@ -34,7 +33,7 @@ class App {
             $output = json_decode(file_get_contents('./../db/currency.json'), 1);
             self::$usd_rate = $output['rates']['USD'];
         }
-        if (!file_exists('./../db/currency.json') || ($output !== null && $output['time'] - time() > 30)) {
+        if (!file_exists('./../db/currency.json') || ($output !== null && (time() - $output['time'] > 3600))) {
             $call = curl_init(); 
             curl_setopt($call, CURLOPT_URL, 'https://api.exchangeratesapi.io/latest?symbols=USD');
             curl_setopt($call, CURLOPT_RETURNTRANSFER, 1); 
@@ -44,7 +43,6 @@ class App {
             file_put_contents('./../db/currency.json', json_encode($output));
             self::$usd_rate = $output->rates->USD;
         } 
-        // self::$usd_rate = $output->rates->USD;
 
         if (count(self::$params) === 1) {
             try {
@@ -53,7 +51,6 @@ class App {
                         if (Login::login()) {
                             $_SESSION['message'] = Design::successMessage('Login Successful');
                             self::redirect('list');
-                            // $_SESSION['message'] = Design::successMessage('Login Successful');
                         } else {
                             $_SESSION['message'] = Design::failureMessage('Login Failed');
                             self::redirect('login');

@@ -1,9 +1,7 @@
 <?php
 namespace App\DB;
 
-use App\DB\DataBase;
 use Ramsey\Uuid\Uuid;
-use Main\Design;
 
 class JsonDb implements DataBase {
     
@@ -31,8 +29,7 @@ class JsonDb implements DataBase {
     }
     
     public static function showAll() : array {
-        $data = self::open();
-        return $data;
+        return self::open();
     }
 
     private function open() : array {
