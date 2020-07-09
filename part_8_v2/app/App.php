@@ -5,6 +5,9 @@ use Main\Login;
 use Main\Design;
 use Main\ListLogic;
 use Main\NewLogic;
+use App\DB\JsonDb;
+use App\DB\MySQL;
+use App\DB\DataBase;
 use Exceptions\FailureException;
 use Exceptions\SuccessException;
 
@@ -18,6 +21,7 @@ class App {
     private static $message = '';
     private static $csrf = '';
     private static $usd_rate = 1;
+    private static $db;
 
     public static function start() {
         session_start();
@@ -30,6 +34,7 @@ class App {
 
         $output = '';
         if (file_exists('./../db/currency.json')) {
+            # 1 for array
             $output = json_decode(file_get_contents('./../db/currency.json'), 1);
             self::$usd_rate = $output['rates']['USD'];
         }
@@ -37,12 +42,16 @@ class App {
             $call = curl_init(); 
             curl_setopt($call, CURLOPT_URL, 'https://api.exchangeratesapi.io/latest?symbols=USD');
             curl_setopt($call, CURLOPT_RETURNTRANSFER, 1); 
+            # no param for object by default
             $output = json_decode(curl_exec($call)); 
             curl_close($call);
             $output->time = time();
             file_put_contents('./../db/currency.json', json_encode($output));
             self::$usd_rate = $output->rates->USD;
         } 
+
+        // self::$db = new JsonDb;
+        self::$db = new MySQL;
 
         if (count(self::$params) === 1) {
             try {
@@ -98,20 +107,20 @@ class App {
         }
     }
 
-    public static function getUriParams() : array {
-        return self::$params;
-    }
-
-    public static function getMessage() : string {
+    public static function Message() : string {
         return self::$message;
     }
 
-    public static function getCSRF() : string {
+    public static function USDrate() : float {
+        return self::$usd_rate;
+    }
+
+    public static function CSRF() : string {
         return self::$csrf;
     }
 
-    public static function getUSDrate() : float {
-        return self::$usd_rate;
+    public static function DB() : DataBase {
+        return self::$db;
     }
 
     private static function redirect(string $page = '') : void {

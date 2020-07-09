@@ -1,18 +1,22 @@
 <?php
-    Main\Design::setBody();
-    Main\Design::setHeader();
-    Main\Design::setMenu(false, $_SESSION['role'] === 'admin');
-    echo Main\App::getMessage();
+    use Main\App;
+    use Main\Design;
+
+    Design::setBody();
+    Design::setHeader();
+    Design::setMenu(false, $_SESSION['role'] === 'admin');
+    echo App::Message();
 ?>
 
 <div class="main">
     <div class="container list-container">
 
     <?php
-        $data = App\DB\JsonDb::showAll();
+        $data = App::DB()::showAll();
         uasort($data, function($a, $b) {
             return $a['surname'] <=> $b['surname'];
         });
+        var_dump($data);
         foreach ($data as $index => &$account) {
             echo '<span>' . 
                 $account['accountId'] .
@@ -20,7 +24,7 @@
                 $account['name'] . ' ' .
                 $account['surname'] . ': ' . 
                 $account['value'] . ' &euro; ' . 
-                ($account['value'] * Main\App::getUSDrate()) . ' &dollar;' . 
+                ($account['value'] * App::USDrate()) . ' &dollar;' . 
                 ' </span>';
             if ($_SESSION['role'] === 'admin') {
                 echo '<form action="" method="post">';
@@ -30,7 +34,7 @@
                 echo '<button type="submit" name="remove" value="remove">Remove</button>';
                 echo '<input class="list-input" type="text" id="amount" name="amount" value="0">';
                 echo '<input type="hidden" name="uuid" value="' . $index . '">';
-                echo '<input type="hidden" name="csrf" value="' . Main\App::getCSRF() . '">';
+                echo '<input type="hidden" name="csrf" value="' . App::CSRF() . '">';
                 echo '</form>';
             }
         }
@@ -41,5 +45,5 @@
 </div>
 
 <?php
-    Main\Design::setFooter();
-    Main\Design::finishBody();
+    Design::setFooter();
+    Design::finishBody();

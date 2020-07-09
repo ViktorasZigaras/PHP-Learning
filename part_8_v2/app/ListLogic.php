@@ -1,18 +1,17 @@
 <?php
 namespace Main;
 
-use Main\Design;
-use App\DB\JsonDb as DB;
+use Main\App;
 use Exceptions\FailureException;
 use Exceptions\SuccessException;
 
 class ListLogic {
 
     public static function deleteAccount() : void {
-        $account = DB::show($_POST['uuid']);
+        $account = App::DB()->show($_POST['uuid']);
         if ($account) {
             if ($account['value'] === 0) {
-                DB::delete($_POST['uuid']);
+                App::DB()->delete($_POST['uuid']);
                 throw new SuccessException('Account Deleted');
             } else {
                 throw new FailureException('Account Has To Be Empty And Not Have Negative Balance');
@@ -23,14 +22,14 @@ class ListLogic {
     }
 
     public static function addAmount() : void {
-        $account = DB::show($_POST['uuid']);
+        $account = App::DB()->show($_POST['uuid']);
         if ($account) {
             if (is_numeric($_POST['amount'])) {
                 if ($_POST['amount'] < 0) {
                     throw new FailureException('Negative Amount Is Not Allowed');
                 } else {
                     $account['value'] += $_POST['amount'];
-                    DB::update($_POST['uuid'], $account);
+                    App::DB()->update($_POST['uuid'], $account);
                     throw new SuccessException($_POST['amount'] . ' Has Been Added');
                 }
             } else {
@@ -42,7 +41,7 @@ class ListLogic {
     }
 
     public static function removeAmount() : void {
-        $account = DB::show($_POST['uuid']);
+        $account = App::DB()->show($_POST['uuid']);
         if ($account) { 
             if (is_numeric($_POST['amount'])) {
                 if ($_POST['amount'] < 0) {
@@ -51,7 +50,7 @@ class ListLogic {
                     throw new FailureException('Not Enough Money In Balance');
                 } else {
                     $account['value'] -= $_POST['amount'];
-                    DB::update($_POST['uuid'], $account);
+                    App::DB()->update($_POST['uuid'], $account);
                     throw new SuccessException($_POST['amount'] . ' Has Been Removed');
                 }
             } else {

@@ -13,7 +13,7 @@ class Login {
 
     public static function login() : bool {
         $loginResult = false;
-        if (isset($_POST['csrf']) && App::getCSRF() === $_POST['csrf']) {
+        if (isset($_POST['csrf']) && App::CSRF() === $_POST['csrf']) {
             foreach (self::$users as $user) {
                 if ($user['user'] === $_POST['user'] && $user['password'] === md5($_POST['password'])) {
                     $_SESSION['login'] = 1;
