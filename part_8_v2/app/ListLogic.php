@@ -10,7 +10,7 @@ class ListLogic {
     public static function deleteAccount() : void {
         $account = App::DB()->show($_POST['uuid']);
         if ($account) {
-            if ($account['value'] === 0) {
+            if ($account['value'] == 0) {
                 App::DB()->delete($_POST['uuid']);
                 throw new SuccessException('Account Deleted');
             } else {
@@ -23,8 +23,6 @@ class ListLogic {
 
     public static function addAmount() : void {
         $account = App::DB()->show($_POST['uuid']);
-        var_dump($_POST['uuid']);
-        var_dump($account);
         if ($account) {
             if (is_numeric($_POST['amount'])) {
                 if ($_POST['amount'] < 0) {

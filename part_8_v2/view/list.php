@@ -16,11 +16,8 @@
         uasort($data, function($a, $b) {
             return $a['surname'] <=> $b['surname'];
         });
-        // var_dump($data);
-        foreach ($data as $index => &$account) {
-            var_dump($account['uuid']);
-            var_dump($account);
-            // echo '<span>' . 
+        foreach ($data as &$account) {
+            echo '<span>' . 
                 $account['account'] .
                 ' (' . $account['personal_code'] . ') ' .
                 $account['name'] . ' ' .
@@ -36,7 +33,6 @@
                 echo '<button type="submit" name="remove" value="remove">Remove</button>';
                 echo '<input class="list-input" type="text" id="amount" name="amount" value="0">';
                 echo '<input type="hidden" name="uuid" value="' . $account['uuid'] . '">';
-                // echo '<input type="hidden" name="uuid" value="' . $index . '">';
                 echo '<input type="hidden" name="csrf" value="' . App::CSRF() . '">';
                 echo '</form>';
             }

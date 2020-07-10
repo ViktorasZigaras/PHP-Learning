@@ -13,18 +13,20 @@ class JsonDb implements DataBase {
     }
     
     public function create(array $customerData) : void {
-        self::$data[(string) Uuid::uuid4()] = $customerData;
-        self::$save(self::$data);
+        $uuid = (string) Uuid::uuid4();
+        $customerData['uuid'] = $uuid;
+        self::$data[$uuid] = $customerData;
+        self::save(self::$data);
     }
  
     public function update(string $customerUUID, array $customerData) : void {
         self::$data[$customerUUID] = $customerData;
-        self::$save(self::$data);
+        self::save(self::$data);
     }
  
     public function delete(string $customerUUID) : void {
         unset(self::$data[$customerUUID]);
-        self::$save(self::$data);
+        self::save(self::$data);
     }
  
     public function show(string $customerUUID) : array {

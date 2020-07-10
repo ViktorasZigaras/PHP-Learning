@@ -53,7 +53,8 @@ class MySQL implements DataBase {
                 $customerData['personal_code'], 
                 $customerData['name'], 
                 $customerData['surname'], 
-                $customerData['value']
+                $customerData['value'],
+                $customerUUID
             ]);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
@@ -75,10 +76,7 @@ class MySQL implements DataBase {
             $sql = "SELECT * FROM bank WHERE uuid = ?";
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute([$customerUUID]);
-            // $stmt = self::$pdo->query($sql);
-            var_dump($customerUUID);
-            var_dump($stmt->fetchAll());
-            return (array) $stmt->fetchAll();
+            return (array) $stmt->fetch();
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
