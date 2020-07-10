@@ -23,6 +23,8 @@ class ListLogic {
 
     public static function addAmount() : void {
         $account = App::DB()->show($_POST['uuid']);
+        var_dump($_POST['uuid']);
+        var_dump($account);
         if ($account) {
             if (is_numeric($_POST['amount'])) {
                 if ($_POST['amount'] < 0) {

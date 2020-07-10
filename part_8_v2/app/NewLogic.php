@@ -13,21 +13,21 @@ class NewLogic {
         if (isset($_POST['csrf']) && App::CSRF() === $_POST['csrf']) {
             if (!isset($_POST['name'])) throw new FailureException('Name Is Not Provided');
             elseif (!isset($_POST['surname'])) throw new FailureException('Surname Is Not Provided');
-            elseif (!isset($_POST['accountId'])) throw new FailureException('Account Is Not Provided');
-            elseif (!isset($_POST['personId'])) throw new FailureException('Personal ID Is Not Provided');
+            elseif (!isset($_POST['account'])) throw new FailureException('Account Is Not Provided');
+            elseif (!isset($_POST['personal_code'])) throw new FailureException('Personal ID Is Not Provided');
             elseif (
                 $_POST['name'] === '' || 
                 $_POST['surname'] === '' || 
-                $_POST['accountId'] === '' || 
-                $_POST['personId'] === '') throw new FailureException('Some Fields Are Empty');
+                $_POST['account'] === '' || 
+                $_POST['personal_code'] === '') throw new FailureException('Some Fields Are Empty');
             elseif (mb_strlen($_POST['name']) < 3) throw new FailureException('Name Has To Be 3 Characters Long');
             elseif (mb_strlen($_POST['surname']) < 3) throw new FailureException('Surname Has To Be 3 Characters Long');
             else {
                 $data = [
                     'name' => $_POST['name'], 
                     'surname' => $_POST['surname'], 
-                    'accountId' => $_POST['accountId'], 
-                    'personId' => $_POST['personId'],
+                    'account' => $_POST['account'], 
+                    'personal_code' => $_POST['personal_code'],
                     'value' => 0
                 ];
                 App::DB()->create($data);

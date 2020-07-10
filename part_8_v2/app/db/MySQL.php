@@ -33,8 +33,8 @@ class MySQL implements DataBase {
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute([
                 (string) Uuid::uuid4(),
-                $customerData['accountId'], 
-                $customerData['personId'], 
+                $customerData['account'], 
+                $customerData['personal_code'], 
                 $customerData['name'], 
                 $customerData['surname'], 
                 $customerData['value']
@@ -49,8 +49,8 @@ class MySQL implements DataBase {
             $sql = "UPDATE bank SET account = ?, personal_code = ?, name = ?, surname = ?, value = ? WHERE uuid = ?";
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute([
-                $customerData['accountId'], 
-                $customerData['personId'], 
+                $customerData['account'], 
+                $customerData['personal_code'], 
                 $customerData['name'], 
                 $customerData['surname'], 
                 $customerData['value']
@@ -64,7 +64,7 @@ class MySQL implements DataBase {
         try {
             $sql = "DELETE FROM bank WHERE uuid = ?";
             $stmt = self::$pdo->prepare($sql);
-            $stmt->execute([[$customerUUID]]);
+            $stmt->execute([$customerUUID]);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
@@ -74,7 +74,11 @@ class MySQL implements DataBase {
         try {
             $sql = "SELECT * FROM bank WHERE uuid = ?";
             $stmt = self::$pdo->prepare($sql);
-            return (array) $stmt->execute([$customerUUID]);
+            $stmt->execute([$customerUUID]);
+            // $stmt = self::$pdo->query($sql);
+            var_dump($customerUUID);
+            var_dump($stmt->fetchAll());
+            return (array) $stmt->fetchAll();
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }

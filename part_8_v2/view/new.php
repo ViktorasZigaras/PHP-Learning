@@ -17,9 +17,9 @@
             <span>Customer Surname: </span>
             <input class="new-input" type="text" name="surname" value="<?= 'surname ' . rand(1, 50) ?>"><br>
             <span>Customer Account ID: </span>
-            <input class="new-input" type="text" name="accountId" value="<?= NewLogic::generateAccountID() ?>" readonly><br>
+            <input class="new-input" type="text" name="account" value="<?= NewLogic::generateAccountID() ?>" readonly><br>
             <span>Customer Person ID: </span>
-            <input class="new-input" type="text" name="personId" value="<?= NewLogic::generatePersonID() ?>"><br>
+            <input class="new-input" type="text" name="personal_code" value="<?= NewLogic::generatePersonID() ?>"><br>
             <input type="hidden" name="csrf" value="<?= App::CSRF() ?>">
             <button type="submit">Create</button>
         </form>
