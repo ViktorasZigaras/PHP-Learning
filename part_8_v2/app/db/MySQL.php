@@ -9,7 +9,7 @@ class MySQL implements DataBase {
 
     public function __construct() {
         $host = 'localhost';
-        $db   = 'learning';
+        $db   = 'learning_bank';
         $user = 'root';
         $pass = '';
         $charset = 'utf8mb4';
@@ -29,7 +29,7 @@ class MySQL implements DataBase {
     
     public function create(array $customerData) : void {
         try {
-            $sql = "INSERT INTO bank (uuid, account, personal_code, name, surname, value) VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO accounts (uuid, account, personal_code, name, surname, value) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute([
                 (string) Uuid::uuid4(),
@@ -46,7 +46,7 @@ class MySQL implements DataBase {
  
     public function update(string $customerUUID, array $customerData) : void {
         try {
-            $sql = "UPDATE bank SET account = ?, personal_code = ?, name = ?, surname = ?, value = ? WHERE uuid = ?";
+            $sql = "UPDATE accounts SET account = ?, personal_code = ?, name = ?, surname = ?, value = ? WHERE uuid = ?";
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute([
                 $customerData['account'], 
@@ -63,7 +63,7 @@ class MySQL implements DataBase {
  
     public function delete(string $customerUUID) : void {
         try {
-            $sql = "DELETE FROM bank WHERE uuid = ?";
+            $sql = "DELETE FROM accounts WHERE uuid = ?";
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute([$customerUUID]);
         } catch (\PDOException $e) {
@@ -73,7 +73,7 @@ class MySQL implements DataBase {
  
     public function show(string $customerUUID) : array {
         try {
-            $sql = "SELECT * FROM bank WHERE uuid = ?";
+            $sql = "SELECT * FROM accounts WHERE uuid = ?";
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute([$customerUUID]);
             return (array) $stmt->fetch();
@@ -84,7 +84,7 @@ class MySQL implements DataBase {
     
     public function showAll() : array {
         try {
-            $sql = "SELECT * FROM bank";
+            $sql = "SELECT * FROM accounts";
             $stmt = self::$pdo->prepare($sql);
             $stmt->execute();
             return (array) $stmt->fetchAll();

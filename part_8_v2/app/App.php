@@ -50,8 +50,8 @@ class App {
             self::$usd_rate = $output->rates->USD;
         } 
 
-        self::$db = new JsonDb; # json
-        // self::$db = new MySQL;
+        // self::$db = new JsonDb; # json
+        self::$db = new MySQL;
 
         if (count(self::$params) === 1) {
             try {
