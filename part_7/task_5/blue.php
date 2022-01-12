@@ -5,7 +5,7 @@
 // create two pages, on link click redirect to the other
 
 if (isset($_GET['redirect'])) {
-    header("Location: http://localhost/PHP-Learning/s7/t5/red.php");
+    header("Location: http://localhost/BIT-stuff/PHP-Learning/part_7/task_5/red.php");
     die();
 }
 

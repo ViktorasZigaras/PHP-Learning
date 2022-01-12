@@ -2,6 +2,9 @@
 
 # launch url: http://localhost/PHP-Learning/part_8_v1/index.php
 
+# admin - abc
+# guest - 123
+
 require __DIR__ . '/bootstrap.php';
 
 setBody();
